@@ -5,6 +5,34 @@ Calculator::Calculator(const std::string input_string)
 
 Calculator::~Calculator(){};
 
+Token::Token(){};
+Token::Token(std::string type, int precedence, double value, int associativity,
+             int operation_type, function_variant function)
+    : type_(type),
+      precedence_(precedence),
+      value_(value),
+      associativity_(associativity),
+      operation_type_(operation_type),
+      function_(function){};
+
+Token::Token(const Token& other)
+    : type_(other.type_),
+      precedence_(other.precedence_),
+      value_(other.value_),
+      associativity_(other.associativity_),
+      operation_type_(other.operation_type_),
+      function_(other.function_){};
+
+Token::~Token(){};
+
+std::string Token::GetType() { return type_; }
+int Token::GetPrecedence() { return precedence_; }
+double Token::GetValue() { return value_; }
+int Token::GetAssociativity() { return associativity_; }
+int Token::GetOperationType() { return operation_type_; }
+function_variant Token::GetFunction() { return function_; }
+void Token::SetValue(double value) { value_ = value; }
+
 void Calculator::CreateTokenMap() {
   using namespace std;
   initializer_list<pair<const string, Token>> list = {
@@ -37,9 +65,27 @@ void Calculator::CreateTokenMap() {
   token_map_.insert(list);
 };
 
+Token Number_("", p_number, 0, a_none, ot_none, nullptr);
+Token UnaryPlus_("+", p_unary, 0, a_left, ot_unary, UnaryPlus);
+Token UnaryNegation_("-", p_unary, 0, a_left, ot_unary, UnaryNegation);
+
 double Calculator::CalculateValue(double x) {
-  ConvertToPostfixNotation();
+  CheckVariable(x);
+  ConvertToPostfixNotation();  //! converte before x
   return PostfixNotationCalculation(x);
+}
+
+std::pair<std::vector<double>, std::vector<double>> Calculator::CalculateGraph(
+    int number_of_points, double x_start, double x_end) {
+  CheckNumberOfPoints(number_of_points);
+  CheckRange(x_start, x_end);
+  ConvertToPostfixNotation();  //! converte before x
+  std::vector<double> x, y;
+  for (int i = 0; i < number_of_points + 1.0; ++i) {
+    x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
+    y.push_back(PostfixNotationCalculation(x.back()));
+  }
+  return make_pair(x, y);
 }
 
 void Calculator::ConvertToPostfixNotation() {
@@ -48,7 +94,7 @@ void Calculator::ConvertToPostfixNotation() {
   Parsing();
   UnarySigns();
   //   CheckBrackets();
-  //   ShuntingYardAlgorithm();
+  ShuntingYardAlgorithm();
 }
 
 void Calculator::CheckLength() {
@@ -58,6 +104,12 @@ void Calculator::CheckLength() {
   }
   if (input_expression_.size() == 0) {
     error_code_ = empty_input_string;
+    return;
+  }
+}
+void Calculator::CheckVariable(double x) {
+  if (x != x) {
+    error_code_ = x_is_nan;
     return;
   }
 }
@@ -86,6 +138,12 @@ void Calculator::Parsing() {
       std::string temp;
       temp.push_back(*it++);
       PushToken(temp);
+    } else if (is_letter(*it)) {
+      std::string temp;
+      while (is_letter(*it) && (it != end)) {
+        temp.push_back(*it++);
+      }
+      PushToken(temp);
     } else if (is_number(*it)) {
       std::string temp;
       while (is_number(*it) && (it != end)) {
@@ -98,12 +156,6 @@ void Calculator::Parsing() {
         }
       }
       PushNumber(temp);
-    } else if (is_letter(*it)) {
-      std::string temp;
-      while (is_letter(*it) && (it != end)) {
-        temp.push_back(*it++);
-      }
-      PushToken(temp);
     } else {
       error_code_ = incorrect_symbol;
       return;
@@ -316,18 +368,6 @@ double Calculator::FromResult() {
   double value = result_.top();
   result_.pop();
   return value;
-}
-
-void Calculator::CalculateGraph(int number_of_points, double x_start,
-                                double x_end) {
-  CheckNumberOfPoints(number_of_points);
-  CheckRange(x_start, x_end);
-  ConvertToPostfixNotation();
-  std::vector<double> x, y;
-  for (int i = 0; i < number_of_points + 1.0; ++i) {
-    x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
-    y.push_back(PostfixNotationCalculation(x.back()));
-  }
 }
 
 void Calculator::CheckNumberOfPoints(int number_of_points) {

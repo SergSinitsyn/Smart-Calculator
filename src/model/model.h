@@ -35,6 +35,7 @@ enum error_list {
   not_a_plot,
   x_start_equals_x_end,
   exceeded_max_size_of_vector,
+  x_is_nan,
 };
 
 enum precedence {
@@ -63,14 +64,14 @@ using function_1arg = std::function<double(double)>;
 using function_2arg = std::function<double(double, double)>;
 using function_cast_1arg = double (*)(double);
 using function_cast_2arg = double (*)(double, double);
-using function_variant = std::variant<function_1arg, function_2arg, nullptr_t>;
+using function_variant = std::variant<nullptr_t, function_1arg, function_2arg>;
 
-double Addition(double a, double b);
-double Subtraction(double a, double b);
-double Multiplication(double a, double b);
-double Division(double a, double b);
-double UnaryPlus(double a);
-double UnaryNegation(double a);
+double Addition(double a, double b);        //!
+double Subtraction(double a, double b);     //!
+double Multiplication(double a, double b);  //!
+double Division(double a, double b);        // !
+double UnaryPlus(double a);                 //!
+double UnaryNegation(double a);             //!
 
 bool is_number(char c);
 bool is_symbol(char c);
@@ -80,27 +81,21 @@ bool is_pm(char c);
 
 class Token {
  public:
+  Token();
   Token(std::string type, int precedence, double value, int associativity,
-        int operation_type, function_variant function)
-      : type_(type),
-        precedence_(precedence),
-        value_(value),
-        associativity_(associativity),
-        operation_type_(operation_type),
-        function_(function){};
+        int operation_type, function_variant function);
+  Token(const Token& other);
 
   //! rule of 5
+  ~Token();
 
-  ~Token(){};
-
-  std::string GetType() { return type_; }
-  int GetPrecedence() { return precedence_; }
-  double GetValue() { return value_; }
-  int GetAssociativity() { return associativity_; }
-  int GetOperationType() { return operation_type_; }
-  function_variant GetFunction() { return function_; }
-
-  void SetValue(double value) { value_ = value; }
+  std::string GetType();
+  int GetPrecedence();
+  double GetValue();
+  int GetAssociativity();
+  int GetOperationType();
+  function_variant GetFunction();
+  void SetValue(double value);
 
  private:
   std::string type_;
@@ -120,17 +115,21 @@ class Calculator {
   //   Calculator &operator=(const Calculator &other);
   //   Calculator &operator=(Calculator &&other);
   ~Calculator();
+  //! rule of 5
 
   double CalculateValue(double x);
-  void CalculateGraph(int size, double x_start, double x_end);
+  std::pair<std::vector<double>, std::vector<double>> CalculateGraph(
+      int number_of_points, double x_start, double x_end);
 
  private:
   void ConvertToPostfixNotation();
   double PostfixNotationCalculation(double x);
 
+  void CheckVariable(double x);
   void CheckLength();
   void CheckNumberOfPoints(int size);
   void CheckRange(double x_start, double x_end);
+
   void CreateTokenMap();
   void Parsing();
   void PushNumber(std::string temp);
@@ -138,7 +137,6 @@ class Calculator {
   //   void CheckBrackets();  //!
   void UnarySigns();  //!
 
-  // Shunting Yard Algorithm
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
   void FromInputToStack();
@@ -148,7 +146,6 @@ class Calculator {
   void ToResult(double x);
   double FromResult();
 
- private:
   int error_code_;
   std::string input_expression_;
   std::map<std::string, Token> token_map_;
@@ -156,10 +153,10 @@ class Calculator {
   std::stack<Token> stack_;
   std::queue<Token> output_;
   std::stack<double> result_;
-};
 
-Token Number_("", p_number, 0, a_none, ot_none, nullptr);
-Token UnaryPlus_("+", p_unary, 0, a_left, ot_unary, UnaryPlus);
-Token UnaryNegation_("-", p_unary, 0, a_left, ot_unary, UnaryNegation);
+  //   Token Number_;
+  //   Token UnaryPlus_;
+  //   Token UnaryNegation_;
+};
 
 #endif  // MODEL_MODEL_H_
