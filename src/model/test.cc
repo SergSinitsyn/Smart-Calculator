@@ -1,7 +1,7 @@
 #include "model.h"
 
 int main() {
-  Calculator A("sin(x+ 1+2*3 )");
+  Calculator A("sin(x+ 1+2*3)");
 
   //   string input2 = "77777";ß
   //   double x = 10;

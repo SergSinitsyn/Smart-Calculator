@@ -65,8 +65,9 @@ void Calculator::CreateTokenMap() {
   token_map_.insert(list);
 };
 
+//? куда их перенести ?
 Token Number_("", p_number, 0, a_none, ot_none, nullptr);
-Token UnaryPlus_("+", p_unary, 0, a_left, ot_unary, UnaryPlus);
+// Token UnaryPlus_("+", p_unary, 0, a_left, ot_unary, UnaryPlus); //! delete
 Token UnaryNegation_("-", p_unary, 0, a_left, ot_unary, UnaryNegation);
 
 double Calculator::CalculateValue(double x) {
@@ -107,6 +108,7 @@ void Calculator::CheckLength() {
     return;
   }
 }
+
 void Calculator::CheckVariable(double x) {
   if (x != x) {
     error_code_ = x_is_nan;
@@ -306,8 +308,6 @@ void Calculator::UnarySigns() {
             temp_output.back().GetType() == ")")) {
         if (input_type == "-") {
           temp_output.push(UnaryNegation_);
-        } else {
-          temp_output.push(UnaryPlus_);
         }
         temp_input.pop();
       }
