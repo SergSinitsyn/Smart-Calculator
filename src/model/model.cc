@@ -5,70 +5,37 @@ Calculator::Calculator(const std::string input_string)
 
 Calculator::~Calculator(){};
 
-Token::Token(){};
-Token::Token(std::string type, int precedence, double value, int associativity,
-             int operation_type, function_variant function)
-    : type_(type),
-      precedence_(precedence),
-      value_(value),
-      associativity_(associativity),
-      operation_type_(operation_type),
-      function_(function){};
-
-Token::Token(const Token& other)
-    : type_(other.type_),
-      precedence_(other.precedence_),
-      value_(other.value_),
-      associativity_(other.associativity_),
-      operation_type_(other.operation_type_),
-      function_(other.function_){};
-
-Token::~Token(){};
-
-std::string Token::GetType() { return type_; }
-int Token::GetPrecedence() { return precedence_; }
-double Token::GetValue() { return value_; }
-int Token::GetAssociativity() { return associativity_; }
-int Token::GetOperationType() { return operation_type_; }
-function_variant Token::GetFunction() { return function_; }
-void Token::SetValue(double value) { value_ = value; }
-
 void Calculator::CreateTokenMap() {
   using namespace std;
   initializer_list<pair<const string, Token>> list = {
-      make_pair("x", Token("x", p_number, 0, a_none, ot_none, nullptr)),
-      make_pair("+", Token("+", p_bin_low, 0, a_left, ot_binary, Addition)),
-      make_pair("-", Token("-", p_bin_low, 0, a_left, ot_binary, Subtraction)),
-      make_pair("*",
-                Token("*", p_bin_med, 0, a_left, ot_binary, Multiplication)),
-      make_pair("/", Token("/", p_bin_med, 0, a_left, ot_binary, Division)),
-      make_pair("^", Token("^", p_bin_hig, 0, a_right, ot_binary, powl)),
-      make_pair("mod", Token("mod", p_bin_med, 0, a_left, ot_binary, fmodl)),
-      make_pair("cos", Token("cos", p_function, 0, a_right, ot_unary, cosl)),
-      make_pair("sin", Token("sin", p_function, 0, a_right, ot_unary, sinl)),
-      make_pair("tan", Token("tan", p_function, 0, a_right, ot_unary, tanl)),
-      make_pair("acos", Token("acos", p_function, 0, a_right, ot_unary, acosl)),
-      make_pair("asin", Token("asin", p_function, 0, a_right, ot_unary, asinl)),
-      make_pair("atan", Token("atan", p_function, 0, a_right, ot_unary, atanl)),
-      make_pair("sqrt", Token("sqrt", p_function, 0, a_right, ot_unary, sqrtl)),
-      make_pair("ln", Token("ln", p_function, 0, a_right, ot_unary, logl)),
-      make_pair("log", Token("log", p_function, 0, a_right, ot_unary, log10l)),
-      make_pair("(", Token("(", p_bracket, 0, a_none, ot_none, nullptr)),
-      make_pair(")", Token(")", p_bracket, 0, a_none, ot_none, nullptr)),
-      make_pair("exp", Token("exp", p_function, 0, a_right, ot_unary, expl)),
-      make_pair("e", Token("e", p_number, M_E, a_none, ot_none, nullptr)),
-      make_pair("pi", Token("pi", p_number, M_PI, a_none, ot_none, nullptr)),
-      make_pair("inf",
-                Token("inf", p_number, INFINITY, a_none, ot_none, nullptr)),
+      {"x", Token("x", kNumber, kNone, kOperand, 0, nullptr)},
+      {"(", Token("(", kBracket, kNone, kOperand, 0, nullptr)},
+      {")", Token(")", kBracket, kNone, kOperand, 0, nullptr)},
+
+      {"+", Token("+", kLow, kLeft, kBinary, 0, Addition)},
+      {"-", Token("-", kLow, kLeft, kBinary, 0, Subtraction)},
+      {"*", Token("*", kMedium, kLeft, kBinary, 0, Multiplication)},
+      {"/", Token("/", kMedium, kLeft, kBinary, 0, Division)},
+      {"^", Token("^", kHigh, kRight, kBinary, 0, powl)},
+
+      {"mod", Token("mod", kMedium, kLeft, kBinary, 0, fmodl)},
+      {"cos", Token("cos", kFunction, kRight, kUnary, 0, cosl)},
+      {"sin", Token("sin", kFunction, kRight, kUnary, 0, sinl)},
+      {"tan", Token("tan", kFunction, kRight, kUnary, 0, tanl)},
+      {"acos", Token("acos", kFunction, kRight, kUnary, 0, acosl)},
+      {"asin", Token("asin", kFunction, kRight, kUnary, 0, asinl)},
+      {"atan", Token("atan", kFunction, kRight, kUnary, 0, atanl)},
+      {"sqrt", Token("sqrt", kFunction, kRight, kUnary, 0, sqrtl)},
+      {"ln", Token("ln", kFunction, kRight, kUnary, 0, logl)},
+      {"log", Token("log", kFunction, kRight, kUnary, 0, log10l)},
+      {"exp", Token("exp", kFunction, kRight, kUnary, 0, expl)},
 
   };
   token_map_.insert(list);
 };
 
-//? куда их перенести ?
-Token Number_("", p_number, 0, a_none, ot_none, nullptr);
-// Token UnaryPlus_("+", p_unary, 0, a_left, ot_unary, UnaryPlus); //! delete
-Token UnaryNegation_("-", p_unary, 0, a_left, ot_unary, UnaryNegation);
+Token Number_("", kNumber, kNone, kOperand, 0, nullptr);
+Token UnaryNegation_("-", kUnaryOperator, kLeft, kUnary, 0, UnaryNegation);
 
 double Calculator::CalculateValue(double x) {
   CheckVariable(x);
@@ -94,7 +61,7 @@ void Calculator::ConvertToPostfixNotation() {
   CreateTokenMap();
   Parsing();
   UnarySigns();
-  //   CheckBrackets();
+  //   CheckBrackets();  // TODO
   ShuntingYardAlgorithm();
 }
 
@@ -202,16 +169,16 @@ void Calculator::FromStackToOutput() {
 
 void Calculator::ShuntingYardAlgorithm() {
   while (!input_.empty()) {
-    if (input_.front().GetPrecedence() == p_number) {
+    if (input_.front().GetPrecedence() == Precedence::kNumber) {
       FromInputToOutput();
-    } else if (input_.front().GetOperationType() == ot_unary) {
+    } else if (input_.front().GetOperationType() == OperationType::kUnary) {
       FromInputToStack();
-    } else if (input_.front().GetOperationType() == ot_binary) {
+    } else if (input_.front().GetOperationType() == OperationType::kBinary) {
       while (!stack_.empty() &&
-             (stack_.top().GetOperationType() == ot_binary) &&
+             (stack_.top().GetOperationType() == OperationType::kBinary) &&
              (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
               (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
-               input_.front().GetAssociativity() == a_left))) {
+               input_.front().GetAssociativity() == Associativity::kLeft))) {
         FromStackToOutput();
       }
       FromInputToStack();
@@ -227,7 +194,8 @@ void Calculator::ShuntingYardAlgorithm() {
         error_code_ = open_bracket_missing;
         return;
       }
-      if (!stack_.empty() && stack_.top().GetPrecedence() == p_function) {
+      if (!stack_.empty() &&
+          stack_.top().GetPrecedence() == Precedence::kFunction) {
         FromStackToOutput();
       }
       input_.pop();
@@ -263,7 +231,7 @@ void Calculator::ShuntingYardAlgorithm() {
 //         error_code_ = empty_brackets;
 //         return;
 //       }
-//     } else if (temp_input.front().priority == p_function) {
+//     } else if (temp_input.front().priority == kFunction) {
 //       ++function_count;
 //     }
 //     if (!temp_output.empty()) {
@@ -274,7 +242,7 @@ void Calculator::ShuntingYardAlgorithm() {
 //           error_code_ = binary_operation_after_opening_bracket;
 //           return;
 //         }
-//       } else if (temp_output.back().priority == p_function) {
+//       } else if (temp_output.back().priority == kFunction) {
 //         if (temp_input.front().type != t_bra) {
 //           error_code_ = functions_braket_missing;
 //           return;
@@ -304,7 +272,8 @@ void Calculator::UnarySigns() {
     std::string input_type = temp_input.front().GetType();
     if (input_type == "+" || input_type == "-") {
       if (temp_output.empty() ||
-          !(temp_output.back().GetPrecedence() == p_number ||
+          !(temp_output.back().GetPrecedence() ==
+                Precedence::kNumber ||  //! operation type operand
             temp_output.back().GetType() == ")")) {
         if (input_type == "-") {
           temp_output.push(UnaryNegation_);
@@ -321,13 +290,13 @@ void Calculator::UnarySigns() {
 double Calculator::PostfixNotationCalculation(double x) {
   input_ = output_;
   while (!input_.empty()) {
-    if (input_.front().GetPrecedence() == p_number) {
+    if (input_.front().GetPrecedence() == kNumber) {
       if (input_.front().GetType() == "x") {
         ToResult(x);
       } else {
         ToResult();
       }
-    } else if (input_.front().GetOperationType() == ot_binary) {
+    } else if (input_.front().GetOperationType() == kBinary) {
       if (result_.size() >= 2) {
         double value2 = FromResult();
         double value1 = FromResult();
@@ -337,7 +306,7 @@ double Calculator::PostfixNotationCalculation(double x) {
         error_code_ = missing_value_for_binary_operator;
         return 0;
       }
-    } else if (input_.front().GetOperationType() == ot_unary) {
+    } else if (input_.front().GetOperationType() == kUnary) {
       if (result_.size() >= 1) {
         // std::visit function = input_.front().GetFunction();
         // ToResult(function(FromResult()));

@@ -1,5 +1,5 @@
-#ifndef MODEL_MODEL_H_
-#define MODEL_MODEL_H_
+#ifndef _MODEL_MODEL_H_
+#define _MODEL_MODEL_H_
 
 #include <array>
 #include <cmath>
@@ -11,7 +11,8 @@
 #include <sstream>  // for scientific notation
 #include <stack>
 #include <string>
-#include <variant>
+
+#include "token.h"
 
 #define MAX 256
 
@@ -38,73 +39,18 @@ enum error_list {
   x_is_nan,
 };
 
-enum precedence {
-  p_number,
-  p_bin_low,
-  p_bin_med,
-  p_bin_hig,
-  p_unary,
-  p_function,
-  p_bracket,
-};
-
-enum operation_type {
-  ot_none,
-  ot_unary,
-  ot_binary,
-};
-
-enum associativity {
-  a_none,
-  a_left,
-  a_right,
-};
-
-using function_1arg = std::function<double(double)>;
-using function_2arg = std::function<double(double, double)>;
-using function_cast_1arg = double (*)(double);
-using function_cast_2arg = double (*)(double, double);
-using function_variant = std::variant<nullptr_t, function_1arg, function_2arg>;
-
 double Addition(double a, double b);        //!
 double Subtraction(double a, double b);     //!
 double Multiplication(double a, double b);  //!
 double Division(double a, double b);        // !
-double UnaryPlus(double a);                 //!
-double UnaryNegation(double a);             //!
+
+double UnaryNegation(double a);  //!
 
 bool is_number(char c);
 bool is_symbol(char c);
 bool is_letter(char c);
 bool is_E(char c);
 bool is_pm(char c);
-
-class Token {
- public:
-  Token();
-  Token(std::string type, int precedence, double value, int associativity,
-        int operation_type, function_variant function);
-  Token(const Token& other);
-
-  //! rule of 5
-  ~Token();
-
-  std::string GetType();
-  int GetPrecedence();
-  double GetValue();
-  int GetAssociativity();
-  int GetOperationType();
-  function_variant GetFunction();
-  void SetValue(double value);
-
- private:
-  std::string type_;
-  int precedence_;
-  double value_;
-  int associativity_;
-  int operation_type_;
-  function_variant function_;
-};
 
 class Calculator {
  public:
@@ -130,13 +76,12 @@ class Calculator {
   void CheckNumberOfPoints(int size);
   void CheckRange(double x_start, double x_end);
 
-  void CreateTokenMap();
   void Parsing();
   void PushNumber(std::string temp);
   void PushToken(std::string temp);
   //   void CheckBrackets();  //!
   void UnarySigns();  //!
-
+  void CreateTokenMap();
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
   void FromInputToStack();
@@ -153,10 +98,6 @@ class Calculator {
   std::stack<Token> stack_;
   std::queue<Token> output_;
   std::stack<double> result_;
-
-  //   Token Number_;
-  //   Token UnaryPlus_;
-  //   Token UnaryNegation_;
 };
 
 #endif  // MODEL_MODEL_H_
