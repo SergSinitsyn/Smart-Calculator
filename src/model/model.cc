@@ -1,41 +1,11 @@
 #include "model.h"
 
+#include "other.h"
+
 Calculator::Calculator(const std::string input_string)
     : error_code_(0), input_expression_(input_string){};
 
 Calculator::~Calculator(){};
-
-void Calculator::CreateTokenMap() {
-  using namespace std;
-  initializer_list<pair<const string, Token>> list = {
-      {"x", Token("x", kNumber, kNone, kOperand, 0, nullptr)},
-      {"(", Token("(", kBracket, kNone, kOperand, 0, nullptr)},
-      {")", Token(")", kBracket, kNone, kOperand, 0, nullptr)},
-
-      {"+", Token("+", kLow, kLeft, kBinary, 0, Addition)},
-      {"-", Token("-", kLow, kLeft, kBinary, 0, Subtraction)},
-      {"*", Token("*", kMedium, kLeft, kBinary, 0, Multiplication)},
-      {"/", Token("/", kMedium, kLeft, kBinary, 0, Division)},
-      {"^", Token("^", kHigh, kRight, kBinary, 0, powl)},
-
-      {"mod", Token("mod", kMedium, kLeft, kBinary, 0, fmodl)},
-      {"cos", Token("cos", kFunction, kRight, kUnary, 0, cosl)},
-      {"sin", Token("sin", kFunction, kRight, kUnary, 0, sinl)},
-      {"tan", Token("tan", kFunction, kRight, kUnary, 0, tanl)},
-      {"acos", Token("acos", kFunction, kRight, kUnary, 0, acosl)},
-      {"asin", Token("asin", kFunction, kRight, kUnary, 0, asinl)},
-      {"atan", Token("atan", kFunction, kRight, kUnary, 0, atanl)},
-      {"sqrt", Token("sqrt", kFunction, kRight, kUnary, 0, sqrtl)},
-      {"ln", Token("ln", kFunction, kRight, kUnary, 0, logl)},
-      {"log", Token("log", kFunction, kRight, kUnary, 0, log10l)},
-      {"exp", Token("exp", kFunction, kRight, kUnary, 0, expl)},
-
-  };
-  token_map_.insert(list);
-};
-
-Token Number_("", kNumber, kNone, kOperand, 0, nullptr);
-Token UnaryNegation_("-", kUnaryOperator, kLeft, kUnary, 0, UnaryNegation);
 
 double Calculator::CalculateValue(double x) {
   CheckVariable(x);
@@ -58,46 +28,12 @@ std::pair<std::vector<double>, std::vector<double>> Calculator::CalculateGraph(
 
 void Calculator::ConvertToPostfixNotation() {
   CheckLength();
-  CreateTokenMap();
+  token_map_ = CreateTokenMap();
   Parsing();
   UnarySigns();
   //   CheckBrackets();  // TODO
   ShuntingYardAlgorithm();
 }
-
-void Calculator::CheckLength() {
-  if (input_expression_.size() > MAX) {
-    error_code_ = character_limit_exceeded;
-    return;
-  }
-  if (input_expression_.size() == 0) {
-    error_code_ = empty_input_string;
-    return;
-  }
-}
-
-void Calculator::CheckVariable(double x) {
-  if (x != x) {
-    error_code_ = x_is_nan;
-    return;
-  }
-}
-
-bool is_letter(char c) { return (c >= 'a' && c <= 'z'); }
-bool is_E(char c) { return (c == 'E' || c == 'e'); }
-bool is_pm(char c) { return (c == '+' || c == '-'); }
-bool is_number(char c) { return (c == '.' || (c >= '0' && c <= '9')); }
-bool is_symbol(char c) {
-  return (c == ' ' || (c >= '(' && c <= '+') || c == '-' || c == '/' ||
-          c == '^' || c == 'x');
-}
-
-double Addition(double a, double b) { return a + b; }
-double Subtraction(double a, double b) { return a - b; }
-double Multiplication(double a, double b) { return a * b; }
-double Division(double a, double b) { return a / b; }
-double UnaryPlus(double a) { return a; }
-double UnaryNegation(double a) { return -a; }
 
 void Calculator::Parsing() {
   auto it = input_expression_.begin();
@@ -300,8 +236,8 @@ double Calculator::PostfixNotationCalculation(double x) {
       if (result_.size() >= 2) {
         double value2 = FromResult();
         double value1 = FromResult();
-        // std::visit function = input_.front().GetFunction();
-        // ToResult(function(value1, value2));
+        // function_2arg f = std::get(input_.front().GetFunction());
+
       } else {
         error_code_ = missing_value_for_binary_operator;
         return 0;
@@ -323,6 +259,32 @@ double Calculator::PostfixNotationCalculation(double x) {
   return FromResult();
 }
 
+// double Calculator::calc(double x) {
+//   std::stack<double> stack;
+//   for (auto it : m_rpn) {
+//     std::visit(overloaded{[&](QChar& arg) {
+//                             if (arg == 'x') {
+//                               stack.push(x);
+//                             } else {
+//                               std::visit(
+//                                   overloaded{[&](fp_1arg fn) {
+//                                                stack.push(fn(stack.pop()));
+//                                              },
+//                                              [&](fp_2arg fn) {
+//                                                double rhs = stack.pop();
+//                                                double lhs = stack.pop();
+//                                                stack.push(fn(lhs, rhs));
+//                                              },
+//                                              [](auto fn) {}},
+//                                   m_fun_ptr.value(arg).second.second);
+//                             }
+//                           },
+//                           [&](double& arg) { stack.push(arg); }},
+//                it);
+//   }
+//   return stack.pop();
+// }
+
 void Calculator::ToResult() {
   result_.push(input_.front().GetValue());
   input_.pop();
@@ -337,23 +299,4 @@ double Calculator::FromResult() {
   double value = result_.top();
   result_.pop();
   return value;
-}
-
-void Calculator::CheckNumberOfPoints(int number_of_points) {
-  if (number_of_points < 1) {
-    error_code_ = not_a_plot;
-    return;
-  }
-  std::vector<double> x;
-  if (number_of_points > x.max_size() / 2.) {  //! ? ?
-    error_code_ = exceeded_max_size_of_vector;
-    return;
-  }
-}
-
-void Calculator::CheckRange(double x_start, double x_end) {
-  if (x_start == x_end) {
-    error_code_ = x_start_equals_x_end;
-    return;
-  }
 }

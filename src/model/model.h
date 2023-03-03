@@ -11,10 +11,11 @@
 #include <sstream>  // for scientific notation
 #include <stack>
 #include <string>
+#include <variant>
 
+#include "check.h"
+#include "other.h"
 #include "token.h"
-
-#define MAX 256
 
 enum error_list {
   no_errors,
@@ -37,20 +38,8 @@ enum error_list {
   x_start_equals_x_end,
   exceeded_max_size_of_vector,
   x_is_nan,
+  sss,
 };
-
-double Addition(double a, double b);        //!
-double Subtraction(double a, double b);     //!
-double Multiplication(double a, double b);  //!
-double Division(double a, double b);        // !
-
-double UnaryNegation(double a);  //!
-
-bool is_number(char c);
-bool is_symbol(char c);
-bool is_letter(char c);
-bool is_E(char c);
-bool is_pm(char c);
 
 class Calculator {
  public:
@@ -71,17 +60,12 @@ class Calculator {
   void ConvertToPostfixNotation();
   double PostfixNotationCalculation(double x);
 
-  void CheckVariable(double x);
-  void CheckLength();
-  void CheckNumberOfPoints(int size);
-  void CheckRange(double x_start, double x_end);
-
   void Parsing();
   void PushNumber(std::string temp);
   void PushToken(std::string temp);
   //   void CheckBrackets();  //!
   void UnarySigns();  //!
-  void CreateTokenMap();
+
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
   void FromInputToStack();
@@ -91,6 +75,7 @@ class Calculator {
   void ToResult(double x);
   double FromResult();
 
+  double calc(double x);  //!
   int error_code_;
   std::string input_expression_;
   std::map<std::string, Token> token_map_;
