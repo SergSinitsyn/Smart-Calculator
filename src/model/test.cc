@@ -1,12 +1,17 @@
 #include "model.h"
 
 int main() {
-  Calculator A("sin(x+ 1+2*3)");
+  try {
+    Calculator A("sin(x+ 1+2*3)");
 
-  //   string input2 = "77777";ß
-  //   double x = 10;
-  double res = A.CalculateValue(100);
-  std::cout << "result = " << res << std::endl;
+    //   string input2 = "77777";ß
+    //   double x = 10;
+    double res = A.CalculateValue(100);
+    std::cout << "result = " << res << std::endl;
+  } catch (const std::exception &ex) {
+    std::cout << ex.what() << std::endl;
+  }
+
   //   double f;
   //   string str = "12345.133";
   //   f = atof(str.c_str());

@@ -2,6 +2,7 @@
 #define _MODEL_TOKEN_H_
 
 #include <cmath>
+// #include <exception>
 #include <functional>
 #include <string>
 #include <variant>
@@ -53,26 +54,6 @@ using fp_2arg = std::function<double(double, double)>;
 /// function pointer variant
 using fp_variant = std::variant<fp_1arg, fp_2arg, nullptr_t>;
 
-// /**
-//  * @brief Alias для типов данных в таблице приоритетов и указателей на
-//  функции
-//  * @details function prioritet and pointer type
-//  */
-// using fun_ptr_t = const QMap<QChar, QPair<QString, QPair<f_prt_t,
-// fp_variant>>>;
-
-//   /**
-//    * @brief Таблиц приоритетов и указателей на функции
-//    * @details table function prioritet and pointer type
-//    */
-//   static fun_ptr_t m_fun_ptr;
-
-// /**
-//  * @brief Таблиц приоритетов и указателей на функции
-//  * @details table function prioritet and pointer type
-//  */
-// static fun_ptr_t m_fun_ptr;
-
 enum Precedence {
   kNumber,
   kLow,
@@ -98,14 +79,14 @@ enum Associativity {
 class Token {
  public:
   Token();
-  Token(std::string type, Precedence precedence, Associativity associativity,
+  Token(std::string name, Precedence precedence, Associativity associativity,
         OperationType operation_type, double value, fp_variant function);
   Token(const Token& other);
 
   //! rule of 5
   ~Token();
 
-  std::string GetType();
+  std::string GetName();
   int GetPrecedence();
   double GetValue();
   int GetAssociativity();
@@ -114,7 +95,7 @@ class Token {
   void SetValue(double value);
 
  private:
-  std::string type_;
+  std::string name_;
   Precedence precedence_;
   Associativity associativity_;
   OperationType operation_type_;
@@ -126,12 +107,5 @@ Token Number_("", kNumber, kNone, kOperand, 0, nullptr);
 Token UnaryNegation_("-", kUnaryOperator, kLeft, kUnary, 0, lamdas_f1arg(-));
 
 std::map<std::string, Token> CreateTokenMap();
-
-// double Addition(double a, double b);        //!
-// double Subtraction(double a, double b);     //!
-// double Multiplication(double a, double b);  //!
-// double Division(double a, double b);        // !
-
-// double UnaryNegation(double a);  //!
 
 #endif  // _MODEL_TOKEN_H_

@@ -3,10 +3,10 @@
 #include <map>
 
 Token::Token(){};
-Token::Token(std::string type, Precedence precedence,
+Token::Token(std::string name, Precedence precedence,
              Associativity associativity, OperationType operation_type,
              double value, fp_variant function)
-    : type_(type),
+    : name_(name),
       precedence_(precedence),
       value_(value),
       associativity_(associativity),
@@ -14,7 +14,7 @@ Token::Token(std::string type, Precedence precedence,
       function_(function){};
 
 Token::Token(const Token& other)
-    : type_(other.type_),
+    : name_(other.name_),
       precedence_(other.precedence_),
       value_(other.value_),
       associativity_(other.associativity_),
@@ -23,7 +23,7 @@ Token::Token(const Token& other)
 //! 5
 Token::~Token(){};
 
-std::string Token::GetType() { return type_; }
+std::string Token::GetName() { return name_; }
 int Token::GetPrecedence() { return precedence_; }
 double Token::GetValue() { return value_; }
 int Token::GetAssociativity() { return associativity_; }
@@ -70,10 +70,3 @@ std::map<std::string, Token> CreateTokenMap() {
   temp_map.insert(list);
   return temp_map;
 }
-
-// double Addition(double a, double b) { return a + b; }
-// double Subtraction(double a, double b) { return a - b; }
-// double Multiplication(double a, double b) { return a * b; }
-// double Division(double a, double b) { return a / b; }
-// double UnaryPlus(double a) { return a; }
-// double UnaryNegation(double a) { return -a; }

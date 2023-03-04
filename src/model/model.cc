@@ -1,9 +1,12 @@
 #include "model.h"
 
-Calculator::Calculator(const std::string input_string)
-    : error_code_(0), input_expression_(input_string){};
+Calculator::Calculator(){};
 
 Calculator::~Calculator(){};
+
+void Calculator::LoadExpression(const std::string input_string) {
+  input_expression_ = input_string;
+}
 
 double Calculator::CalculateValue(double x) {
   CheckVariable(x);
@@ -11,21 +14,27 @@ double Calculator::CalculateValue(double x) {
   return PostfixNotationCalculation(x);
 }
 
-std::pair<std::vector<double>, std::vector<double>> Calculator::CalculateGraph(
-    int number_of_points, double x_start, double x_end) {
+double Calculator::CalculateValue() {
+  ConvertToPostfixNotation();
+  return PostfixNotationCalculation(0);
+}
+
+XYGraph Calculator::CalculateGraph(int number_of_points, double x_start,
+                                   double x_end) {
   CheckNumberOfPoints(number_of_points);
   CheckRange(x_start, x_end);
   ConvertToPostfixNotation();  //! converte before x
   std::vector<double> x, y;
   for (int i = 0; i < number_of_points + 1.0; ++i) {
     x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
+    //    TODO check finite of y
     y.push_back(PostfixNotationCalculation(x.back()));
   }
   return make_pair(x, y);
 }
 
 void Calculator::ConvertToPostfixNotation() {
-  CheckLength();
+  CheckLength(input_expression_);
   token_map_ = CreateTokenMap();
   Parsing();
   UnarySigns();
@@ -60,19 +69,16 @@ void Calculator::Parsing() {
       }
       PushNumber(temp);
     } else {
-      error_code_ = incorrect_symbol;
-      return;
+      throw std::logic_error("incorrect symbol");  // TODO print this symbol
     }
   }
 }
 
 void Calculator::PushToken(std::string temp) {
   if (auto it = token_map_.find(temp); it != token_map_.end()) {
-    // std::cout << "Found " << it->first << '\n'; //! delete
-    if (it->second.GetType() != " ") input_.push(it->second);  //! check
+    if (it->second.GetName() != " ") input_.push(it->second);  //! check
   } else {
-    error_code_ = incorrect_symbol;  // TODO print this symbol
-    return;
+    throw std::logic_error("incorrect symbol");  // TODO print this symbol
   }
 }
 
@@ -84,68 +90,30 @@ void Calculator::PushNumber(std::string temp) {
   Token value(Number_);
   value.SetValue(d);
   input_.push(value);
+
+  //   throw std::logic_error("incorrect number");  // TODO print this symbol
 }
 
-void Calculator::FromInputToOutput() {
-  output_.push(input_.front());
-  input_.pop();
-}
-
-void Calculator::FromInputToStack() {
-  stack_.push(input_.front());
-  input_.pop();
-}
-
-void Calculator::FromStackToOutput() {
-  output_.push(stack_.top());
-  stack_.pop();
-}
-
-void Calculator::ShuntingYardAlgorithm() {
-  while (!input_.empty()) {
-    if (input_.front().GetPrecedence() == Precedence::kNumber) {
-      FromInputToOutput();
-    } else if (input_.front().GetOperationType() == OperationType::kUnary) {
-      FromInputToStack();
-    } else if (input_.front().GetOperationType() == OperationType::kBinary) {
-      while (
-          !stack_.empty() &&
-          ((stack_.top().GetOperationType() == OperationType::kBinary) &&
-           (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
-            (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
-             input_.front().GetAssociativity() == Associativity::kLeft)))) {
-        FromStackToOutput();
+void Calculator::UnarySigns() {
+  std::queue temp_input(input_);
+  std::queue<Token> temp_output;
+  while (!temp_input.empty()) {
+    std::string input_type = temp_input.front().GetName();
+    if (input_type == "+" || input_type == "-") {
+      if (temp_output.empty() ||
+          !(temp_output.back().GetPrecedence() ==
+                Precedence::kNumber ||  //! operation type operand
+            temp_output.back().GetName() == ")")) {
+        if (input_type == "-") {
+          temp_output.push(UnaryNegation_);
+        }
+        temp_input.pop();
       }
-      FromInputToStack();
-    } else if (input_.front().GetType() == "(") {
-      FromInputToStack();
-    } else if (input_.front().GetType() == ")") {
-      while (!stack_.empty() && stack_.top().GetType() != "(") {
-        FromStackToOutput();
-      }
-      if (!stack_.empty() && stack_.top().GetType() == "(") {
-        stack_.pop();
-      } else {
-        error_code_ = open_bracket_missing;
-        return;
-      }
-      if (!stack_.empty() &&
-          stack_.top().GetPrecedence() == Precedence::kFunction) {
-        FromStackToOutput();
-      }
-      input_.pop();
-    } else {
-      error_code_ = incrorrect_lexem;
-      return;
     }
+    temp_output.push(temp_input.front());
+    temp_input.pop();
   }
-  while (!stack_.empty()) {
-    if (stack_.top().GetType() == "(") {
-      error_code_ = close_bracket_missing;
-      return;
-    }
-    FromStackToOutput();
-  }
+  input_.swap(temp_output);
 }
 
 // void Calculator::CheckBrackets() {
@@ -200,26 +168,63 @@ void Calculator::ShuntingYardAlgorithm() {
 //   input.swap(temp_output);
 // }
 
-void Calculator::UnarySigns() {
-  std::queue temp_input(input_);
-  std::queue<Token> temp_output;
-  while (!temp_input.empty()) {
-    std::string input_type = temp_input.front().GetType();
-    if (input_type == "+" || input_type == "-") {
-      if (temp_output.empty() ||
-          !(temp_output.back().GetPrecedence() ==
-                Precedence::kNumber ||  //! operation type operand
-            temp_output.back().GetType() == ")")) {
-        if (input_type == "-") {
-          temp_output.push(UnaryNegation_);
-        }
-        temp_input.pop();
+void Calculator::FromInputToOutput() {
+  output_.push(input_.front());
+  input_.pop();
+}
+
+void Calculator::FromInputToStack() {
+  stack_.push(input_.front());
+  input_.pop();
+}
+
+void Calculator::FromStackToOutput() {
+  output_.push(stack_.top());
+  stack_.pop();
+}
+
+void Calculator::ShuntingYardAlgorithm() {
+  while (!input_.empty()) {
+    if (input_.front().GetPrecedence() == Precedence::kNumber) {
+      FromInputToOutput();
+    } else if (input_.front().GetOperationType() == OperationType::kUnary) {
+      FromInputToStack();
+    } else if (input_.front().GetOperationType() == OperationType::kBinary) {
+      while (
+          !stack_.empty() &&
+          ((stack_.top().GetOperationType() == OperationType::kBinary) &&
+           (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
+            (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
+             input_.front().GetAssociativity() == Associativity::kLeft)))) {
+        FromStackToOutput();
       }
+      FromInputToStack();
+    } else if (input_.front().GetName() == "(") {
+      FromInputToStack();
+    } else if (input_.front().GetName() == ")") {
+      while (!stack_.empty() && stack_.top().GetName() != "(") {
+        FromStackToOutput();
+      }
+      if (!stack_.empty() && stack_.top().GetName() == "(") {
+        stack_.pop();
+      } else {
+        throw std::logic_error("open bracket missing");
+      }
+      if (!stack_.empty() &&
+          stack_.top().GetPrecedence() == Precedence::kFunction) {
+        FromStackToOutput();
+      }
+      input_.pop();
+    } else {
+      throw std::logic_error("incorrect token");
     }
-    temp_output.push(temp_input.front());
-    temp_input.pop();
   }
-  input_.swap(temp_output);
+  while (!stack_.empty()) {
+    if (stack_.top().GetName() == "(")
+      throw std::logic_error("close bracket missing");
+
+    FromStackToOutput();
+  }
 }
 
 void Calculator::ToResult() {
@@ -241,7 +246,7 @@ double Calculator::FromResult() {
 double Calculator::PostfixNotationCalculation(double x) {
   input_ = output_;
   while (!input_.empty()) {
-    if (input_.front().GetType() == "x") {
+    if (input_.front().GetName() == "x") {
       ToResult(x);
     } else {
       std::visit(overloaded{[&](fp_1arg fn) { ToResult(fn(FromResult())); },
@@ -255,13 +260,14 @@ double Calculator::PostfixNotationCalculation(double x) {
     }
   }
   if (result_.size() > 1) {
-    error_code_ = missing_binary_operator;
-    return 0;
+    throw std::logic_error("missing binary operator or function");
   }
   return FromResult();
 }
 
-bool is_letter(char c) { return (c >= 'a' && c <= 'z'); }
+bool is_letter(char c) {
+  return (c >= 'a' && c <= 'z');
+}  // TODO add hight letters
 bool is_E(char c) { return (c == 'E' || c == 'e'); }
 bool is_pm(char c) { return (c == '+' || c == '-'); }
 bool is_number(char c) { return (c == '.' || (c >= '0' && c <= '9')); }

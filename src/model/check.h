@@ -1,6 +1,8 @@
 #ifndef _MODEL_CHECK_H_
 #define _MODEL_CHECK_H_
 
+#include <exception>
+
 void CheckVariable(double x);
 void CheckLength(std::string expression);
 void CheckNumberOfPoints(int size);
