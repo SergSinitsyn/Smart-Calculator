@@ -1,6 +1,7 @@
 #ifndef _MODEL_TOKEN_H_
 #define _MODEL_TOKEN_H_
 
+#include <cmath>
 #include <functional>
 #include <string>
 #include <variant>
@@ -120,5 +121,17 @@ class Token {
   double value_;
   fp_variant function_;
 };
+
+Token Number_("", kNumber, kNone, kOperand, 0, nullptr);
+Token UnaryNegation_("-", kUnaryOperator, kLeft, kUnary, 0, lamdas_f1arg(-));
+
+std::map<std::string, Token> CreateTokenMap();
+
+// double Addition(double a, double b);        //!
+// double Subtraction(double a, double b);     //!
+// double Multiplication(double a, double b);  //!
+// double Division(double a, double b);        // !
+
+// double UnaryNegation(double a);  //!
 
 #endif  // _MODEL_TOKEN_H_

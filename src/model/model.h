@@ -75,7 +75,6 @@ class Calculator {
   void ToResult(double x);
   double FromResult();
 
-  double calc(double x);  //!
   int error_code_;
   std::string input_expression_;
   std::map<std::string, Token> token_map_;
@@ -84,5 +83,11 @@ class Calculator {
   std::queue<Token> output_;
   std::stack<double> result_;
 };
+
+bool is_number(char c);
+bool is_symbol(char c);
+bool is_letter(char c);
+bool is_E(char c);
+bool is_pm(char c);
 
 #endif  // MODEL_MODEL_H_

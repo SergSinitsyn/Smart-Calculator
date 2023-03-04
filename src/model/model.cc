@@ -1,7 +1,5 @@
 #include "model.h"
 
-#include "other.h"
-
 Calculator::Calculator(const std::string input_string)
     : error_code_(0), input_expression_(input_string){};
 
@@ -73,7 +71,7 @@ void Calculator::PushToken(std::string temp) {
     // std::cout << "Found " << it->first << '\n'; //! delete
     if (it->second.GetType() != " ") input_.push(it->second);  //! check
   } else {
-    error_code_ = incorrect_symbol;  // print this symbol
+    error_code_ = incorrect_symbol;  // TODO print this symbol
     return;
   }
 }
@@ -110,11 +108,12 @@ void Calculator::ShuntingYardAlgorithm() {
     } else if (input_.front().GetOperationType() == OperationType::kUnary) {
       FromInputToStack();
     } else if (input_.front().GetOperationType() == OperationType::kBinary) {
-      while (!stack_.empty() &&
-             (stack_.top().GetOperationType() == OperationType::kBinary) &&
-             (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
-              (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
-               input_.front().GetAssociativity() == Associativity::kLeft))) {
+      while (
+          !stack_.empty() &&
+          ((stack_.top().GetOperationType() == OperationType::kBinary) &&
+           (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
+            (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
+             input_.front().GetAssociativity() == Associativity::kLeft)))) {
         FromStackToOutput();
       }
       FromInputToStack();
@@ -223,68 +222,6 @@ void Calculator::UnarySigns() {
   input_.swap(temp_output);
 }
 
-double Calculator::PostfixNotationCalculation(double x) {
-  input_ = output_;
-  while (!input_.empty()) {
-    if (input_.front().GetPrecedence() == kNumber) {
-      if (input_.front().GetType() == "x") {
-        ToResult(x);
-      } else {
-        ToResult();
-      }
-    } else if (input_.front().GetOperationType() == kBinary) {
-      if (result_.size() >= 2) {
-        double value2 = FromResult();
-        double value1 = FromResult();
-        // function_2arg f = std::get(input_.front().GetFunction());
-
-      } else {
-        error_code_ = missing_value_for_binary_operator;
-        return 0;
-      }
-    } else if (input_.front().GetOperationType() == kUnary) {
-      if (result_.size() >= 1) {
-        // std::visit function = input_.front().GetFunction();
-        // ToResult(function(FromResult()));
-      } else {
-        error_code_ = missing_value_for_unary_operator;
-        return 0;
-      }
-    }
-  }
-  if (result_.size() > 1) {
-    error_code_ = missing_binary_operator;
-    return 0;
-  }
-  return FromResult();
-}
-
-// double Calculator::calc(double x) {
-//   std::stack<double> stack;
-//   for (auto it : m_rpn) {
-//     std::visit(overloaded{[&](QChar& arg) {
-//                             if (arg == 'x') {
-//                               stack.push(x);
-//                             } else {
-//                               std::visit(
-//                                   overloaded{[&](fp_1arg fn) {
-//                                                stack.push(fn(stack.pop()));
-//                                              },
-//                                              [&](fp_2arg fn) {
-//                                                double rhs = stack.pop();
-//                                                double lhs = stack.pop();
-//                                                stack.push(fn(lhs, rhs));
-//                                              },
-//                                              [](auto fn) {}},
-//                                   m_fun_ptr.value(arg).second.second);
-//                             }
-//                           },
-//                           [&](double& arg) { stack.push(arg); }},
-//                it);
-//   }
-//   return stack.pop();
-// }
-
 void Calculator::ToResult() {
   result_.push(input_.front().GetValue());
   input_.pop();
@@ -299,4 +236,36 @@ double Calculator::FromResult() {
   double value = result_.top();
   result_.pop();
   return value;
+}
+
+double Calculator::PostfixNotationCalculation(double x) {
+  input_ = output_;
+  while (!input_.empty()) {
+    if (input_.front().GetType() == "x") {
+      ToResult(x);
+    } else {
+      std::visit(overloaded{[&](fp_1arg fn) { ToResult(fn(FromResult())); },
+                            [&](fp_2arg fn) {
+                              double rhs = FromResult();
+                              double lhs = FromResult();
+                              ToResult(fn(lhs, rhs));
+                            },
+                            [&](auto fn) { ToResult(); }},
+                 input_.front().GetFunction());
+    }
+  }
+  if (result_.size() > 1) {
+    error_code_ = missing_binary_operator;
+    return 0;
+  }
+  return FromResult();
+}
+
+bool is_letter(char c) { return (c >= 'a' && c <= 'z'); }
+bool is_E(char c) { return (c == 'E' || c == 'e'); }
+bool is_pm(char c) { return (c == '+' || c == '-'); }
+bool is_number(char c) { return (c == '.' || (c >= '0' && c <= '9')); }
+bool is_symbol(char c) {
+  return (c == ' ' || (c >= '(' && c <= '+') || c == '-' || c == '/' ||
+          c == '^' || c == 'x');
 }

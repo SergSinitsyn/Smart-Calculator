@@ -2,6 +2,8 @@
 
 #include <cmath>
 #include <string>
+#include <vector>
+
 #define MAX 256
 
 void CheckLength(std::string expression) {
