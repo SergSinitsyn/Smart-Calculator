@@ -2,6 +2,7 @@
 #define _MODEL_CHECK_H_
 
 #include <exception>
+#include <string>
 
 void CheckVariable(double x);
 void CheckLength(std::string expression);

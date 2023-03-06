@@ -2,11 +2,8 @@
 
 int main() {
   try {
-    Calculator A("sin(x+ 1+2*3)");
-
-    //   string input2 = "77777";ß
-    //   double x = 10;
-    double res = A.CalculateValue(100);
+    Calculator A("&");
+    double res = A.CalculateValue(3);
     std::cout << "result = " << res << std::endl;
   } catch (const std::exception &ex) {
     std::cout << ex.what() << std::endl;

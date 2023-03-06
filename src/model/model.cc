@@ -1,16 +1,12 @@
 #include "model.h"
 
-Calculator::Calculator(){};
-
-Calculator::~Calculator(){};
-
-void Calculator::LoadExpression(const std::string input_string) {
+Calculator::Calculator(const std::string input_string) {
   input_expression_ = input_string;
-}
+};
 
 double Calculator::CalculateValue(double x) {
   CheckVariable(x);
-  ConvertToPostfixNotation();  //! converte before x
+  ConvertToPostfixNotation();
   return PostfixNotationCalculation(x);
 }
 
@@ -23,7 +19,7 @@ XYGraph Calculator::CalculateGraph(int number_of_points, double x_start,
                                    double x_end) {
   CheckNumberOfPoints(number_of_points);
   CheckRange(x_start, x_end);
-  ConvertToPostfixNotation();  //! converte before x
+  ConvertToPostfixNotation();
   std::vector<double> x, y;
   for (int i = 0; i < number_of_points + 1.0; ++i) {
     x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
@@ -72,11 +68,13 @@ void Calculator::Parsing() {
       throw std::logic_error("incorrect symbol");  // TODO print this symbol
     }
   }
+  if (input_.empty())
+    throw std::logic_error("empty expression");  // TODO print this symbol
 }
 
 void Calculator::PushToken(std::string temp) {
   if (auto it = token_map_.find(temp); it != token_map_.end()) {
-    if (it->second.GetName() != " ") input_.push(it->second);  //! check
+    if (it->second.GetName() != " ") input_.push(it->second);
   } else {
     throw std::logic_error("incorrect symbol");  // TODO print this symbol
   }
@@ -87,15 +85,16 @@ void Calculator::PushNumber(std::string temp) {
   double d = 0;
   ss >> d;
   //   std::cout << "Found " << d << '\n';  //! delete
-  Token value(Number_);
-  value.SetValue(d);
-  input_.push(value);
+  Token number;
+  number.MakeNumber(d);
+  input_.push(number);
 
   //   throw std::logic_error("incorrect number");  // TODO print this symbol
 }
 
 void Calculator::UnarySigns() {
-  std::queue temp_input(input_);
+  std::queue<Token> temp_input;
+  temp_input.swap(input_);
   std::queue<Token> temp_output;
   while (!temp_input.empty()) {
     std::string input_type = temp_input.front().GetName();
@@ -105,7 +104,9 @@ void Calculator::UnarySigns() {
                 Precedence::kNumber ||  //! operation type operand
             temp_output.back().GetName() == ")")) {
         if (input_type == "-") {
-          temp_output.push(UnaryNegation_);
+          Token temp;
+          temp.MakeUnaryNegation();
+          temp_output.push(temp);
         }
         temp_input.pop();
       }
@@ -192,10 +193,12 @@ void Calculator::ShuntingYardAlgorithm() {
     } else if (input_.front().GetOperationType() == OperationType::kBinary) {
       while (
           !stack_.empty() &&
-          ((stack_.top().GetOperationType() == OperationType::kBinary) &&
-           (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
-            (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
-             input_.front().GetAssociativity() == Associativity::kLeft)))) {
+          (stack_.top().GetOperationType() == OperationType::kBinary ||
+           stack_.top().GetPrecedence() == Precedence::kUnaryOperator &&
+               (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
+                (stack_.top().GetPrecedence() ==
+                     input_.front().GetPrecedence() &&
+                 input_.front().GetAssociativity() == Associativity::kLeft)))) {
         FromStackToOutput();
       }
       FromInputToStack();
@@ -205,15 +208,18 @@ void Calculator::ShuntingYardAlgorithm() {
       while (!stack_.empty() && stack_.top().GetName() != "(") {
         FromStackToOutput();
       }
+
       if (!stack_.empty() && stack_.top().GetName() == "(") {
         stack_.pop();
       } else {
         throw std::logic_error("open bracket missing");
       }
+
       if (!stack_.empty() &&
           stack_.top().GetPrecedence() == Precedence::kFunction) {
         FromStackToOutput();
       }
+
       input_.pop();
     } else {
       throw std::logic_error("incorrect token");
@@ -249,14 +255,27 @@ double Calculator::PostfixNotationCalculation(double x) {
     if (input_.front().GetName() == "x") {
       ToResult(x);
     } else {
-      std::visit(overloaded{[&](fp_1arg fn) { ToResult(fn(FromResult())); },
-                            [&](fp_2arg fn) {
-                              double rhs = FromResult();
-                              double lhs = FromResult();
-                              ToResult(fn(lhs, rhs));
-                            },
-                            [&](auto fn) { ToResult(); }},
-                 input_.front().GetFunction());
+      std::visit(
+          overloaded{[&](fp_1arg fn) {
+                       if (result_.size() > 0) {
+                         ToResult(fn(FromResult()));
+                       } else {
+                         throw std::logic_error(
+                             "missing number for unary operator or function");
+                       }
+                     },
+                     [&](fp_2arg fn) {
+                       if (result_.size() > 1) {
+                         double rhs = FromResult();
+                         double lhs = FromResult();
+                         ToResult(fn(lhs, rhs));
+                       } else {
+                         throw std::logic_error(
+                             "missing number for binary operator");
+                       }
+                     },
+                     [&](auto fn) { ToResult(); }},
+          input_.front().GetFunction());
     }
   }
   if (result_.size() > 1) {

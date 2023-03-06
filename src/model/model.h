@@ -21,15 +21,8 @@ using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
 
 class Calculator {
  public:
-  Calculator();
-  //   Calculator(const Calculator &other);
-  //   Calculator(Calculator &&other);
-  //   Calculator &operator=(const Calculator &other);
-  //   Calculator &operator=(Calculator &&other);
-  ~Calculator();
-  //! rule of 5
+  Calculator(const std::string input_string);
 
-  void LoadExpression(const std::string input_string);
   double CalculateValue(double x);
   double CalculateValue();
 

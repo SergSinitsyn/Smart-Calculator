@@ -2,8 +2,8 @@
 #define _MODEL_TOKEN_H_
 
 #include <cmath>
-// #include <exception>
 #include <functional>
+#include <map>
 #include <string>
 #include <variant>
 
@@ -54,6 +54,7 @@ using fp_2arg = std::function<double(double, double)>;
 /// function pointer variant
 using fp_variant = std::variant<fp_1arg, fp_2arg, nullptr_t>;
 
+/// @brief precendence of operations
 enum Precedence {
   kNumber,
   kLow,
@@ -64,12 +65,14 @@ enum Precedence {
   kBracket,
 };
 
+/// @brief operation type
 enum OperationType {
   kOperand,
   kUnary,
   kBinary,
 };
 
+/// @brief associativity of operation
 enum Associativity {
   kNone,
   kLeft,
@@ -81,18 +84,16 @@ class Token {
   Token();
   Token(std::string name, Precedence precedence, Associativity associativity,
         OperationType operation_type, double value, fp_variant function);
-  Token(const Token& other);
-
-  //! rule of 5
-  ~Token();
 
   std::string GetName();
-  int GetPrecedence();
+  Precedence GetPrecedence();
+  Associativity GetAssociativity();
+  OperationType GetOperationType();
   double GetValue();
-  int GetAssociativity();
-  int GetOperationType();
   fp_variant GetFunction();
-  void SetValue(double value);
+
+  void MakeNumber(double value);
+  void MakeUnaryNegation();
 
  private:
   std::string name_;
@@ -102,9 +103,6 @@ class Token {
   double value_;
   fp_variant function_;
 };
-
-Token Number_("", kNumber, kNone, kOperand, 0, nullptr);
-Token UnaryNegation_("-", kUnaryOperator, kLeft, kUnary, 0, lamdas_f1arg(-));
 
 std::map<std::string, Token> CreateTokenMap();
 
