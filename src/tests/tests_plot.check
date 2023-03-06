@@ -1,0 +1,23 @@
+#test plot1
+char string[255] = "x^2";
+
+long double xmin = 0;
+long double xmax = 10;
+long double size = 10;
+long double actual_x[11] = {0};
+long double actual_y[11] = {0};
+long double expected_x[11] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+long double expected_y[11] = {0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100};
+
+int expected_error_code = 0;
+int actual_error_code =
+    calculate_plot(string, xmin, xmax, size, actual_x, actual_y);
+ck_assert_uint_eq(expected_error_code, actual_error_code);
+
+if (!expected_error_code) {
+  for (int i = 0; i < 11; i++) {
+    ck_assert(fabsl(expected_x[i] - actual_x[i]) < S21_EPS);
+    ck_assert(fabsl(expected_y[i] - actual_y[i]) < S21_EPS);
+  }
+}
+// end

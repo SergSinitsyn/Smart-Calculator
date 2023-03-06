@@ -6,9 +6,9 @@ Token::Token(std::string name, Precedence precedence,
              double value, fp_variant function)
     : name_(name),
       precedence_(precedence),
-      value_(value),
       associativity_(associativity),
       operation_type_(operation_type),
+      value_(value),
       function_(function){};
 
 std::string Token::GetName() { return name_; }

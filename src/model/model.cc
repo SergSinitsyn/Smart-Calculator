@@ -191,14 +191,12 @@ void Calculator::ShuntingYardAlgorithm() {
     } else if (input_.front().GetOperationType() == OperationType::kUnary) {
       FromInputToStack();
     } else if (input_.front().GetOperationType() == OperationType::kBinary) {
-      while (
-          !stack_.empty() &&
-          (stack_.top().GetOperationType() == OperationType::kBinary ||
-           stack_.top().GetPrecedence() == Precedence::kUnaryOperator &&
-               (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
-                (stack_.top().GetPrecedence() ==
-                     input_.front().GetPrecedence() &&
-                 input_.front().GetAssociativity() == Associativity::kLeft)))) {
+      while (!stack_.empty() &&
+             (stack_.top().GetOperationType() == OperationType::kBinary ||
+              stack_.top().GetPrecedence() == Precedence::kUnaryOperator) &&
+             (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
+              (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
+               input_.front().GetAssociativity() == Associativity::kLeft))) {
         FromStackToOutput();
       }
       FromInputToStack();
@@ -274,7 +272,9 @@ double Calculator::PostfixNotationCalculation(double x) {
                              "missing number for binary operator");
                        }
                      },
-                     [&](auto fn) { ToResult(); }},
+                     [&](auto fn) {
+                       if (fn == nullptr) ToResult();
+                     }},
           input_.front().GetFunction());
     }
   }
