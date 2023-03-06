@@ -54,7 +54,7 @@ using fp_2arg = std::function<double(double, double)>;
 /// function pointer variant
 using fp_variant = std::variant<fp_1arg, fp_2arg, nullptr_t>;
 
-/// @brief precendence of operations
+/// @brief precendence of operation
 enum Precedence {
   kNumber,
   kLow,

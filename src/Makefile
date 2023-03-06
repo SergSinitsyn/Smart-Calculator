@@ -40,7 +40,7 @@ clean:
 	$(CLEAN) *.o *.a *.gcno *.gcda *.info *.out *.gch *.dSYM report
 	$(CLEAN) report*
 
-$(TEST_FILE): $(TEST)
+$(TEST_FILE): $(SOURCE) $(TEST)
 	$(CC) $(WFLAGS) $(SOURCE) $(TEST) -o $(TEST_FILE) $(CHECKFLAGS)
 
 test: $(TEST_FILE)

@@ -1,6 +1,7 @@
 #ifndef _MODEL_MODEL_H_
 #define _MODEL_MODEL_H_
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <cstring>
@@ -9,6 +10,7 @@
 #include <iostream>
 #include <map>
 #include <queue>
+#include <regex>
 #include <sstream>  // for scientific notation
 #include <stack>
 #include <string>
@@ -30,10 +32,10 @@ class Calculator {
 
  private:
   void ConvertToPostfixNotation();
-
+  void ConvertToLowercase();
   void Parsing();
-  void PushNumber(std::string temp);
   void PushToken(std::string temp);
+  void PushNumber(std::string& s, size_t& start);
   //   void CheckBrackets();  //!
   void UnarySigns();
 
@@ -55,10 +57,7 @@ class Calculator {
   std::stack<double> result_{};
 };
 
-bool is_number(char c);
 bool is_symbol(char c);
 bool is_letter(char c);
-bool is_E(char c);
-bool is_pm(char c);
 
 #endif  // MODEL_MODEL_H_

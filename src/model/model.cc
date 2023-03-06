@@ -31,6 +31,7 @@ XYGraph Calculator::CalculateGraph(int number_of_points, double x_start,
 
 void Calculator::ConvertToPostfixNotation() {
   CheckLength(input_expression_);
+  ConvertToLowercase();
   token_map_ = CreateTokenMap();
   Parsing();
   UnarySigns();
@@ -38,32 +39,30 @@ void Calculator::ConvertToPostfixNotation() {
   ShuntingYardAlgorithm();
 }
 
+void Calculator::ConvertToLowercase() {
+  std::string result;
+  for (size_t i = 0; i < input_expression_.size(); ++i) {
+    result.push_back(tolower(input_expression_[i]));
+  }
+  input_expression_ = result;
+}
+
 void Calculator::Parsing() {
-  auto it = input_expression_.begin();
-  auto end = input_expression_.end();
-  while (it != end) {
-    if (is_symbol(*it)) {
+  for (size_t i = 0; i < input_expression_.size();) {
+    if (is_symbol(input_expression_[i])) {
       std::string temp;
-      temp.push_back(*it++);
+      temp.push_back(input_expression_[i]);
+      ++i;
       PushToken(temp);
-    } else if (is_letter(*it)) {
+    } else if (is_letter(input_expression_[i])) {
       std::string temp;
-      while (is_letter(*it) && (it != end)) {
-        temp.push_back(*it++);
+      while (is_letter(input_expression_[i]) && i < input_expression_.size()) {
+        temp.push_back(input_expression_[i]);
+        ++i;
       }
       PushToken(temp);
-    } else if (is_number(*it)) {
-      std::string temp;
-      while (is_number(*it) && (it != end)) {
-        temp.push_back(*it++);
-        if (is_E(*it)) {
-          temp.push_back(*it++);
-          if (is_pm(*it)) {
-            temp.push_back(*it++);
-          }
-        }
-      }
-      PushNumber(temp);
+    } else if (isdigit(input_expression_[i])) {
+      PushNumber(input_expression_, i);
     } else {
       throw std::logic_error("incorrect symbol");  // TODO print this symbol
     }
@@ -80,16 +79,22 @@ void Calculator::PushToken(std::string temp) {
   }
 }
 
-void Calculator::PushNumber(std::string temp) {
-  std::stringstream ss(temp);
-  double d = 0;
-  ss >> d;
-  //   std::cout << "Found " << d << '\n';  //! delete
-  Token number;
-  number.MakeNumber(d);
-  input_.push(number);
-
-  //   throw std::logic_error("incorrect number");  // TODO print this symbol
+void Calculator::PushNumber(std::string& str, size_t& start) {
+  std::regex r("\\d+(([.]\\d+)?(e[+-]\\d+)?)?");
+  std::sregex_iterator i =
+      std::sregex_iterator(str.begin() + start, str.end(), r);
+  std::smatch m = *i;
+  if (m.size()) {
+    start += m.length();
+    std::stringstream ss(m.str());
+    double d = 0;
+    ss >> d;
+    Token number;
+    number.MakeNumber(d);
+    input_.push(number);
+  } else {
+    throw std::logic_error("incorrect number");  // TODO print this symbol
+  }
 }
 
 void Calculator::UnarySigns() {
@@ -259,7 +264,7 @@ double Calculator::PostfixNotationCalculation(double x) {
                          ToResult(fn(FromResult()));
                        } else {
                          throw std::logic_error(
-                             "missing number for unary operator or function");
+                             "missing number for function or unary operator");
                        }
                      },
                      [&](fp_2arg fn) {
@@ -287,9 +292,7 @@ double Calculator::PostfixNotationCalculation(double x) {
 bool is_letter(char c) {
   return (c >= 'a' && c <= 'z');
 }  // TODO add hight letters
-bool is_E(char c) { return (c == 'E' || c == 'e'); }
-bool is_pm(char c) { return (c == '+' || c == '-'); }
-bool is_number(char c) { return (c == '.' || (c >= '0' && c <= '9')); }
+
 bool is_symbol(char c) {
   return (c == ' ' || (c >= '(' && c <= '+') || c == '-' || c == '/' ||
           c == '^' || c == 'x');

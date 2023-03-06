@@ -94,6 +94,11 @@ TEST(calculation, e) {
   ASSERT_NEAR(calc.CalculateValue(), 2.718281, kAcc);
 }
 
+TEST(calculation, exp) {
+  Calculator calc("exp(5)");
+  ASSERT_NEAR(calc.CalculateValue(), 148.413159103, kAcc);
+}
+
 TEST(calculation, expression_1) {
   Calculator calc("cos(sin(3.14))");
   ASSERT_NEAR(calc.CalculateValue(), 0.999998, kAcc);
