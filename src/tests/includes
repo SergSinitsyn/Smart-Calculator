@@ -1,8 +1,0 @@
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "./SmartCalc_v1_0/logic/logic.h"
-
-#define S21_EPS 0.0000001

@@ -23,16 +23,16 @@ using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
 
 class Calculator {
  public:
-  // TODO default constructots
-  Calculator(const std::string input_string);
+  Calculator() = default;
+  ~Calculator() = default;
+
+  void LoadExpression(const std::string& input_string);
 
   double CalculateValue(double x);
   double CalculateValue();
-
   XYGraph CalculateGraph(int number_of_points, double x_start, double x_end);
 
  private:
-  void ConvertToPostfixNotation();
   void ConvertToLowercase();
   void Parsing();
   void PushToken(std::string temp);

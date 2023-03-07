@@ -1,42 +1,34 @@
 #include "model.h"
 
-Calculator::Calculator(const std::string input_string) {
+void Calculator::LoadExpression(const std::string& input_string) {
+  CheckLength(input_string);
   input_expression_ = input_string;
-};
+  ConvertToLowercase();
+  token_map_ = CreateTokenMap();
+  Parsing();
+  UnarySigns();
+  CheckBrackets();
+  ShuntingYardAlgorithm();
+}
 
 double Calculator::CalculateValue(double x) {
   CheckVariable(x);
-  ConvertToPostfixNotation();
   return PostfixNotationCalculation(x);
 }
 
-double Calculator::CalculateValue() {
-  ConvertToPostfixNotation();
-  return PostfixNotationCalculation(0);
-}
+double Calculator::CalculateValue() { return PostfixNotationCalculation(0); }
 
 XYGraph Calculator::CalculateGraph(int number_of_points, double x_start,
                                    double x_end) {
   CheckNumberOfPoints(number_of_points);
   CheckRange(x_start, x_end);
-  ConvertToPostfixNotation();
   std::vector<double> x, y;
-  for (int i = 0; i < number_of_points + 1.0; ++i) {
+  for (int i = 0; i < number_of_points; ++i) {
     x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
     //    TODO check finite of y
     y.push_back(PostfixNotationCalculation(x.back()));
   }
   return make_pair(x, y);
-}
-
-void Calculator::ConvertToPostfixNotation() {
-  CheckLength(input_expression_);
-  ConvertToLowercase();
-  token_map_ = CreateTokenMap();
-  Parsing();
-  UnarySigns();
-  //   CheckBrackets();  // TODO
-  ShuntingYardAlgorithm();
 }
 
 void Calculator::ConvertToLowercase() {
@@ -55,8 +47,7 @@ void Calculator::Parsing() {
     } else if (isalpha(input_expression_[i])) {
       ReadWord(input_expression_, i);
     } else {
-      std::string temp{input_expression_[i]};
-      ++i;
+      std::string temp{input_expression_[i++]};
       PushToken(temp);
     }
   }
@@ -105,28 +96,25 @@ void Calculator::ReadNumber(std::string& str, size_t& start) {
 }
 
 void Calculator::UnarySigns() {
-  std::queue<Token> temp_input;
-  temp_input.swap(input_);
-  std::queue<Token> temp_output;
-  while (!temp_input.empty()) {
-    std::string input_type = temp_input.front().GetName();
-    if (input_type == "+" || input_type == "-") {
-      if (temp_output.empty() ||
-          !(temp_output.back().GetPrecedence() ==
-                Precedence::kNumber ||  //! operation type operand
-            temp_output.back().GetName() == ")")) {
-        if (input_type == "-") {
-          Token temp;
-          temp.MakeUnaryNegation();
-          temp_output.push(temp);
-        }
-        temp_input.pop();
+  while (!input_.empty()) {
+    std::string input_name = input_.front().GetName();
+    if ((input_name == "+" || input_name == "-") &&
+        (output_.empty() ||
+         !(output_.back().GetPrecedence() == Precedence::kNumber ||
+           output_.back().GetName() == ")"))) {
+      if (input_name == "-") {
+        Token temp;
+        temp.MakeUnaryNegation();
+        output_.push(temp);
       }
+      input_.pop();
+    } else {
+      output_.push(input_.front());
+      input_.pop();
     }
-    temp_output.push(temp_input.front());
-    temp_input.pop();
   }
-  input_.swap(temp_output);
+  if (output_.empty()) throw std::logic_error("wrong expression (only +++)");
+  input_.swap(output_);
 }
 
 void Calculator::CheckBrackets() {
@@ -148,6 +136,7 @@ void Calculator::CheckBrackets() {
       output_.push(input_.front());
       input_.pop();
       if (input_.front().GetName() == "(") {
+        ++bracket_count;
         --function_count;
       } else {
         throw std::logic_error("missing function bracket");
@@ -207,18 +196,15 @@ void Calculator::ShuntingYardAlgorithm() {
       while (!stack_.empty() && stack_.top().GetName() != "(") {
         FromStackToOutput();
       }
-
       if (!stack_.empty() && stack_.top().GetName() == "(") {
         stack_.pop();
       } else {
         throw std::logic_error("open bracket missing");
       }
-
       if (!stack_.empty() &&
           stack_.top().GetPrecedence() == Precedence::kFunction) {
         FromStackToOutput();
       }
-
       input_.pop();
     } else {
       throw std::logic_error("incorrect token");

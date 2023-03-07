@@ -81,9 +81,11 @@ enum Associativity {
 
 class Token {
  public:
-  Token();
-  Token(std::string name, Precedence precedence, Associativity associativity,
-        OperationType operation_type, double value, fp_variant function);
+  Token() = default;
+  Token(const std::string& name, Precedence precedence,
+        Associativity associativity, OperationType operation_type, double value,
+        fp_variant function);
+  ~Token() = default;
 
   std::string GetName();
   Precedence GetPrecedence();

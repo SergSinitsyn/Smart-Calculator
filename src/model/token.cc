@@ -1,7 +1,6 @@
 #include "token.h"
 
-Token::Token(){};
-Token::Token(std::string name, Precedence precedence,
+Token::Token(const std::string& name, Precedence precedence,
              Associativity associativity, OperationType operation_type,
              double value, fp_variant function)
     : name_(name),

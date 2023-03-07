@@ -46,8 +46,8 @@ test: $(TEST_FILE)
 
 rebuild: clean all
 
-report/index.html: $(SOURCES) $(TEST)
-	$(CC) $(WFLAGS) $(GCOVFLAGS) $(TEST) $(SOURCES) -o $(TEST_FILE_COV) $(CHECKFLAGS)
+report/index.html: $(SOURCE) $(TEST)
+	$(CC) $(WFLAGS) $(GCOVFLAGS) $(SOURCE) $(TEST) -o $(TEST_FILE_COV) $(CHECKFLAGS)
 	./$(TEST_FILE_COV)
 	lcov -t "$(TEST_FILE_COV)" -o $(TEST_FILE_COV).info -c -d . --no-external
 	genhtml -o report $(TEST_FILE_COV).info
@@ -55,29 +55,26 @@ report/index.html: $(SOURCES) $(TEST)
 gcov_report: report/index.html
 	open report/index.html
 
-gcovr_report: $(HEADERS) $(TEST)
-	$(CC) $(WFLAGS) $(TEST) $(GCOVFLAGS) -o $(TEST_FILE_COV) $(CHECKFLAGS)
-	./$(TEST_FILE_COV)
-	gcovr --html --html-details -o report.html
-	open report.html
+# gcovr_report: $(HEADERS) $(TEST)
+# 	$(CC) $(WFLAGS) $(TEST) $(GCOVFLAGS) -o $(TEST_FILE_COV) $(CHECKFLAGS)
+# 	./$(TEST_FILE_COV)
+# 	gcovr --html --html-details -o report.html
+# 	open report.html
 
 check: leaks cppcheck linter
 
-linter:
-	@cp ../materials/linters/.clang-format ./
-	@clang-format -n $(TEST) $(HEADERS)
-	@rm -f .clang-format
+# linter:
+# 	@cp ../../materials/linters/.clang-format ./
+# 	@clang-format -n $(TEST) $(SOURCE)
+# 	@rm -f .clang-format
 
 cppcheck:
-	cppcheck --std=c++17 --enable=all --language=c++ --suppress=missingIncludeSystem $(SOURCES) $(TEST)
+	cppcheck --std=c++17 --enable=all --language=c++ --suppress=missingIncludeSystem $(TEST) $(SOURCE)
 
-$(TEST_FILE_FOR_LEAKS): $(SOURCES) $(TEST_LEAKS)
-	$(CC) $(WFLAGS) $(TEST_LEAKS) $(SOURCES) -o $(TEST_FILE_FOR_LEAKS) $(CHECKFLAGS)
+$(TEST_FILE_FOR_LEAKS): $(SOURCE) $(TEST_LEAKS)
+	$(CC) $(WFLAGS) $(TEST_LEAKS) $(SOURCE) -o $(TEST_FILE_FOR_LEAKS) $(CHECKFLAGS)
 
 leaks: $(TEST_FILE_FOR_LEAKS)
 	$(LEAKS) ./$(TEST_FILE_FOR_LEAKS)
 
 .PHONY: all clean test gcov_report rebuild linter cppcheck leaks check
-
-fff:  #!delete this
-	grep ASSERT_ANY_THROW -n */*
