@@ -100,7 +100,7 @@ TEST(calculation, exp) {
 }
 
 TEST(calculation, expression_1) {
-  Calculator calc("cos(sin(3.14))");
+  Calculator calc("COS(sin(3.14))");
   ASSERT_NEAR(calc.CalculateValue(), 0.999998, kAcc);
 }
 

@@ -48,23 +48,16 @@ void Calculator::ConvertToLowercase() {
 }
 
 void Calculator::Parsing() {
-  for (size_t i = 0; i < input_expression_.size();) {
-    if (is_symbol(input_expression_[i])) {
-      std::string temp;
-      temp.push_back(input_expression_[i]);
+  size_t i = 0;
+  while (i < input_expression_.size()) {
+    if (isdigit(input_expression_[i])) {
+      ReadNumber(input_expression_, i);
+    } else if (isalpha(input_expression_[i])) {
+      ReadWord(input_expression_, i);
+    } else {
+      std::string temp{input_expression_[i]};
       ++i;
       PushToken(temp);
-    } else if (is_letter(input_expression_[i])) {
-      std::string temp;
-      while (is_letter(input_expression_[i]) && i < input_expression_.size()) {
-        temp.push_back(input_expression_[i]);
-        ++i;
-      }
-      PushToken(temp);
-    } else if (isdigit(input_expression_[i])) {
-      PushNumber(input_expression_, i);
-    } else {
-      throw std::logic_error("incorrect symbol");  // TODO print this symbol
     }
   }
   if (input_.empty())
@@ -79,7 +72,21 @@ void Calculator::PushToken(std::string temp) {
   }
 }
 
-void Calculator::PushNumber(std::string& str, size_t& start) {
+void Calculator::ReadWord(std::string& str, size_t& start) {
+  std::regex r("([a-z]+)");
+  std::sregex_iterator i =
+      std::sregex_iterator(str.begin() + start, str.end(), r);
+  std::smatch m = *i;
+  if (m.size()) {
+    start += m.length();
+    PushToken(m.str());
+  } else {
+    throw std::logic_error(
+        "incorrect function name");  // TODO print this symbol
+  }
+}
+
+void Calculator::ReadNumber(std::string& str, size_t& start) {
   std::regex r("\\d+(([.]\\d+)?(e[+-]\\d+)?)?");
   std::sregex_iterator i =
       std::sregex_iterator(str.begin() + start, str.end(), r);
@@ -122,57 +129,46 @@ void Calculator::UnarySigns() {
   input_.swap(temp_output);
 }
 
-// void Calculator::CheckBrackets() {
-//   std::queue temp_input(input);
-//   std::queue<OldToken> temp_output;
-//   int bracket_count = 0;
-//   int function_count = 0;
-//   while (!temp_input.empty()) {
-//     if (temp_input.front().type == t_bra) {
-//       ++bracket_count;
-//     } else if (temp_input.front().type == t_ket) {
-//       --bracket_count;
-//       if (bracket_count < 0) {
-//         error_code_ = open_bracket_missing;
-//         return;
-//       }
-//       if (temp_output.back().type == t_bra) {
-//         error_code_ = empty_brackets;
-//         return;
-//       }
-//     } else if (temp_input.front().priority == kFunction) {
-//       ++function_count;
-//     }
-//     if (!temp_output.empty()) {
-//       if (temp_output.back().type == t_bra) {
-//         if (temp_input.front().priority == p_add ||
-//             temp_input.front().priority == p_mult ||
-//             temp_input.front().priority == p_pow) {
-//           error_code_ = binary_operation_after_opening_bracket;
-//           return;
-//         }
-//       } else if (temp_output.back().priority == kFunction) {
-//         if (temp_input.front().type != t_bra) {
-//           error_code_ = functions_braket_missing;
-//           return;
-//         } else {
-//           --function_count;
-//         }
-//       }
-//     }
-//     temp_output.push(temp_input.front());
-//     temp_input.pop();
-//   }
-//   if (bracket_count) {
-//     error_code_ = close_bracket_missing;
-//     return;
-//   }
-//   if (function_count) {
-//     error_code_ = functions_braket_missing;
-//     return;
-//   }
-//   input.swap(temp_output);
-// }
+void Calculator::CheckBrackets() {
+  int bracket_count = 0;
+  int function_count = 0;
+  while (!input_.empty()) {
+    if (input_.front().GetName() == "(") {
+      ++bracket_count;
+    } else if (input_.front().GetName() == ")") {
+      --bracket_count;
+      if (bracket_count < 0) {
+        throw std::logic_error("open bracket missing");
+      }
+      if (output_.back().GetName() == "(") {
+        throw std::logic_error("empty brackets");
+      }
+    } else if (input_.front().GetPrecedence() == Precedence::kFunction) {
+      ++function_count;
+      output_.push(input_.front());
+      input_.pop();
+      if (input_.front().GetName() == "(") {
+        --function_count;
+      } else {
+        throw std::logic_error("missing function bracket");
+      }
+    } else if (input_.front().GetOperationType() == OperationType::kBinary) {
+      if (!output_.empty() && output_.back().GetName() == "(") {
+        throw std::logic_error("binary_operation_after_opening_bracket");
+      }
+    } else {
+    }
+    output_.push(input_.front());
+    input_.pop();
+  }
+  if (bracket_count) {
+    throw std::logic_error("close bracket missing");
+  }
+  if (function_count) {
+    throw std::logic_error("function bracket missing");
+  }
+  input_.swap(output_);
+}
 
 void Calculator::FromInputToOutput() {
   output_.push(input_.front());
@@ -287,13 +283,4 @@ double Calculator::PostfixNotationCalculation(double x) {
     throw std::logic_error("missing binary operator or function");
   }
   return FromResult();
-}
-
-bool is_letter(char c) {
-  return (c >= 'a' && c <= 'z');
-}  // TODO add hight letters
-
-bool is_symbol(char c) {
-  return (c == ' ' || (c >= '(' && c <= '+') || c == '-' || c == '/' ||
-          c == '^' || c == 'x');
 }

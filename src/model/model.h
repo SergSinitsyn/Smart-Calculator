@@ -23,6 +23,7 @@ using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
 
 class Calculator {
  public:
+  // TODO default constructots
   Calculator(const std::string input_string);
 
   double CalculateValue(double x);
@@ -35,9 +36,10 @@ class Calculator {
   void ConvertToLowercase();
   void Parsing();
   void PushToken(std::string temp);
-  void PushNumber(std::string& s, size_t& start);
-  //   void CheckBrackets();  //!
+  void ReadNumber(std::string& str, size_t& start);
+  void ReadWord(std::string& str, size_t& start);
   void UnarySigns();
+  void CheckBrackets();
 
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
@@ -56,8 +58,5 @@ class Calculator {
   std::queue<Token> output_{};
   std::stack<double> result_{};
 };
-
-bool is_symbol(char c);
-bool is_letter(char c);
 
 #endif  // MODEL_MODEL_H_
