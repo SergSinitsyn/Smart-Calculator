@@ -17,13 +17,13 @@ OperationType Token::GetOperationType() { return operation_type_; }
 double Token::GetValue() { return value_; }
 fp_variant Token::GetFunction() { return function_; }
 
-void Token::MakeNumber(double value) {
-  Token result("", kNumber, kNone, kOperand, value, nullptr);
+void Token::MakeNumber(std::string name, double value) {
+  Token result(name, kNumber, kNone, kOperand, value, nullptr);
   *this = result;
 }
 
 void Token::MakeUnaryNegation() {
-  Token result("un", kUnaryOperator, kRight, kUnary, 0, lamdas_f1arg(-));
+  Token result("-", kUnaryOperator, kRight, kUnary, 0, lamdas_f1arg(-));
   *this = result;
 }
 

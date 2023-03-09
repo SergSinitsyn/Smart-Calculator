@@ -94,7 +94,7 @@ class Token {
   double GetValue();
   fp_variant GetFunction();
 
-  void MakeNumber(double value);
+  void MakeNumber(std::string name, double value);
   void MakeUnaryNegation();
 
  private:

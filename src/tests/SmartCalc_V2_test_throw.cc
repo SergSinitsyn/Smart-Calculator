@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../model/model.h"
+#include "../model/calculator.h"
 
 TEST(logic_error, character_limit_exceeded) {
   Calculator calc;
@@ -88,17 +88,22 @@ TEST(logic_error, fail_13) {
   ASSERT_ANY_THROW(calc.LoadExpression("1+."); calc.CalculateValue());
 }
 
-// TEST(logic_error, fail_14) {
-//   Calculator calc;
-//   ASSERT_ANY_THROW(calc.LoadExpression("2 2 *"); calc.CalculateValue());
-// }
+TEST(logic_error, fail_14) {
+  Calculator calc;
+  ASSERT_ANY_THROW(calc.LoadExpression("2 2 *"); calc.CalculateValue());
+}
 
 TEST(logic_error, fail_15) {
+  Calculator calc;
+  ASSERT_ANY_THROW(calc.LoadExpression(" * * 2 2 *"); calc.CalculateValue());
+}
+
+TEST(logic_error, fail_16) {
   Calculator calc;
   ASSERT_ANY_THROW(calc.LoadExpression("-"); calc.CalculateValue());
 }
 
-TEST(logic_error, fail_16) {
+TEST(logic_error, fail_17) {
   Calculator calc;
   ASSERT_ANY_THROW(calc.LoadExpression("+"); calc.CalculateValue());
 }
