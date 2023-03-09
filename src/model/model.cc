@@ -1,12 +1,16 @@
 #include "model.h"
 
 void Calculator::LoadExpression(const std::string& input_string) {
+  input_ = {};
+  stack_ = {};
+  output_ = {};
+  result_ = {};
   CheckLength(input_string);
   input_expression_ = input_string;
   ConvertToLowercase();
-  token_map_ = CreateTokenMap();
+  // Validate();
+  CreateTokenMap(token_map_);
   Parsing();
-  UnarySigns();
   CheckBrackets();
   ShuntingYardAlgorithm();
 }
@@ -39,6 +43,35 @@ void Calculator::ConvertToLowercase() {
   input_expression_ = result;
 }
 
+// void Calculator::Validate() {
+//   using namespace std;
+//   vector<regex> re = {
+//       regex(".(?<![+\\-*\\/^(.]|mod|\\d)(\\d)"),
+//       // regex("(?<![)xpe]|\\d)([\\*\\/^]|mod)"),
+//       regex("(?<![)xpe]|\\d)([+\\-\\*\\/^]|mod)([+-])"),
+//       // regex(".(?<![())xpe+\\-\\*\\/^E]|\\d|mod)([+-])"),
+//       // regex(
+//       //
+//       "(?<=^|[-+*\\/^(]|mod)(ln|log|sqrt|a?(cos|sin|tan))(*SKIP)(*F)|(?1)"),
+//       // regex("(\\((?>[^()\n]|(?1))*+\\))(*SKIP)(*F)|[()]"),
+//       // regex(".(?<![+\\-*\\/^(sntgd])[(]"),
+//       // regex("(?<!\\d|[)xpe])[)]"),
+//       // regex("\\d*?[.]\\d*?[.]\\d*?"),
+//       // regex(".(?<!\\d|[\\)xpe])$"),
+//       // regex("(?<!\\d)E"),
+//       // regex("nan|inf")
+//   };
+
+//   for (auto it : re) {
+//     std::smatch m;
+//     if (regex_search(input_expression_, m, it)) {
+//       flag = false;
+//
+//     }
+//   }
+//
+// }
+
 void Calculator::Parsing() {
   size_t i = 0;
   while (i < input_expression_.size()) {
@@ -53,28 +86,6 @@ void Calculator::Parsing() {
   }
   if (input_.empty())
     throw std::logic_error("empty expression");  // TODO print this symbol
-}
-
-void Calculator::PushToken(std::string temp) {
-  if (auto it = token_map_.find(temp); it != token_map_.end()) {
-    if (it->second.GetName() != " ") input_.push(it->second);
-  } else {
-    throw std::logic_error("incorrect symbol");  // TODO print this symbol
-  }
-}
-
-void Calculator::ReadWord(std::string& str, size_t& start) {
-  std::regex r("([a-z]+)");
-  std::sregex_iterator i =
-      std::sregex_iterator(str.begin() + start, str.end(), r);
-  std::smatch m = *i;
-  if (m.size()) {
-    start += m.length();
-    PushToken(m.str());
-  } else {
-    throw std::logic_error(
-        "incorrect function name");  // TODO print this symbol
-  }
 }
 
 void Calculator::ReadNumber(std::string& str, size_t& start) {
@@ -95,26 +106,39 @@ void Calculator::ReadNumber(std::string& str, size_t& start) {
   }
 }
 
-void Calculator::UnarySigns() {
-  while (!input_.empty()) {
-    std::string input_name = input_.front().GetName();
-    if ((input_name == "+" || input_name == "-") &&
-        (output_.empty() ||
-         !(output_.back().GetPrecedence() == Precedence::kNumber ||
-           output_.back().GetName() == ")"))) {
-      if (input_name == "-") {
+void Calculator::ReadWord(std::string& str, size_t& start) {
+  std::regex r("([a-z]+)");
+  std::sregex_iterator i =
+      std::sregex_iterator(str.begin() + start, str.end(), r);
+  std::smatch m = *i;
+  if (m.size()) {
+    start += m.length();
+    PushToken(m.str());
+  } else {
+    throw std::logic_error(
+        "incorrect function name");  // TODO print this symbol
+  }
+}
+
+void Calculator::PushToken(std::string temp) {
+  if (auto it = token_map_.find(temp); it != token_map_.end()) {
+    std::string name = it->second.GetName();
+    if (name == " ") {
+    } else if ((name == "+" || name == "-") &&
+               (input_.empty() ||
+                !(input_.back().GetPrecedence() == Precedence::kNumber ||
+                  input_.back().GetName() == ")"))) {
+      if (name == "-") {
         Token temp;
         temp.MakeUnaryNegation();
-        output_.push(temp);
+        input_.push(temp);
       }
-      input_.pop();
     } else {
-      output_.push(input_.front());
-      input_.pop();
+      input_.push(it->second);
     }
+  } else {
+    throw std::logic_error("incorrect symbol");  // TODO print this symbol
   }
-  if (output_.empty()) throw std::logic_error("wrong expression (only +++)");
-  input_.swap(output_);
 }
 
 void Calculator::CheckBrackets() {
@@ -143,7 +167,7 @@ void Calculator::CheckBrackets() {
       }
     } else if (input_.front().GetOperationType() == OperationType::kBinary) {
       if (!output_.empty() && output_.back().GetName() == "(") {
-        throw std::logic_error("binary_operation_after_opening_bracket");
+        throw std::logic_error("binary operation after opening bracket");
       }
     } else {
     }
@@ -157,21 +181,6 @@ void Calculator::CheckBrackets() {
     throw std::logic_error("function bracket missing");
   }
   input_.swap(output_);
-}
-
-void Calculator::FromInputToOutput() {
-  output_.push(input_.front());
-  input_.pop();
-}
-
-void Calculator::FromInputToStack() {
-  stack_.push(input_.front());
-  input_.pop();
-}
-
-void Calculator::FromStackToOutput() {
-  output_.push(stack_.top());
-  stack_.pop();
 }
 
 void Calculator::ShuntingYardAlgorithm() {
@@ -218,20 +227,19 @@ void Calculator::ShuntingYardAlgorithm() {
   }
 }
 
-void Calculator::ToResult() {
-  result_.push(input_.front().GetValue());
+void Calculator::FromInputToOutput() {
+  output_.push(input_.front());
   input_.pop();
 }
 
-void Calculator::ToResult(double x) {
-  result_.push(x);
+void Calculator::FromInputToStack() {
+  stack_.push(input_.front());
   input_.pop();
 }
 
-double Calculator::FromResult() {
-  double value = result_.top();
-  result_.pop();
-  return value;
+void Calculator::FromStackToOutput() {
+  output_.push(stack_.top());
+  stack_.pop();
 }
 
 double Calculator::PostfixNotationCalculation(double x) {
@@ -269,4 +277,20 @@ double Calculator::PostfixNotationCalculation(double x) {
     throw std::logic_error("missing binary operator or function");
   }
   return FromResult();
+}
+
+void Calculator::ToResult() {
+  result_.push(input_.front().GetValue());
+  input_.pop();
+}
+
+void Calculator::ToResult(double x) {
+  result_.push(x);
+  input_.pop();
+}
+
+double Calculator::FromResult() {
+  double value = result_.top();
+  result_.pop();
+  return value;
 }

@@ -76,6 +76,12 @@ TEST(calculation, sqrt) {
   ASSERT_NEAR(calc.CalculateValue(), 20.5669638012, kAcc);
 }
 
+TEST(calculation, cbrt) {
+  Calculator calc;
+  calc.LoadExpression("cbrt(x)");
+  ASSERT_NEAR(calc.CalculateValue(27), 3, kAcc);
+}
+
 TEST(calculation, asin) {
   Calculator calc;
   calc.LoadExpression("asin(0.324)");
@@ -116,6 +122,12 @@ TEST(calculation, exp) {
   Calculator calc;
   calc.LoadExpression("exp(5)");
   ASSERT_NEAR(calc.CalculateValue(), 148.413159103, kAcc);
+}
+
+TEST(calculation, fabs) {
+  Calculator calc;
+  calc.LoadExpression("fabs(-1324.234)");
+  ASSERT_NEAR(calc.CalculateValue(), 1324.234, kAcc);
 }
 
 TEST(calculation, expression_1) {
@@ -237,6 +249,9 @@ TEST(calculation, expression_20) {
   Calculator calc;
   calc.LoadExpression("+5*-x");
   ASSERT_NEAR(calc.CalculateValue(-20), 100, kAcc);
+  ASSERT_NEAR(calc.CalculateValue(-10), 50, kAcc);
+  ASSERT_NEAR(calc.CalculateValue(0), 0, kAcc);
+  ASSERT_NEAR(calc.CalculateValue(-5), 25, kAcc);
 }
 
 int main(int argc, char* argv[]) {

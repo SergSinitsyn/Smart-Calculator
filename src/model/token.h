@@ -106,6 +106,6 @@ class Token {
   fp_variant function_;
 };
 
-std::map<std::string, Token> CreateTokenMap();
+void CreateTokenMap(std::map<std::string, Token>& temp_map);
 
 #endif  // _MODEL_TOKEN_H_

@@ -15,15 +15,15 @@ void CheckLength(std::string expression) {
 }
 
 void CheckVariable(double x) {
-  if (x != x) throw std::invalid_argument("x is NAN");
+  if (!(std::isfinite(x))) throw std::invalid_argument("x is NAN");
 }
 
 void CheckNumberOfPoints(int number_of_points) {
   if (number_of_points < 1)
     throw std::invalid_argument("invalid number of points for plot");
 
-  std::vector<double> x;
-  if (number_of_points > x.max_size() / 2.)
+  std::vector<double> v;
+  if (number_of_points > v.max_size() / 2.)
     throw std::invalid_argument("invalid number of points for plot");
 }
 

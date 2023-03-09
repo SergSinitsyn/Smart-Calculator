@@ -34,11 +34,11 @@ class Calculator {
 
  private:
   void ConvertToLowercase();
+  // void Validate();
   void Parsing();
   void PushToken(std::string temp);
   void ReadNumber(std::string& str, size_t& start);
   void ReadWord(std::string& str, size_t& start);
-  void UnarySigns();
   void CheckBrackets();
 
   void ShuntingYardAlgorithm();
