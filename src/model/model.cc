@@ -3,22 +3,13 @@
 #include "calculator.h"
 
 std::pair<double, std::string> Model::Calculate(std::string str) {
-  Calculator A;
-  double result = 0;
-  std::string error_message = "Correct";
-  try {
-    A.LoadExpression(str);
-    result = A.CalculateValue();
-  } catch (const std::exception& e) {
-    error_message = e.what();
-  }
-  return make_pair(result, error_message);
+  return Calculate(str, 0);
 }
 
 std::pair<double, std::string> Model::Calculate(std::string str, double x) {
   Calculator A;
   double result = 0;
-  std::string error_message = "Correct";
+  std::string error_message = "";
   try {
     A.LoadExpression(str);
     result = A.CalculateValue(x);
@@ -32,7 +23,7 @@ std::pair<XYGraph, std::string> Model::Calculate(std::string str, int size,
                                                  double start, double end) {
   Calculator A;
   XYGraph result{0, 0};
-  std::string error_message = "Correct";
+  std::string error_message = "";
   try {
     A.LoadExpression(str);
     result = A.CalculateGraph(size, start, end);

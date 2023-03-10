@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-#include "../model/calculator.h"
 #include "../model/model.h"
 
 #define kAcc 1e-6
@@ -44,7 +43,6 @@ TEST(calculation, sin) {
 
 TEST(calculation, cos) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("cos(32.32)").first, 0.61841396583, kAcc);
 }
 
@@ -55,92 +53,77 @@ TEST(calculation, tan) {
 
 TEST(calculation, log) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("log(23.23)").first, 1.3660492098, kAcc);
 }
 
 TEST(calculation, ln) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("ln(48.234)").first, 3.87606416657, kAcc);
 }
 
 TEST(calculation, sqrt) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("sqrt(423)").first, 20.5669638012, kAcc);
 }
 
 TEST(calculation, cbrt) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("cbrt(x)", 27).first, 3, kAcc);
 }
 
 TEST(calculation, asin) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("asin(0.324)").first, 0.329954518, kAcc);
 }
 
 TEST(calculation, acos) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("acos(0.324)").first, 1.24084181, kAcc);
 }
 
 TEST(calculation, atan) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("atan(-0.324)").first, -0.313327168, kAcc);
 }
 
 TEST(calculation, pow) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("423.32^(2.432^(1/5))").first, 1372.787322, kAcc);
 }
 
 TEST(calculation, pi) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("pi").first, 3.1415926, kAcc);
 }
 
 TEST(calculation, e) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("e").first, 2.718281, kAcc);
 }
 
 TEST(calculation, exp) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("exp(5)").first, 148.413159103, kAcc);
 }
 
 TEST(calculation, fabs) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("fabs(-1324.234)").first, 1324.234, kAcc);
 }
 
 TEST(calculation, expression_1) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("COS(Sin(3.14))").first, 0.999998, kAcc);
 }
 
 TEST(calculation, expression_2) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("(cos(sin(3.14))+3.12)^-5.14E-3").first, 0.9927489,
               kAcc);
 }
 
 TEST(calculation, expression_3) {
   Model calc;
-
   ASSERT_NEAR(calc.Calculate("sqrt(cos(sin(3.14))+3.12)^-5.14E-3").first,
               0.9963678, kAcc);
 }
