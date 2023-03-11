@@ -13,22 +13,6 @@ Date::Date(int day, int month, int year) {
   day_ = tm.tm_mday;
 }
 
-// Date::Date(const Date& other) {
-//   if (this != &other) {
-//     day_ = other.day_;
-//     month_ = other.month_;
-//     year_ = other.year_;
-//   }
-// }
-
-// Date::Date(Date&& other) : day_{0}, month_{0}, year_{0} {
-//   if (this != &other) {
-//     std::swap(day_, other.day_);
-//     std::swap(month_, other.month_);
-//     std::swap(year_, other.year_);
-//   }
-// }
-
 int Date::GetDay() { return day_; }
 int Date::GetMonth() { return month_; }
 int Date::GetYear() { return year_; }
@@ -81,6 +65,10 @@ bool Date::operator<(const Date& other) const {
 
 bool Date::operator<=(const Date& other) const {
   return (*this == other || *this < other);
+}
+
+bool Date::operator>=(const Date& other) const {
+  return (*this == other || *this > other);
 }
 
 int Date::DaysInYear() {

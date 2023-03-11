@@ -1,6 +1,7 @@
 #include "deposit.h"
 
 #include <cmath>
+#include <string>
 
 double round_2digit(double value) { return round(value * 100) / 100.; }
 
@@ -24,6 +25,52 @@ Deposit::Deposit(double deposit_amount, Date start_date, Date end_date,
       accrued_interest_{0},
       tax_amount_{0},
       deposit_amount_by_the_end_of_the_term_{0} {};
+
+std::tuple<double, double, double> Deposit::CalculateDeposit() {
+  if (!capitalization_of_interest_) {
+    periodicity_of_payments_ = PeriodicityOfPayments::kEndOfTerm;
+  }
+  double start_deposit_ = deposit_amount_;
+  current_date_.Add(1, 0, 0);
+  int count = 1;  // capitalisation count
+  SetNextCapitalizationDate(count);
+  while (current_date_ <= end_date_) {
+    // сheck capitalisation_date_
+    if (current_date_ == capitalisation_date_) {
+      deposit_amount_ += accrued_interest_;
+      accrued_interest_ = 0;
+      SetNextCapitalizationDate(count);
+    }
+    // add accrued interest every day
+    accrued_interest_ += round_2digit(deposit_amount_ * interest_rate_ / 100.0 /
+                                      current_date_.DaysInYear());
+    // сheck replenishments_list_
+    if (auto it = replenishments_list_.find(current_date_);
+        it != replenishments_list_.end()) {
+      deposit_amount_ += it->second;
+      replenishments_list_.erase(it);
+    }
+    // сheck partial_withdrawals_list_
+    if (auto it = partial_withdrawals_list_.find(current_date_);
+        it != partial_withdrawals_list_.end()) {
+      deposit_amount_ -= it->second;
+      if (deposit_amount_ < 0) {
+        throw std::logic_error("The withdrawal amount " +
+                               std::to_string(it->second) +
+                               " exceeds the current deposit amount by " +
+                               std::to_string(deposit_amount_));
+      }
+      partial_withdrawals_list_.erase(it);
+    }
+    // go to next day
+    current_date_.Add(1, 0, 0);
+  }
+  accrued_interest_ = deposit_amount_ - start_deposit_;
+  deposit_amount_by_the_end_of_the_term_ = deposit_amount_;
+  tax_amount_ = round_2digit(accrued_interest_ * tax_rate_ / 100.);
+  return std::make_tuple(accrued_interest_, tax_amount_,
+                         deposit_amount_by_the_end_of_the_term_);
+}
 
 void Deposit::SetNextCapitalizationDate(int& count) {
   Date temp = start_date_;
@@ -70,48 +117,4 @@ void Deposit::SetNextCapitalizationDate(int& count) {
   if (capitalisation_date_ > end_date_) {
     capitalisation_date_ = end_date_;
   }
-}
-
-std::tuple<double, double, double> Deposit::CalculateDeposit() {
-  if (!capitalization_of_interest_) {
-    periodicity_of_payments_ = PeriodicityOfPayments::kEndOfTerm;
-  }
-  double start_deposit_ = deposit_amount_;
-  current_date_.Add(1, 0, 0);
-  int count = 1;  // capitalisation count
-  SetNextCapitalizationDate(count);
-  while (current_date_ <= end_date_) {
-    // сheck capitalisation_date_
-    if (current_date_ == capitalisation_date_) {
-      deposit_amount_ += accrued_interest_;
-      accrued_interest_ = 0;
-      SetNextCapitalizationDate(count);
-    }
-    // add accrued interest every day
-    accrued_interest_ += round_2digit(deposit_amount_ * interest_rate_ / 100.0 /
-                                      current_date_.DaysInYear());
-    // сheck replenishments_list_
-    if (auto it = replenishments_list_.find(current_date_);
-        it != replenishments_list_.end()) {
-      deposit_amount_ += it->second;
-      replenishments_list_.erase(it);
-    }
-    // сheck partial_withdrawals_list_
-    if (auto it = partial_withdrawals_list_.find(current_date_);
-        it != partial_withdrawals_list_.end()) {
-      // TODO
-      deposit_amount_ -= it->second;
-      if (deposit_amount_ < 0) {
-        deposit_amount_ = 0;  // TODO
-      }
-      partial_withdrawals_list_.erase(it);
-    }
-    // go to next day
-    current_date_.Add(1, 0, 0);
-  }
-  accrued_interest_ = deposit_amount_ - start_deposit_;
-  deposit_amount_by_the_end_of_the_term_ = deposit_amount_;
-  tax_amount_ = round_2digit(accrued_interest_ * tax_rate_ / 100.);
-  return std::make_tuple(accrued_interest_, tax_amount_,
-                         deposit_amount_by_the_end_of_the_term_);
 }
