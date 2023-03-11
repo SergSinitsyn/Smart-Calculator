@@ -5,6 +5,8 @@
 
 #include "date.h"
 
+double round_2digit(double value);
+
 enum PeriodicityOfPayments {
   kDaily,
   kWeekly,

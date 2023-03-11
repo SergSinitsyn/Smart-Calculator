@@ -11,7 +11,6 @@ void Calculator::LoadExpression(const std::string& input_string) {
   CreateTokenMap(token_map_);
   Parsing();
   Check();
-  CheckBrackets();
   ShuntingYardAlgorithm();
 }
 
@@ -97,67 +96,29 @@ void Calculator::PushToken(std::string temp) {
       input_.push(it->second);
     }
   } else {
-    throw std::logic_error("Incorrect symbol: " + temp);  //!
+    throw std::logic_error("Incorrect symbol: " + temp);  // TODO
   }
 }
 
 void Calculator::Check() {
-  while (!input_.empty()) {
-    if (!(output_.empty() && !input_.empty()) &&
-        input_.front().GetPrecedence() == output_.back().GetPrecedence()) {
-      if (input_.front().GetPrecedence() == Precedence::kBracket ||
-          input_.front().GetPrecedence() == Precedence::kUnaryOperator) {
-      } else {
-        throw std::logic_error("Wrong sequence: " + output_.front().GetName() +
-                               " " + input_.front().GetName());
-      }
+  if (!first_token_[input_.front().GetPrecedence()]) {
+    throw std::logic_error("Wrong sequence: expression starts with " +
+                           input_.front().GetName());
+  }
+  FromInputToOutput();
+  while (!input_.empty() && !output_.empty()) {
+    if (!adjacency_matrix_[output_.back().GetPrecedence()]
+                          [input_.front().GetPrecedence()]) {
+      throw std::logic_error("Wrong sequence: " + output_.front().GetName() +
+                             " " + input_.front().GetName());
     }
-    output_.push(input_.front());
-    input_.pop();
+    FromInputToOutput();
   }
-  input_.swap(output_);
-}
-
-void Calculator::CheckBrackets() {
-  int bracket_count = 0;
-  int function_count = 0;
-  while (!input_.empty()) {
-    if (input_.front().GetName() == "(") {
-      ++bracket_count;
-    } else if (input_.front().GetName() == ")") {
-      --bracket_count;
-      if (bracket_count < 0) {
-        throw std::logic_error("Open bracket missing");
-      }
-      if (output_.back().GetName() == "(") {
-        throw std::logic_error("Empty brackets");
-      }
-    } else if (input_.front().GetPrecedence() == Precedence::kFunction) {
-      ++function_count;
-      output_.push(input_.front());
-      input_.pop();
-      if (input_.front().GetName() == "(") {
-        ++bracket_count;
-        --function_count;
-      } else {
-        throw std::logic_error("Missing brackets for function: " +
-                               output_.back().GetName());
-      }
-    } else if (input_.front().GetOperationType() == OperationType::kBinary) {
-      if (!output_.empty() && output_.back().GetName() == "(") {
-        throw std::logic_error("Binary operation after opening bracket");
-      }
-    } else {
-    }
-    output_.push(input_.front());
-    input_.pop();
+  if (!last_token_[output_.back().GetPrecedence()]) {
+    throw std::logic_error("Wrong sequence: expression ends with " +
+                           output_.back().GetName());
   }
-  if (bracket_count) {
-    throw std::logic_error("Close bracket missing");
-  }
-  if (function_count) {
-    throw std::logic_error("Function bracket missing");
-  }
+  FromInputToOutput();
   input_.swap(output_);
 }
 

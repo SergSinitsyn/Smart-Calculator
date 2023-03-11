@@ -1,6 +1,7 @@
 #include "credit.h"
 
 #include <cmath>
+#include <tuple>
 
 double round_2d(double value) { return round(value * 100) / 100.; }
 

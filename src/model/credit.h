@@ -3,6 +3,8 @@
 
 #include <vector>
 
+double round_2d(double value);
+
 class Credit {
  public:
   Credit(double total_credit_amount, double term, double interest_rate);

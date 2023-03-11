@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-double round_2d(double value) { return round(value * 100) / 100.; }
+double round_2digit(double value) { return round(value * 100) / 100.; }
 
 Deposit::Deposit(double deposit_amount, Date start_date, Date end_date,
                  double interest_rate, double tax_rate,
@@ -52,7 +52,7 @@ void Deposit::SetNextCapitalizationDate(int& count) {
         temp.Add(-1, 0, 0);
       }
       break;
-    case PeriodicityOfPayments::kAnnualy:
+    case PeriodicityOfPayments::kAnnualy:  //!
       temp.Add(0, 0, count);
       while (temp.GetMonth() != start_date_.GetMonth()) {
         temp.Add(-1, 0, 0);
@@ -88,8 +88,8 @@ std::tuple<double, double, double> Deposit::CalculateDeposit() {
       SetNextCapitalizationDate(count);
     }
     // add accrued interest every day
-    accrued_interest_ += round_2d(deposit_amount_ * interest_rate_ / 100.0 /
-                                  current_date_.DaysInYear());
+    accrued_interest_ += round_2digit(deposit_amount_ * interest_rate_ / 100.0 /
+                                      current_date_.DaysInYear());
     // сheck replenishments_list_
     if (auto it = replenishments_list_.find(current_date_);
         it != replenishments_list_.end()) {
@@ -99,9 +99,10 @@ std::tuple<double, double, double> Deposit::CalculateDeposit() {
     // сheck partial_withdrawals_list_
     if (auto it = partial_withdrawals_list_.find(current_date_);
         it != partial_withdrawals_list_.end()) {
+      // TODO
       deposit_amount_ -= it->second;
       if (deposit_amount_ < 0) {
-        deposit_amount_ = 0;  //!
+        deposit_amount_ = 0;  // TODO
       }
       partial_withdrawals_list_.erase(it);
     }
@@ -110,7 +111,7 @@ std::tuple<double, double, double> Deposit::CalculateDeposit() {
   }
   accrued_interest_ = deposit_amount_ - start_deposit_;
   deposit_amount_by_the_end_of_the_term_ = deposit_amount_;
-  tax_amount_ = round_2d(accrued_interest_ * tax_rate_ / 100.);
+  tax_amount_ = round_2digit(accrued_interest_ * tax_rate_ / 100.);
   return std::make_tuple(accrued_interest_, tax_amount_,
                          deposit_amount_by_the_end_of_the_term_);
 }
