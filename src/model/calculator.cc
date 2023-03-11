@@ -29,7 +29,6 @@ XYGraph Calculator::CalculateGraph(int number_of_points, double x_start,
   std::vector<double> x, y;
   for (int i = 0; i < number_of_points; ++i) {
     x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
-    //    TODO check finite of y ?
     y.push_back(PostfixNotationCalculation(x.back()));
   }
   return make_pair(x, y);

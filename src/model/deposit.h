@@ -17,33 +17,37 @@ enum PeriodicityOfPayments {
 
 class Deposit {
  public:
-  Deposit() = default;
+  Deposit(double deposit_amount, Date start_date, Date end_date,
+          double interest_rate, double tax_rate,
+          PeriodicityOfPayments periodicity_of_payments,
+          bool capitalization_of_interest,
+          std::map<Date, double> replenishments_list,
+          std::map<Date, double> partial_withdrawals_list);
   ~Deposit() = default;
 
-  void SetNextCapitalizationDate();
-  void CalculateDeposit();
+  void SetNextCapitalizationDate(int& count);
+  std::tuple<double, double, double> CalculateDeposit();
 
  private:
-  double deposit_amount_;                          // in
-  double interest_rate_;                           // in
-  double tax_rate_;                                // in
-  PeriodicityOfPayments periodicity_of_payments_;  // in
-  bool capitalization_of_interest_;                // in
-  // true(periodicity_of_payments_)
-  // fasle(periodicity_of_payments_ = kEndOfTerm)
-
-  Date start_date_;  // in
-  Date end_date_;    // in
-
+  // input data
+  double deposit_amount_;
+  Date start_date_;
+  Date end_date_;
+  double interest_rate_;
+  double tax_rate_;
+  PeriodicityOfPayments periodicity_of_payments_;
+  bool capitalization_of_interest_;
   std::map<Date, double> replenishments_list_;
   std::map<Date, double> partial_withdrawals_list_;
 
+  // temp data
   Date current_date_;
   Date capitalisation_date_;
 
-  double accrued_interest_{};                       // out
-  double tax_amount_{};                             // out
-  double deposit_amount_by_the_end_of_the_term_{};  // out
+  // output data
+  double accrued_interest_;
+  double tax_amount_;
+  double deposit_amount_by_the_end_of_the_term_;
 };
 
 #endif  // _MODEL_DEPOSIT_H_
