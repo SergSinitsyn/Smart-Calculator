@@ -3,23 +3,19 @@
 
 #include <vector>
 
-double round_2d(double value);
-
 class Credit {
  public:
   Credit(double total_credit_amount, double term, double interest_rate);
   ~Credit() = default;
-  std::tuple<std::vector<double>, double, double> AnnuityCredit();
+  std::tuple<double, double, double> AnnuityCredit();
   std::tuple<std::vector<double>, double, double> DifferentiatedCredit();
 
  private:
-  // input
   double total_credit_amount_;
   double term_;
   double interest_rate_;
-
-  // output
-  std::vector<double> monthly_payment_;
+  double monthly_payment_;
+  std::vector<double> monthly_payment_diff_;
   double overpayment_on_credit_;
   double total_payment_;
 };

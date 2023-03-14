@@ -3,7 +3,6 @@
 
 #include "calculator.h"
 #include "credit.h"
-#include "deposit.h"
 
 class Model {
  public:
@@ -12,19 +11,11 @@ class Model {
 
   std::pair<double, std::string> Calculate(std::string str);
   std::pair<double, std::string> Calculate(std::string str, double x);
-  std::pair<XYGraph, std::string> CalculateGraph(std::string str, int size,
-                                                 double start, double end);
+  std::pair<XYGraph, std::string> Calculate(std::string str, int size,
+                                            double start, double end);
 
-  std::tuple<std::vector<double>, double, double> CalculateCredit(
-      double total_credit_amount, double term, double interest_rate, int type);
-
-  std::pair<std::tuple<double, double, double>, std::string> CalculateDeposit(
-      double deposit_amount_, Date start_date_, Date end_date_,
-      double interest_rate_, double tax_rate_,
-      PeriodicityOfPayments periodicity_of_payments_,
-      bool capitalization_of_interest_,
-      std::map<Date, double> replenishments_list_,
-      std::map<Date, double> partial_withdrawals_list_);
+  //   std::tuple<double, double, double> CalculateCreditA();
+  //   std::tuple<std::vector<double>, double, double> CalculateCreditD();
 };
 
 #endif  // _MODEL_MODEL_H_

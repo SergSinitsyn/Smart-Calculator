@@ -11,7 +11,7 @@
 #include <map>
 #include <queue>
 #include <regex>
-#include <sstream>
+#include <sstream>  // for scientific notation
 #include <stack>
 #include <string>
 #include <variant>
@@ -29,6 +29,7 @@ class Calculator {
   void LoadExpression(const std::string& input_string);
 
   double CalculateValue(double x);
+  double CalculateValue();
   XYGraph CalculateGraph(int number_of_points, double x_start, double x_end);
 
  private:
@@ -37,7 +38,9 @@ class Calculator {
   void PushToken(std::string temp);
   void ReadNumber(std::string& str, size_t& start);
   void ReadWord(std::string& str, size_t& start);
+
   void Check();
+  void CheckBrackets();
 
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
@@ -49,25 +52,12 @@ class Calculator {
   void ToResult(double x);
   double FromResult();
 
-  std::string input_expression_;
-  std::map<std::string, Token> token_map_;
-  std::queue<Token> input_;
-  std::stack<Token> stack_;
-  std::queue<Token> output_;
-  std::stack<double> result_;
-
-  bool adjacency_matrix_[8][8] = {
-      {0, 1, 1, 1, 0, 0, 0, 1},  // kNumber
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kLow
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kMedium
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kHigh
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kUnaryOperator
-      {0, 0, 0, 0, 0, 0, 1, 0},  // kFunction
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kOpenBracket
-      {0, 1, 1, 1, 1, 0, 0, 1},  // kCloseBracket
-  };
-  bool first_token_[8] = {1, 0, 0, 0, 1, 1, 1, 0};
-  bool last_token_[8] = {1, 0, 0, 0, 0, 0, 0, 1};
+  std::string input_expression_{};
+  std::map<std::string, Token> token_map_{};
+  std::queue<Token> input_{};
+  std::stack<Token> stack_{};
+  std::queue<Token> output_{};
+  std::stack<double> result_{};
 };
 
 #endif  // _MODEL_CALCULATOR_H_

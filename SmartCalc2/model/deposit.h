@@ -1,16 +1,9 @@
 #ifndef _MODEL_DEPOSIT_H_
 #define _MODEL_DEPOSIT_H_
 
-#include <cmath>
-#include <cstring>
-#include <exception>
 #include <map>
-#include <stdexcept>
-#include <string>
 
 #include "date.h"
-
-double round_2digit(double value);
 
 enum PeriodicityOfPayments {
   kDaily,
@@ -32,11 +25,10 @@ class Deposit {
           std::map<Date, double> partial_withdrawals_list);
   ~Deposit() = default;
 
+  void SetNextCapitalizationDate(int& count);
   std::tuple<double, double, double> CalculateDeposit();
 
  private:
-  void SetNextCapitalizationDate(int& count);
-
   // input data
   double deposit_amount_;
   Date start_date_;

@@ -6,7 +6,10 @@
 class Date {
  public:
   Date(int day, int month, int year);
-  ~Date() = default;
+  //   Date(const Date& other);
+  //   Date(Date&& other);
+  //   Date& operator=(const Date& other);
+  //   Date& operator=(Date&& other);
 
   int GetDay();
   int GetMonth();
@@ -19,7 +22,6 @@ class Date {
   bool operator>(const Date& other) const;
   bool operator<(const Date& other) const;
   bool operator<=(const Date& other) const;
-  bool operator>=(const Date& other) const;
 
  private:
   int day_{};

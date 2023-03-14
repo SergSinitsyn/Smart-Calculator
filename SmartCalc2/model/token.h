@@ -62,8 +62,7 @@ enum Precedence {
   kHigh,
   kUnaryOperator,
   kFunction,
-  kOpenBracket,
-  kCloseBracket,
+  kBracket,
 };
 
 /// @brief operation type
