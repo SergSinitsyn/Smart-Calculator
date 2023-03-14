@@ -4,6 +4,11 @@
 
 #define kAcc 1e-6
 
+TEST(calculation, kek_add) {
+  Model calc;
+  ASSERT_NEAR(calc.Calculate("8").first, 8, kAcc);
+}
+
 TEST(calculation, add) {
   Model calc;
   ASSERT_NEAR(calc.Calculate("5.53234+1032.42342").first, 1037.95576, kAcc);

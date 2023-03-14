@@ -62,7 +62,8 @@ enum Precedence {
   kHigh,
   kUnaryOperator,
   kFunction,
-  kBracket,
+  kOpenBracket,
+  kCloseBracket,
 };
 
 /// @brief operation type
@@ -88,7 +89,7 @@ class Token {
   ~Token() = default;
 
   std::string GetName();
-  Precedence GetPrecedence();
+  int GetPrecedence();
   Associativity GetAssociativity();
   OperationType GetOperationType();
   double GetValue();

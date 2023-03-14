@@ -38,9 +38,7 @@ class Calculator {
   void PushToken(std::string temp);
   void ReadNumber(std::string& str, size_t& start);
   void ReadWord(std::string& str, size_t& start);
-
-  void Check();
-  void CheckBrackets();
+  void CheckSequence();
 
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
@@ -52,12 +50,25 @@ class Calculator {
   void ToResult(double x);
   double FromResult();
 
-  std::string input_expression_{};
-  std::map<std::string, Token> token_map_{};
-  std::queue<Token> input_{};
-  std::stack<Token> stack_{};
-  std::queue<Token> output_{};
-  std::stack<double> result_{};
+  std::string input_expression_;
+  std::map<std::string, Token> token_map_;
+  std::queue<Token> input_;
+  std::stack<Token> stack_;
+  std::queue<Token> output_;
+  std::stack<double> result_;
+
+  const bool adjacency_matrix_[8][8] = {
+      {0, 1, 1, 1, 0, 0, 0, 1},  // kNumber
+      {1, 0, 0, 0, 1, 1, 1, 0},  // kLow
+      {1, 0, 0, 0, 1, 1, 1, 0},  // kMedium
+      {1, 0, 0, 0, 1, 1, 1, 0},  // kHigh
+      {1, 0, 0, 0, 1, 1, 1, 0},  // kUnaryOperator
+      {0, 0, 0, 0, 0, 0, 1, 0},  // kFunction
+      {1, 0, 0, 0, 1, 1, 1, 0},  // kOpenBracket
+      {0, 1, 1, 1, 0, 0, 0, 1},  // kCloseBracket
+  };
+  const bool first_token_[8] = {1, 0, 0, 0, 1, 1, 1, 0};
+  const bool last_token_[8] = {1, 0, 0, 0, 0, 0, 0, 1};
 };
 
 #endif  // _MODEL_CALCULATOR_H_

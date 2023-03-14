@@ -11,7 +11,7 @@ Token::Token(const std::string& name, Precedence precedence,
       function_(function){};
 
 std::string Token::GetName() { return name_; }
-Precedence Token::GetPrecedence() { return precedence_; }
+int Token::GetPrecedence() { return precedence_; }
 Associativity Token::GetAssociativity() { return associativity_; }
 OperationType Token::GetOperationType() { return operation_type_; }
 double Token::GetValue() { return value_; }
@@ -32,8 +32,8 @@ void CreateTokenMap(std::map<std::string, Token>& temp_map) {
   initializer_list<pair<const string, Token>> list = {
       {" ", Token(" ", kNumber, kNone, kOperand, 0, nullptr)},
       {"x", Token("x", kNumber, kNone, kOperand, 0, nullptr)},
-      {"(", Token("(", kBracket, kNone, kOperand, 0, nullptr)},
-      {")", Token(")", kBracket, kNone, kOperand, 0, nullptr)},
+      {"(", Token("(", kOpenBracket, kNone, kOperand, 0, nullptr)},
+      {")", Token(")", kCloseBracket, kNone, kOperand, 0, nullptr)},
       {"+", Token("+", kLow, kLeft, kBinary, 0, lamdas_f2arg(+))},
       {"-", Token("-", kLow, kLeft, kBinary, 0, lamdas_f2arg(-))},
       {"*", Token("*", kMedium, kLeft, kBinary, 0, lamdas_f2arg(*))},
