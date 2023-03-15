@@ -11,7 +11,7 @@
 #include <map>
 #include <queue>
 #include <regex>
-#include <sstream>  // for scientific notation
+#include <sstream>
 #include <stack>
 #include <string>
 #include <variant>
@@ -57,7 +57,7 @@ class Calculator {
   std::queue<Token> output_;
   std::stack<double> result_;
 
-  const bool adjacency_matrix_[8][8] = {
+  static constexpr bool kAdjacencyMatrix_[8][8] = {
       {0, 1, 1, 1, 0, 0, 0, 1},  // kNumber
       {1, 0, 0, 0, 1, 1, 1, 0},  // kLow
       {1, 0, 0, 0, 1, 1, 1, 0},  // kMedium
@@ -67,8 +67,8 @@ class Calculator {
       {1, 0, 0, 0, 1, 1, 1, 0},  // kOpenBracket
       {0, 1, 1, 1, 0, 0, 0, 1},  // kCloseBracket
   };
-  const bool first_token_[8] = {1, 0, 0, 0, 1, 1, 1, 0};
-  const bool last_token_[8] = {1, 0, 0, 0, 0, 0, 0, 1};
+   static constexpr  bool kFirstToken_[8] = {1, 0, 0, 0, 1, 1, 1, 0};
+   static constexpr  bool kLastToken_[8] = {1, 0, 0, 0, 0, 0, 0, 1};
 };
 
 #endif  // _MODEL_CALCULATOR_H_

@@ -82,6 +82,10 @@ enum Associativity {
 
 class Token {
  public:
+
+
+
+
   Token() = default;
   Token(const std::string& name, Precedence precedence,
         Associativity associativity, OperationType operation_type, double value,

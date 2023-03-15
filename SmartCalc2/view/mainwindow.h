@@ -16,7 +16,10 @@ public:
     ~MainWindow();
 
 private slots:
+    void input_buttons();
     void on_toolButton_equal_clicked();
+    void on_toolButton_deleteAll_clicked();
+    void on_toolButton_backspace_clicked();
 
 private:
     Ui::MainWindow *ui;

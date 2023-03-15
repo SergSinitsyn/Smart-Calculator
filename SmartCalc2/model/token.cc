@@ -52,7 +52,7 @@ void CreateTokenMap(std::map<std::string, Token>& temp_map) {
 
       {"cbrt", Token("cbrt", kFunction, kRight, kUnary, 0, (fcast_1arg)&cbrt)},
       {"exp", Token("exp", kFunction, kRight, kUnary, 0, (fcast_1arg)&exp)},
-      {"fabs", Token("fabs", kFunction, kRight, kUnary, 0, (fcast_1arg)&fabs)},
+      {"abs", Token("abs", kFunction, kRight, kUnary, 0, (fcast_1arg)&fabs)},
       {"e", Token("e", kNumber, kNone, kOperand, M_E, nullptr)},
       {"pi", Token("pi", kNumber, kNone, kOperand, M_PI, nullptr)},
       {"inf", Token("inf", kNumber, kNone, kOperand, INFINITY, nullptr)},
