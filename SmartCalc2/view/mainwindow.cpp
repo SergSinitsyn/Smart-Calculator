@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 #include "../model/model.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow),
+      Credit(new CreditWindow())
+
 {
     ui->setupUi(this);
 
@@ -83,5 +86,27 @@ void MainWindow::on_toolButton_deleteAll_clicked()
 void MainWindow::on_toolButton_backspace_clicked()
 {
     ui->lineEdit_iuput->backspace();
+}
+
+
+void MainWindow::on_actionCredit_Calculator_triggered()
+
+{
+    this->hide();
+    Credit->show();
+}
+
+
+void MainWindow::on_actionEngineer_Calculator_triggered()
+{
+    Credit->hide();
+    this->show();
+}
+
+
+void MainWindow::on_actionDeposit_Calculator_triggered()
+{
+    this->hide();
+
 }
 

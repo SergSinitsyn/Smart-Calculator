@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>672</width>
-    <height>643</height>
+    <height>642</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,13 +16,25 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>672</width>
+    <height>642</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>672</width>
+    <height>642</height>
+   </size>
+  </property>
   <property name="font">
    <font>
-    <pointsize>20</pointsize>
+    <pointsize>24</pointsize>
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Engineer Calculator</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
@@ -31,387 +43,13 @@
      <height>591</height>
     </size>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>672</width>
+     <height>16777215</height>
+    </size>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="6" column="5">
-     <widget class="QToolButton" name="toolButton_point">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>.</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="6">
-     <widget class="QToolButton" name="toolButton_number_3">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>3</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="3">
-     <widget class="QToolButton" name="toolButton_qbrt">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>qbrt</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QToolButton" name="toolButton_cos">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>cos</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QToolButton" name="toolButton_mod">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>mod</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="7">
-     <widget class="QToolButton" name="toolButton_mult">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>*</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0">
-     <widget class="QToolButton" name="toolButton_tan">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>tan</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="2">
-     <widget class="QToolButton" name="toolButton_exp">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>exp</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="6">
-     <widget class="QToolButton" name="toolButton_number_9">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>9</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QToolButton" name="toolButton_pi">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>pi</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="5">
-     <widget class="QToolButton" name="toolButton_number_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>2</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="3">
-     <widget class="QToolButton" name="toolButton_sqrt">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>sqrt</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="7">
-     <widget class="QToolButton" name="toolButton_add">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>+</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="5">
-     <widget class="QToolButton" name="toolButton_number_8">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>8</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QToolButton" name="toolButton_acos">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>acos</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="3">
-     <widget class="QToolButton" name="toolButton_power">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>^</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="6">
-     <widget class="QToolButton" name="toolButton_number_6">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>6</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="5">
-     <widget class="QToolButton" name="toolButton_number_5">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>5</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QToolButton" name="toolButton_sin">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>sin</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="1">
-     <widget class="QToolButton" name="toolButton_atan">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>atan</string>
-      </property>
-     </widget>
-    </item>
     <item row="3" column="7">
      <widget class="QToolButton" name="toolButton_div">
       <property name="sizePolicy">
@@ -422,8 +60,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
@@ -431,8 +69,8 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="4">
-     <widget class="QToolButton" name="toolButton_number_1">
+    <item row="2" column="5">
+     <widget class="QToolButton" name="toolButton_backspace">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -441,31 +79,12 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>1</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="4">
-     <widget class="QToolButton" name="toolButton_number_4">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>4</string>
+       <string>⌫</string>
       </property>
      </widget>
     </item>
@@ -479,12 +98,120 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
+      </property>
+      <property name="whatsThis">
+       <string/>
       </property>
       <property name="text">
        <string>E</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="6">
+     <widget class="QToolButton" name="toolButton_number_6">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>6</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QToolButton" name="toolButton_mod">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>mod</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="8">
+     <widget class="QLineEdit" name="lineEdit_iuput">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QToolButton" name="toolButton_deleteAll">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>AC</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QToolButton" name="toolButton_pi">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>pi</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="6">
+     <widget class="QToolButton" name="toolButton_number_9">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>9</string>
       </property>
      </widget>
     </item>
@@ -498,8 +225,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
@@ -507,8 +234,8 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QToolButton" name="toolButton_x">
+    <item row="4" column="0">
+     <widget class="QToolButton" name="toolButton_sin">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -517,17 +244,17 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>x</string>
+       <string>sin</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="7">
-     <widget class="QToolButton" name="toolButton_sub">
+    <item row="4" column="5">
+     <widget class="QToolButton" name="toolButton_number_5">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -536,12 +263,69 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>-</string>
+       <string>5</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="5">
+     <widget class="QToolButton" name="toolButton_number_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="7">
+     <widget class="QToolButton" name="toolButton_add">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QToolButton" name="toolButton_cos">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>cos</string>
       </property>
      </widget>
     </item>
@@ -555,12 +339,212 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
        <string>log</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QToolButton" name="toolButton_acos">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>acos</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QToolButton" name="toolButton_closeBracket">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QToolButton" name="toolButton_power">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>^</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QToolButton" name="toolButton_openBracket">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>(</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="7">
+     <widget class="QToolButton" name="toolButton_mult">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>*</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="3">
+     <widget class="QToolButton" name="toolButton_qbrt">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>qbrt</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="3">
+     <widget class="QLineEdit" name="lineEdit_input_x">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QToolButton" name="toolButton_number_4">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>4</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="6" colspan="2">
+     <widget class="QToolButton" name="toolButton_equal">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>=</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="5">
+     <widget class="QToolButton" name="toolButton_number_8">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>8</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2">
+     <widget class="QToolButton" name="toolButton_ln">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>ln</string>
       </property>
      </widget>
     </item>
@@ -577,8 +561,8 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="4">
-     <widget class="QToolButton" name="toolButton_number_7">
+    <item row="6" column="5">
+     <widget class="QToolButton" name="toolButton_point">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -587,17 +571,17 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>7</string>
+       <string>.</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="3">
-     <widget class="QToolButton" name="toolButton_closeBracket">
+    <item row="2" column="0">
+     <widget class="QToolButton" name="toolButton_x">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -606,27 +590,17 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>)</string>
+       <string>x</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="8">
-     <widget class="QLineEdit" name="lineEdit_iuput">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2">
-     <widget class="QToolButton" name="toolButton_openBracket">
+    <item row="6" column="1">
+     <widget class="QToolButton" name="toolButton_atan">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -635,12 +609,88 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>(</string>
+       <string>atan</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="6">
+     <widget class="QToolButton" name="toolButton_number_3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QToolButton" name="toolButton_tan">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>tan</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="7">
+     <widget class="QToolButton" name="toolButton_sub">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QToolButton" name="toolButton_exp">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>exp</string>
       </property>
      </widget>
     </item>
@@ -654,8 +704,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
@@ -663,8 +713,8 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="2">
-     <widget class="QToolButton" name="toolButton_ln">
+    <item row="5" column="4">
+     <widget class="QToolButton" name="toolButton_number_1">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -673,17 +723,17 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>ln</string>
+       <string>1</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="6" colspan="2">
-     <widget class="QToolButton" name="toolButton_equal">
+    <item row="5" column="3">
+     <widget class="QToolButton" name="toolButton_sqrt">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -692,17 +742,17 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>=</string>
+       <string>sqrt</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="5">
-     <widget class="QToolButton" name="toolButton_backspace">
+    <item row="3" column="4">
+     <widget class="QToolButton" name="toolButton_number_7">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -711,41 +761,12 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="text">
-       <string>⌫</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="4">
-     <widget class="QToolButton" name="toolButton_deleteAll">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>50</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>AC</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1" colspan="3">
-     <widget class="QLineEdit" name="lineEdit_input_x">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+       <string>7</string>
       </property>
      </widget>
     </item>
@@ -769,14 +790,38 @@
     <property name="title">
      <string>Mode</string>
     </property>
-    <addaction name="action_cacl"/>
+    <addaction name="actionEngineer_Calculator"/>
+    <addaction name="separator"/>
+    <addaction name="actionCredit_Calculator"/>
+    <addaction name="actionDeposit_Calculator"/>
    </widget>
    <addaction name="menu"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+  </widget>
   <action name="action_cacl">
    <property name="text">
-    <string>calc</string>
+    <string>Calcculator</string>
+   </property>
+  </action>
+  <action name="actionEngineer_Calculator">
+   <property name="text">
+    <string>Engineer Calculator</string>
+   </property>
+  </action>
+  <action name="actionCredit_Calculator">
+   <property name="text">
+    <string>Credit Calculator</string>
+   </property>
+  </action>
+  <action name="actionDeposit_Calculator">
+   <property name="text">
+    <string>Deposit Calculator</string>
    </property>
   </action>
  </widget>
