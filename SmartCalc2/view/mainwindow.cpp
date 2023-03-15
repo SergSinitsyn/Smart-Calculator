@@ -6,8 +6,9 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow),
-      Credit(new CreditWindow())
+    , ui(new Ui::MainWindow)
+    , Credit(new CreditWindow())
+    ,Deposit(new DepositWindow())
 
 {
     ui->setupUi(this);
@@ -88,25 +89,24 @@ void MainWindow::on_toolButton_backspace_clicked()
     ui->lineEdit_iuput->backspace();
 }
 
-
-void MainWindow::on_actionCredit_Calculator_triggered()
-
-{
-    this->hide();
-    Credit->show();
-}
-
-
 void MainWindow::on_actionEngineer_Calculator_triggered()
 {
     Credit->hide();
+    Deposit->hide();
     this->show();
 }
 
+void MainWindow::on_actionCredit_Calculator_triggered()
+{
+    this->hide();
+    Deposit->hide();
+    Credit->show();
+}
 
 void MainWindow::on_actionDeposit_Calculator_triggered()
 {
     this->hide();
-
+    Credit->hide();
+    Deposit->show();
 }
 

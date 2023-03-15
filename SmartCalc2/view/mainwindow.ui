@@ -556,6 +556,9 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
@@ -804,11 +807,6 @@
     </font>
    </property>
   </widget>
-  <action name="action_cacl">
-   <property name="text">
-    <string>Calcculator</string>
-   </property>
-  </action>
   <action name="actionEngineer_Calculator">
    <property name="text">
     <string>Engineer Calculator</string>

@@ -1,5 +1,5 @@
 #include "view/mainwindow.h"
-#include "view/creditwindow.h"
+
 
 #include <QApplication>
 

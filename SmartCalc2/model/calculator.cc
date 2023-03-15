@@ -109,7 +109,7 @@ void Calculator::CheckSequence() {
     while (!output_.empty() && !input_.empty()) {
         if (kAdjacencyMatrix_[output_.back().GetPrecedence()]
                 [input_.front().GetPrecedence()] == 0) {
-            throw std::logic_error("Wrong sequence: " + output_.front().GetName() +
+            throw std::logic_error("Wrong sequence: " + output_.back().GetName() +
                                    " " + input_.front().GetName());
         }
         FromInputToOutput();

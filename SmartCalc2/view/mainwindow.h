@@ -2,8 +2,7 @@
 #define MAINWINDOW_H
 
 #include "creditwindow.h"
-#include "ui_creditwindow.h"
-
+#include "depositwindow.h"
 
 #include <QMainWindow>
 
@@ -25,16 +24,14 @@ private slots:
     void on_toolButton_deleteAll_clicked();
     void on_toolButton_backspace_clicked();
 
-    void on_actionCredit_Calculator_triggered();
-
     void on_actionEngineer_Calculator_triggered();
-
+    void on_actionCredit_Calculator_triggered();
     void on_actionDeposit_Calculator_triggered();
 
 private:
     Ui::MainWindow *ui;
-   CreditWindow* Credit;
-
+    CreditWindow* Credit;
+    DepositWindow* Deposit;
 
 };
 #endif // MAINWINDOW_H
