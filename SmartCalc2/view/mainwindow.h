@@ -3,6 +3,7 @@
 
 #include "creditwindow.h"
 #include "depositwindow.h"
+#include "graphwindow.h"
 
 #include <QMainWindow>
 
@@ -28,10 +29,12 @@ private slots:
     void on_actionCredit_Calculator_triggered();
     void on_actionDeposit_Calculator_triggered();
 
+    void on_toolButton_Graph_clicked();
+
 private:
     Ui::MainWindow *ui;
     CreditWindow* Credit;
     DepositWindow* Deposit;
-
+    GraphWindow* Graph;
 };
 #endif // MAINWINDOW_H

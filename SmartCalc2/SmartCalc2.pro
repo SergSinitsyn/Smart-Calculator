@@ -19,6 +19,7 @@ SOURCES += \
     model/token.cc \
     view/creditwindow.cpp \
     view/depositwindow.cpp \
+    view/graphwindow.cpp \
      view/mainwindow.cpp
 
 HEADERS += \
@@ -31,11 +32,13 @@ HEADERS += \
      model/token.h \
      view/creditwindow.h \
      view/depositwindow.h \
+     view/graphwindow.h \
      view/mainwindow.h
 
 FORMS += \
    view/creditwindow.ui \
    view/depositwindow.ui \
+   view/graphwindow.ui \
    view/mainwindow.ui
 
 # Default rules for deployment.

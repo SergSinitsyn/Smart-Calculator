@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , Credit(new CreditWindow())
     , Deposit(new DepositWindow())
+    , Graph (new GraphWindow())
 
 {
     ui->setupUi(this);
@@ -83,7 +84,6 @@ void MainWindow::on_toolButton_deleteAll_clicked()
     ui->lineEdit_iuput->clear();
 }
 
-
 void MainWindow::on_toolButton_backspace_clicked()
 {
     ui->lineEdit_iuput->backspace();
@@ -108,5 +108,12 @@ void MainWindow::on_actionDeposit_Calculator_triggered()
     this->hide();
     Credit->hide();
     Deposit->show();
+}
+
+void MainWindow::on_toolButton_Graph_clicked()
+{
+     this->hide();
+     Graph->show();
+     ui->lineEdit_iuput->text();
 }
 

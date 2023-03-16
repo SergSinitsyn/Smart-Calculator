@@ -15,7 +15,6 @@ public:
     explicit DepositWindow(QWidget *parent = nullptr);
     ~DepositWindow();
 
-
 private:
     Ui::DepositWindow *ui;
 };
