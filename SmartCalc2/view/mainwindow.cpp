@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , Credit(new CreditWindow())
-    ,Deposit(new DepositWindow())
+    , Deposit(new DepositWindow())
 
 {
     ui->setupUi(this);
