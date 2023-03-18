@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>791</height>
+    <width>607</width>
+    <height>496</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -113,10 +113,18 @@
     <widget class="QDoubleSpinBox" name="doubleSpinBox_xMin"/>
    </item>
    <item row="0" column="0" colspan="6">
-    <widget class="QWidget" name="widget" native="true"/>
+    <widget class="QCustomPlot" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

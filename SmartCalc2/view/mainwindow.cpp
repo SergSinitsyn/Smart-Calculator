@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 #include "../model/model.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -57,7 +56,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::input_buttons() {
     QToolButton *button = (QToolButton *)sender();
     ui->lineEdit_iuput->insert(button->text());
@@ -92,6 +90,7 @@ void MainWindow::on_toolButton_backspace_clicked()
 void MainWindow::on_actionEngineer_Calculator_triggered()
 {
     Credit->hide();
+    Graph->hide();
     Deposit->hide();
     this->show();
 }
@@ -99,6 +98,7 @@ void MainWindow::on_actionEngineer_Calculator_triggered()
 void MainWindow::on_actionCredit_Calculator_triggered()
 {
     this->hide();
+    Graph->hide();
     Deposit->hide();
     Credit->show();
 }
@@ -106,14 +106,16 @@ void MainWindow::on_actionCredit_Calculator_triggered()
 void MainWindow::on_actionDeposit_Calculator_triggered()
 {
     this->hide();
+    Graph->hide();
     Credit->hide();
     Deposit->show();
 }
 
-void MainWindow::on_toolButton_Graph_clicked()
+void MainWindow::on_actionGraph_triggered()
 {
-     this->hide();
-     Graph->show();
-     ui->lineEdit_iuput->text();
+    this->hide();
+    Deposit->hide();
+    Credit->hide();
+    Graph->show();
 }
 

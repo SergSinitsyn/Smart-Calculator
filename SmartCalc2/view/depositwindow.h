@@ -15,6 +15,9 @@ public:
     explicit DepositWindow(QWidget *parent = nullptr);
     ~DepositWindow();
 
+private slots:
+    void on_pushButton_addReplenishment_clicked();
+
 private:
     Ui::DepositWindow *ui;
 };

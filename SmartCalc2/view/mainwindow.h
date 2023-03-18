@@ -7,6 +7,8 @@
 
 #include <QMainWindow>
 
+#include <QVector>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -28,8 +30,7 @@ private slots:
     void on_actionEngineer_Calculator_triggered();
     void on_actionCredit_Calculator_triggered();
     void on_actionDeposit_Calculator_triggered();
-
-    void on_toolButton_Graph_clicked();
+    void on_actionGraph_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -1,6 +1,8 @@
 #ifndef CREDITWINDOW_H
 #define CREDITWINDOW_H
 
+
+
 #include <QWidget>
 
 namespace Ui {

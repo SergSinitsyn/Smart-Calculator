@@ -2,6 +2,8 @@
 #define GRAPHWINDOW_H
 
 #include <QWidget>
+#include "qcustomplot.h"
+#include <QVector>
 
 namespace Ui {
 class GraphWindow;
@@ -14,6 +16,9 @@ class GraphWindow : public QWidget
 public:
     explicit GraphWindow(QWidget *parent = nullptr);
     ~GraphWindow();
+
+private slots:
+    void on_pushButton_Print_clicked();
 
 private:
     Ui::GraphWindow *ui;

@@ -1,6 +1,6 @@
-QT       += core gui
+QT       += core gui printsupport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
 
@@ -20,7 +20,8 @@ SOURCES += \
     view/creditwindow.cpp \
     view/depositwindow.cpp \
     view/graphwindow.cpp \
-     view/mainwindow.cpp
+    view/mainwindow.cpp \
+    view/qcustomplot.cpp
 
 HEADERS += \
      model/calculator.h \
@@ -33,7 +34,8 @@ HEADERS += \
      view/creditwindow.h \
      view/depositwindow.h \
      view/graphwindow.h \
-     view/mainwindow.h
+     view/mainwindow.h \
+     view/qcustomplot.h
 
 FORMS += \
    view/creditwindow.ui \
