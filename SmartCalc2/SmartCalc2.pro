@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    controller/controller.cc \
     main.cpp \
     model/calculator.cc \
     model/check.cc \
@@ -20,10 +21,10 @@ SOURCES += \
     view/creditwindow.cpp \
     view/depositwindow.cpp \
     view/graphwindow.cpp \
-    view/mainwindow.cpp \
-    view/qcustomplot.cpp
+    view/mainwindow.cpp
 
 HEADERS += \
+     controller/controller.h \
      model/calculator.h \
      model/check.h \
      model/credit.h \
@@ -34,8 +35,7 @@ HEADERS += \
      view/creditwindow.h \
      view/depositwindow.h \
      view/graphwindow.h \
-     view/mainwindow.h \
-     view/qcustomplot.h
+     view/mainwindow.h
 
 FORMS += \
    view/creditwindow.ui \

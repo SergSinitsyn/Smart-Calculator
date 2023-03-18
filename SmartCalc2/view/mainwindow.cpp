@@ -56,6 +56,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::SetController(Controller *controller) {
+    controller_ = controller;
+}
+
 void MainWindow::input_buttons() {
     QToolButton *button = (QToolButton *)sender();
     ui->lineEdit_iuput->insert(button->text());
@@ -63,19 +67,25 @@ void MainWindow::input_buttons() {
 
 void MainWindow::on_toolButton_equal_clicked()
 {
-    std::string input = ui->lineEdit_iuput->text().toStdString();
-    Model Calculator;
-    auto a = Calculator.Calculate(input, 0);
-
-    double result = a.first;
-    QString q_result = QString::number(result, 'g', 8);
-    ui->lineEdit_output->setText(q_result);
-
-    std::string error_code = a.second;
-    QString q_error = QString::fromStdString(error_code);
-    ui->statusbar->showMessage(q_error);
+    Calculate();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Return) Calculate();
+}
+
+void MainWindow::Calculate()
+{
+    try {
+        std::string input_str = ui->lineEdit_iuput->text().toStdString();
+        double x = 0;
+        double result = controller_->CalculateMath(input_str, x);
+        ui->lineEdit_output->setText(QString::number(result, 'g', 8));
+    } catch (const std::exception &e) {
+        QMessageBox::critical(this, "Warning", e.what());
+    }
+}
 
 void MainWindow::on_toolButton_deleteAll_clicked()
 {
@@ -118,4 +128,6 @@ void MainWindow::on_actionGraph_triggered()
     Credit->hide();
     Graph->show();
 }
+
+
 

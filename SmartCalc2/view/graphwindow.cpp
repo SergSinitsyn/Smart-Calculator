@@ -15,7 +15,7 @@ GraphWindow::~GraphWindow()
 
 void GraphWindow::on_pushButton_Print_clicked()
 {
-
+/*
 int count_=0;
     ui->widget->clearPlottables();
 //    ui->widget->clearItems();
@@ -57,6 +57,6 @@ int count_=0;
     //        int count = ui->widget_plot-> graphCount();
     //        QString q_count = QString::number(count);
     //        ui->statusbar_error->showMessage(q_count);
-    //        ui->widget_plot->clearItems();
+    //        ui->widget_plot->clearItems();*/
 }
 

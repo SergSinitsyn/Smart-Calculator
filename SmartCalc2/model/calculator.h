@@ -31,6 +31,8 @@ class Calculator {
   double CalculateValue(double x);
   double CalculateValue();
   XYGraph CalculateGraph(int number_of_points, double x_start, double x_end);
+  std::string input_expression_;
+  bool correct_load_{false};
 
  private:
   void ConvertToLowercase();
@@ -50,7 +52,7 @@ class Calculator {
   void ToResult(double x);
   double FromResult();
 
-  std::string input_expression_;
+
   std::map<std::string, Token> token_map_;
   std::queue<Token> input_;
   std::stack<Token> stack_;

@@ -1,8 +1,9 @@
 #ifndef GRAPHWINDOW_H
 #define GRAPHWINDOW_H
 
+#include "../controller/controller.h"
+
 #include <QWidget>
-#include "qcustomplot.h"
 #include <QVector>
 
 namespace Ui {
@@ -22,6 +23,7 @@ private slots:
 
 private:
     Ui::GraphWindow *ui;
+    Controller *controller_;
 };
 
 #endif // GRAPHWINDOW_H

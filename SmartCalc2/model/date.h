@@ -5,6 +5,7 @@
 
 class Date {
  public:
+    Date();
   Date(int day, int month, int year);
   //   Date(const Date& other);
   //   Date(Date&& other);
@@ -24,9 +25,9 @@ class Date {
   bool operator<=(const Date& other) const;
 
  private:
-  int day_{};
-  int month_{};
-  int year_{};
+  int day_;
+  int month_;
+  int year_;
 };
 
 #endif  // _MODEL_DATE_H_

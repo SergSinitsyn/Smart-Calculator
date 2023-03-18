@@ -1,8 +1,6 @@
 #ifndef CREDITWINDOW_H
 #define CREDITWINDOW_H
 
-
-
 #include <QWidget>
 
 namespace Ui {
@@ -24,6 +22,7 @@ private slots:
 
 private:
     Ui::CreditWindow *ui;
+    void Calculate();
 };
 
 #endif // CREDITWINDOW_H

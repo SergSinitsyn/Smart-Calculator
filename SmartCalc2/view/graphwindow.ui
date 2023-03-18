@@ -14,54 +14,8 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMin"/>
-   </item>
-   <item row="3" column="0">
-    <widget class="QPushButton" name="pushButton_Crear">
-     <property name="text">
-      <string>Crear All</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="6">
-    <widget class="QLineEdit" name="lineEdit_In"/>
-   </item>
-   <item row="2" column="5" rowspan="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="label_yMax">
-     <property name="layoutDirection">
-      <enum>Qt::RightToLeft</enum>
-     </property>
-     <property name="text">
-      <string>y to</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="4">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_xMax">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMax"/>
+   <item row="0" column="0" colspan="6">
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
    <item row="2" column="0">
     <widget class="QPushButton" name="pushButton_Print">
@@ -83,6 +37,9 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_xMin"/>
+   </item>
    <item row="2" column="3">
     <widget class="QLabel" name="label_xMax">
      <property name="layoutDirection">
@@ -93,6 +50,20 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_xMax">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="pushButton_Crear">
+     <property name="text">
+      <string>Crear All</string>
      </property>
     </widget>
    </item>
@@ -109,22 +80,43 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_xMin"/>
+   <item row="3" column="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMin"/>
    </item>
-   <item row="0" column="0" colspan="6">
-    <widget class="QCustomPlot" name="widget" native="true"/>
+   <item row="3" column="3">
+    <widget class="QLabel" name="label_yMax">
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>y to</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMax"/>
+   </item>
+   <item row="2" column="5" rowspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="QLineEdit" name="lineEdit_In"/>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

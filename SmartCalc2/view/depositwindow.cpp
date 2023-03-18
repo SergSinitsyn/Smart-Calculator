@@ -21,14 +21,14 @@ DepositWindow::~DepositWindow()
     delete ui;
 }
 
- int count =0;
+// int count =0;
 
 void DepositWindow::on_pushButton_addReplenishment_clicked()
 {
-    ui->tableWidget->setRowCount(count);
-    QTableWidgetItem *tbl1 = new QTableWidgetItem(QString::number(count));
-    ui->tableWidget->setItem(count,0,tbl1);
-    QTableWidgetItem *tbl2 = new QTableWidgetItem(ui->dateEdit_2);
-    count++;
+//    ui->tableWidget->setRowCount(count);
+//    QTableWidgetItem *tbl1 = new QTableWidgetItem(QString::number(count));
+//    ui->tableWidget->setItem(count,0,tbl1);
+//    QTableWidgetItem *tbl2 = new QTableWidgetItem(ui->dateEdit_2);
+//    count++;
 }
 

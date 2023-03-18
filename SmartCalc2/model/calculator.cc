@@ -1,6 +1,7 @@
 #include "model.h"
 
 void Calculator::LoadExpression(const std::string& input_string) {
+    correct_load_ = false;
     input_ = {};
     stack_ = {};
     output_ = {};  //!
@@ -12,6 +13,7 @@ void Calculator::LoadExpression(const std::string& input_string) {
     Parsing();
     CheckSequence();
     ShuntingYardAlgorithm();
+    correct_load_ = true;
 }
 
 double Calculator::CalculateValue(double x) {
