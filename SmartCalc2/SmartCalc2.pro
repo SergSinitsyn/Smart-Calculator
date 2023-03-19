@@ -11,11 +11,11 @@ CONFIG += c++17
 SOURCES += \
     controller/controller.cc \
     main.cpp \
-    model/calculator.cc \
     model/check.cc \
     model/credit.cc \
     model/date.cc \
     model/deposit.cc \
+    model/mathcalculator.cc \
     model/model.cc \
     model/token.cc \
     view/creditwindow.cpp \
@@ -25,11 +25,11 @@ SOURCES += \
 
 HEADERS += \
      controller/controller.h \
-     model/calculator.h \
      model/check.h \
      model/credit.h \
      model/date.h \
      model/deposit.h \
+     model/mathcalculator.h \
      model/model.h \
      model/token.h \
      view/creditwindow.h \

@@ -23,7 +23,6 @@ private slots:
 
 private:
     Ui::GraphWindow *ui;
-    Controller *controller_;
 };
 
 #endif // GRAPHWINDOW_H

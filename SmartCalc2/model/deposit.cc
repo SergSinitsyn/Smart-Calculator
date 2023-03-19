@@ -29,8 +29,8 @@ void Deposit::LoadDepositData(double deposit_amount, Date start_date, Date end_d
                               double interest_rate, double tax_rate,
                               PeriodicityOfPayments periodicity_of_payments,
                               bool capitalization_of_interest,
-                              std::map<Date, double> replenishments_list,
-                              std::map<Date, double> partial_withdrawals_list) {
+                              std::multimap<Date, double> replenishments_list,
+                              std::multimap<Date, double> partial_withdrawals_list) {
     deposit_amount_ = deposit_amount;
     start_date_ = start_date;
     end_date_ = end_date ;
@@ -45,7 +45,6 @@ void Deposit::LoadDepositData(double deposit_amount, Date start_date, Date end_d
     accrued_interest_= 0;
     tax_amount_=0;
     deposit_amount_by_the_end_of_the_term_=0;
-
 }
 
 
@@ -115,19 +114,21 @@ std::tuple<double, double, double> Deposit::CalculateDeposit() {
         accrued_interest_ += round_2d(deposit_amount_ * interest_rate_ / 100.0 /
                                       current_date_.DaysInYear());
         // сheck replenishments_list_
-        if (auto it = replenishments_list_.find(current_date_);
-                it != replenishments_list_.end()) {
-            deposit_amount_ += it->second;
-            replenishments_list_.erase(it);
+        auto it1 = replenishments_list_.find(current_date_);
+        while (it1 != replenishments_list_.end()) {
+            deposit_amount_ += it1->second;
+            replenishments_list_.erase(it1);
+            it1 = replenishments_list_.find(current_date_);
         }
         // сheck partial_withdrawals_list_
-        if (auto it = partial_withdrawals_list_.find(current_date_);
-                it != partial_withdrawals_list_.end()) {
-            deposit_amount_ -= it->second;
+        auto it2 = partial_withdrawals_list_.find(current_date_);
+        while (it2 != partial_withdrawals_list_.end()) {
+            deposit_amount_ -= it2->second;
             if (deposit_amount_ < 0) {
                 deposit_amount_ = 0;  //!
             }
-            partial_withdrawals_list_.erase(it);
+            partial_withdrawals_list_.erase(it2);
+            it2 = partial_withdrawals_list_.find(current_date_);
         }
         // go to next day
         current_date_.Add(1, 0, 0);

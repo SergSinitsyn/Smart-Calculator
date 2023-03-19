@@ -10,7 +10,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow window_main;
 
-    Calculator math_calc;
+
+
+
+    MathCalculator math_calc;
     Credit credit_calc;
     Deposit deposit_calc;
 
@@ -18,6 +21,8 @@ int main(int argc, char *argv[])
 
     Controller controller(&model);
     window_main.SetController(&controller);
+
+
     window_main.show();
     return a.exec();
 }

@@ -79,8 +79,8 @@ void MainWindow::Calculate()
 {
     try {
         std::string input_str = ui->lineEdit_iuput->text().toStdString();
-        double x = 0;
-        double result = controller_->CalculateMath(input_str, x);
+        std::string input_x = ui->lineEdit_input_x->text().toStdString();
+        double result = controller_->CalculateMath(input_str, input_x);
         ui->lineEdit_output->setText(QString::number(result, 'g', 8));
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Warning", e.what());

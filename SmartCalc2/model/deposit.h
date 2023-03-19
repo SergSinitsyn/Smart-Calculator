@@ -29,8 +29,8 @@ void LoadDepositData(double deposit_amount, Date start_date, Date end_date,
                      double interest_rate, double tax_rate,
                      PeriodicityOfPayments periodicity_of_payments,
                      bool capitalization_of_interest,
-                     std::map<Date, double> replenishments_list,
-                     std::map<Date, double> partial_withdrawals_list);
+                     std::multimap<Date, double> replenishments_list,
+                     std::multimap<Date, double> partial_withdrawals_list);
   void SetNextCapitalizationDate(int& count);
   std::tuple<double, double, double> CalculateDeposit();
 
@@ -43,8 +43,8 @@ void LoadDepositData(double deposit_amount, Date start_date, Date end_date,
   double tax_rate_;
   PeriodicityOfPayments periodicity_of_payments_;
   bool capitalization_of_interest_;
-  std::map<Date, double> replenishments_list_;
-  std::map<Date, double> partial_withdrawals_list_;
+  std::multimap<Date, double> replenishments_list_;
+  std::multimap<Date, double> partial_withdrawals_list_;
 
   // temp data
   Date current_date_;

@@ -6,10 +6,10 @@ DepositWindow::DepositWindow(QWidget *parent) :
     ui(new Ui::DepositWindow)
 {
     ui->setupUi(this);
-    ui->tableWidget->setRowCount(0);
-    ui->tableWidget->setColumnCount(3);
+//    ui->tableWidget->setRowCount(0);
+//    ui->tableWidget->setColumnCount(3);
 
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "№" << "Date" << "Deposit");
+//    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "№" << "Date" << "Deposit");
 
 
 
