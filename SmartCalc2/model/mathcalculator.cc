@@ -40,7 +40,7 @@ void MathCalculator::LoadExpression(const std::string& input_string) {
   correct_load_ = false;
   input_ = {};
   stack_ = {};
-  output_ = {};  //!
+  output_ = {};
   result_ = {};
   input_expression_ = input_string;
   CheckLength(input_expression_);
@@ -155,26 +155,26 @@ void MathCalculator::PushToken(std::string temp) {
       input_.push(it->second);
     }
   } else {
-    throw std::logic_error("Incorrect symbol: " + temp);  //!
+    throw std::logic_error("Incorrect symbol: " + temp);
   }
 }
 
 void MathCalculator::CheckSequence() {
-  if (kFirstToken_[input_.front().GetPrecedence()] == 0) {
+  if (!kFirstToken_[input_.front().GetPrecedence()]) {
     throw std::logic_error("Wrong sequence: expression starts with " +
                            input_.front().GetName());
   }
   FromInputToOutput();
   while (!output_.empty() && !input_.empty()) {
-    if (kAdjacencyMatrix_[output_.back().GetPrecedence()]
-                         [input_.front().GetPrecedence()] == 0) {
+    if (!kAdjacencyMatrix_[output_.back().GetPrecedence()]
+                          [input_.front().GetPrecedence()]) {
       throw std::logic_error("Wrong sequence: " + output_.back().GetName() +
                              " " + input_.front().GetName());
     }
     FromInputToOutput();
   }
   if (!output_.empty()) {
-    if (kLastToken_[output_.back().GetPrecedence()] == 0) {
+    if (!kLastToken_[output_.back().GetPrecedence()]) {
       throw std::logic_error("Wrong sequence: expression ends with " +
                              output_.back().GetName());
     }
@@ -214,8 +214,6 @@ void MathCalculator::ShuntingYardAlgorithm() {
         FromStackToOutput();
       }
       input_.pop();
-    } else {
-      throw std::logic_error("Incorrect token");
     }
   }
   while (!stack_.empty()) {
@@ -244,38 +242,20 @@ void MathCalculator::FromStackToOutput() {
 double MathCalculator::PostfixNotationCalculation(double x) {
   input_ = output_;
   while (!input_.empty()) {
-    std::visit(
-        overloaded{[&](fp_1arg fn) {
-                     if (result_.size() > 0) {
-                       ToResult(fn(FromResult()));
-                     } else {
-                       throw std::logic_error(
-                           "Missing number for unary operator/function: " +
-                           input_.front().GetName());
-                     }
-                   },
-                   [&](fp_2arg fn) {
-                     if (result_.size() > 1) {
-                       double rhs = FromResult();
-                       double lhs = FromResult();
-                       ToResult(fn(lhs, rhs));
-                     } else {
-                       throw std::logic_error(
-                           "Missing number for binary operator/function: " +
-                           input_.front().GetName());
-                     }
-                   },
-                   [&](auto) {
-                     if (input_.front().GetName() == "x") {
-                       ToResult(x);
-                     } else {
-                       ToResult();
-                     }
-                   }},
-        input_.front().GetFunction());
-  }
-  if (result_.size() > 1) {
-    throw std::logic_error("Missing binary operator/function");
+    std::visit(overloaded{[&](fp_1arg fn) { ToResult(fn(FromResult())); },
+                          [&](fp_2arg fn) {
+                            double rhs = FromResult();
+                            double lhs = FromResult();
+                            ToResult(fn(lhs, rhs));
+                          },
+                          [&](auto) {
+                            if (input_.front().GetName() == "x") {
+                              ToResult(x);
+                            } else {
+                              ToResult();
+                            }
+                          }},
+               input_.front().GetFunction());
   }
   return FromResult();
 }

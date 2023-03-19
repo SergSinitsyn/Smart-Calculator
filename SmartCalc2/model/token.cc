@@ -11,7 +11,7 @@ Token::Token(const std::string& name, Precedence precedence,
       function_(function){};
 
 std::string Token::GetName() { return name_; }
-int Token::GetPrecedence() { return precedence_; }
+Precedence Token::GetPrecedence() { return precedence_; }
 Associativity Token::GetAssociativity() { return associativity_; }
 OperationType Token::GetOperationType() { return operation_type_; }
 double Token::GetValue() { return value_; }

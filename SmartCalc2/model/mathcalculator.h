@@ -36,23 +36,18 @@ class MathCalculator {
  private:
   void LoadExpression(const std::string& input_string);
   void LoadX(const std::string& input_x);
-
   void CalculateXY(int number_of_points, double x_start, double x_end);
-
   std::string ConvertToLowercase(std::string str);
   void Parsing();
   void PushToken(std::string temp);
   double ReadNumber(std::string& str, size_t& start);
   std::string ReadWord(std::string& str, size_t& start);
   void CheckSequence();
-
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
   void FromInputToStack();
   void FromStackToOutput();
-
   void ReadX(std::string str);
-
   double PostfixNotationCalculation(double x);
   void ToResult();
   void ToResult(double x);
@@ -72,7 +67,7 @@ class MathCalculator {
   std::queue<Token> output_;
   std::stack<double> result_;
 
-  // kAdjacencyMatrix_[i][j]   i - token, j - next token
+  // kAdjacencyMatrix_[i][j]: i - token, j - next token
   static constexpr bool kAdjacencyMatrix_[8][8] = {
       {0, 1, 1, 1, 0, 0, 0, 1},  // kNumber
       {1, 0, 0, 0, 1, 1, 1, 0},  // kLow

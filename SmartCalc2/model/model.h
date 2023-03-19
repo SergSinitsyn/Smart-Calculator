@@ -19,6 +19,12 @@ class Model {
     return math_calc_.GetAnswer();
   }
 
+  XYGraph CalcMath(std::string& str_from_label, int size, double x_start,
+                   double x_end) {
+    math_calc_.CalculateGraph(str_from_label, size, x_start, x_end);
+    return math_calc_.GetGraph();
+  }
+
   //   double GetResultMathExpression(std::string& str_from_label,
   //                                  std::string& str_x) {
   //     if (math_calc_.input_expression_ != str_from_label ||

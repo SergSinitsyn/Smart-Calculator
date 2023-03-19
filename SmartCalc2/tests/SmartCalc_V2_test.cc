@@ -269,6 +269,17 @@ TEST(calculation, expression_23) {
   ASSERT_NEAR(calc.GetAnswer(), -1, kAcc);
 }
 
+TEST(calculation_graph, expression) {
+  MathCalculator calc;
+  calc.CalculateGraph("x*x", 11, 0, 10);
+  XYGraph result = calc.GetGraph();
+  std::vector res_x = result.first;
+  std::vector res_y = result.second;
+  std::vector<double> expected_x = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<double> expected_y = {0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100};
+  ASSERT_TRUE((res_x == expected_x) && (res_y == expected_y));
+}
+
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
