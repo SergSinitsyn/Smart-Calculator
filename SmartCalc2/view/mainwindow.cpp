@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "../model/model.h"
+#include "../controller/controller.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -56,7 +57,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::SetController(Controller *controller) {
+void MainWindow::SetController(Controller controller) {
     controller_ = controller;
 }
 
@@ -80,7 +81,9 @@ void MainWindow::Calculate()
     try {
         std::string input_str = ui->lineEdit_iuput->text().toStdString();
         std::string input_x = ui->lineEdit_input_x->text().toStdString();
-        double result = controller_->CalculateMath(input_str, input_x);
+//        double result = controller_->CalculateMath(input_str, input_x);
+
+        double result = controller_.CalculateMath(input_str, input_x);
         ui->lineEdit_output->setText(QString::number(result, 'g', 8));
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Warning", e.what());
@@ -116,12 +119,13 @@ void MainWindow::on_actionCredit_Calculator_triggered()
 void MainWindow::on_actionDeposit_Calculator_triggered()
 {
     this->hide();
+
     Graph->hide();
     Credit->hide();
     Deposit->show();
 }
 
-void MainWindow::on_actionGraph_triggered()
+void MainWindow::on_actionGraph_View_triggered()
 {
     this->hide();
     Deposit->hide();

@@ -781,7 +781,7 @@
      <x>0</x>
      <y>0</y>
      <width>672</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="font">
@@ -794,7 +794,7 @@
      <string>Mode</string>
     </property>
     <addaction name="actionEngineer_Calculator"/>
-    <addaction name="actionGraph"/>
+    <addaction name="actionGraph_View"/>
     <addaction name="separator"/>
     <addaction name="actionCredit_Calculator"/>
     <addaction name="actionDeposit_Calculator"/>
@@ -823,9 +823,9 @@
     <string>Deposit Calculator</string>
    </property>
   </action>
-  <action name="actionGraph">
+  <action name="actionGraph_View">
    <property name="text">
-    <string>Graph</string>
+    <string>Graph View</string>
    </property>
   </action>
  </widget>

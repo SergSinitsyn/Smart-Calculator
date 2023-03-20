@@ -13,16 +13,18 @@ int main(int argc, char *argv[])
 
 
 
-    MathCalculator math_calc;
-    Credit credit_calc;
-    Deposit deposit_calc;
+//    MathCalculator math_calc;
+//    Credit credit_calc;
+//    Deposit deposit_calc;
 
-    Model model(math_calc, credit_calc, deposit_calc);
+//    Model model(math_calc, credit_calc, deposit_calc);
 
-    Controller controller(&model);
-    window_main.SetController(&controller);
+//    Controller controller(&model);
+//    window_main.SetController(&controller);
 
 
+    Controller controller(MathCalculator);
+    window_main.SetController(controller_);
     window_main.show();
     return a.exec();
 }

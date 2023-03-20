@@ -23,7 +23,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void SetController(Controller *controller);
+    void SetController(Controller controller);
 
 private slots:
     void input_buttons();
@@ -33,7 +33,7 @@ private slots:
     void on_actionEngineer_Calculator_triggered();
     void on_actionCredit_Calculator_triggered();
     void on_actionDeposit_Calculator_triggered();
-    void on_actionGraph_triggered();
+    void on_actionGraph_View_triggered();
 
 protected:
     void keyPressEvent(QKeyEvent* event);
@@ -43,7 +43,7 @@ private:
     CreditWindow* Credit;
     DepositWindow* Deposit;
     GraphWindow* Graph;
-    Controller *controller_;
+    Controller controller_;
 
     void Calculate();
 
