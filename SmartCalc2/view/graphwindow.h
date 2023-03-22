@@ -1,7 +1,6 @@
 #ifndef GRAPHWINDOW_H
 #define GRAPHWINDOW_H
 
-#include "../controller/controller.h"
 
 #include <QWidget>
 #include <QVector>

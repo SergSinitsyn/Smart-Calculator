@@ -1,7 +1,6 @@
 #ifndef CREDITWINDOW_H
 #define CREDITWINDOW_H
 
-#include "../controller/controller.h"
 
 #include <QWidget>
 
@@ -26,7 +25,6 @@ private:
     Ui::CreditWindow *ui;
     void Calculate();
 
-     Controller *controller_;
 };
 
 #endif // CREDITWINDOW_H

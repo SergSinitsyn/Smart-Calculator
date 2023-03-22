@@ -5,16 +5,19 @@
 #include "depositwindow.h"
 #include "graphwindow.h"
 
-#include "../controller/controller.h"
 
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QVector>
 #include <QKeyEvent>
 
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+class Controller;
 
 class MainWindow : public QMainWindow
 {
@@ -23,7 +26,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void SetController(Controller controller);
+    void SetController(Controller* c);
+    std::string GetInputString();
+      std::string GetInputStringX();
+      void SetAnswer(double x);
+
 
 private slots:
     void input_buttons();
@@ -43,7 +50,7 @@ private:
     CreditWindow* Credit;
     DepositWindow* Deposit;
     GraphWindow* Graph;
-    Controller controller_;
+    Controller* controller_;
 
     void Calculate();
 
