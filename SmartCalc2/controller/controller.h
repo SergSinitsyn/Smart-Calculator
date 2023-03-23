@@ -10,7 +10,8 @@ class Controller {
 public:
   Controller(MathCalculator* m1, Credit* m2, Deposit* m3);
  ~Controller();
-  void OnCalculateButtonClicked(MainWindow* w);
+  void CalculateValue(MainWindow* w);
+  void CalculateCredit(CreditWindow* c);
 
 private:
     MathCalculator* model_math;

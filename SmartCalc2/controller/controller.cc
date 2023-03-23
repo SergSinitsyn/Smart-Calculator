@@ -2,15 +2,20 @@
 
 #include <string>
 
-Controller::Controller(MathCalculator *m1, Credit *m2, Deposit *m3): model_math(m1), model_credit(m2), model_deposit(m3) {};
+Controller::Controller(MathCalculator *m1, Credit *m2, Deposit *m3)
+    : model_math(m1), model_credit(m2), model_deposit(m3){};
 
 Controller::~Controller(){};
 
-void Controller::OnCalculateButtonClicked(MainWindow* w) {
-    std::string input_string = w->GetInputString();
-    std::string input_string_x = w->GetInputStringX();
-    model_math->CalculateAnswer(input_string, input_string_x);
-    double answer = model_math->GetAnswer();
-    w->SetAnswer(answer);
+void Controller::CalculateValue(MainWindow *w) {
+  model_math->CalculateAnswer(w->GetInputString(), w->GetInputStringX());
+  w->SetAnswer(model_math->GetAnswer());
 }
 
+void Controller::CalculateCredit(CreditWindow *c) {
+  model_credit->CalculateCredit(c->GetCreditType(), c->GetTotalCreditAmount(),
+                                c->GetInterestRate(), c->GetTerm());
+  c->SetAnswer(model_credit->GetTotalPayment(),
+               model_credit->GetOverpaymentOnCredit(),
+               model_credit->GetMonthlyPayment());
+}
