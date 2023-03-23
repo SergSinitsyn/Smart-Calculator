@@ -1,27 +1,25 @@
 #ifndef GRAPHWINDOW_H
 #define GRAPHWINDOW_H
 
-
-#include <QWidget>
 #include <QVector>
+#include <QWidget>
 
 namespace Ui {
 class GraphWindow;
 }
 
-class GraphWindow : public QWidget
-{
-    Q_OBJECT
+class GraphWindow : public QWidget {
+  Q_OBJECT
 
-public:
-    explicit GraphWindow(QWidget *parent = nullptr);
-    ~GraphWindow();
+ public:
+  explicit GraphWindow(QWidget *parent = nullptr);
+  ~GraphWindow();
 
-private slots:
-    void on_pushButton_Print_clicked();
+ private slots:
+  void on_pushButton_Print_clicked();
 
-private:
-    Ui::GraphWindow *ui;
+ private:
+  Ui::GraphWindow *ui;
 };
 
-#endif // GRAPHWINDOW_H
+#endif  // GRAPHWINDOW_H

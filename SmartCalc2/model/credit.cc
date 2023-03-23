@@ -5,7 +5,7 @@
 
 double round_2dd(double value) { return round(value * 100) / 100.; }
 
-void Credit::LoadData(int type, double total_credit_amount, double term,
+void Credit::LoadData(int type, double total_credit_amount, int term,
                       double interest_rate) {
   type_ = type;
   total_credit_amount_ = total_credit_amount;
@@ -22,7 +22,7 @@ void Credit::AnnuityCredit() {
 
   monthly_payment_.push_back(round_2dd(
       total_credit_amount_ * ((interest_rate_temp * core) / (core - 1.0))));
-  total_payment_ = monthly_payment_[0] * term_;
+  total_payment_ = monthly_payment_.back() * term_;
   overpayment_on_credit_ = total_payment_ - total_credit_amount_;
 }
 
@@ -39,7 +39,7 @@ void Credit::DifferentiatedCredit() {
   overpayment_on_credit_ = total_payment_ - total_credit_amount_;
 }
 
-void Credit::CalculateCredit(int type, double total_credit_amount, double term,
+void Credit::CalculateCredit(int type, double total_credit_amount, int term,
                              double interest_rate) {
   LoadData(type, total_credit_amount, term, interest_rate);
   if (type) {

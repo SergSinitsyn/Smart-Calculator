@@ -7,19 +7,18 @@ namespace Ui {
 class DepositWindow;
 }
 
-class DepositWindow : public QWidget
-{
-    Q_OBJECT
+class DepositWindow : public QWidget {
+  Q_OBJECT
 
-public:
-    explicit DepositWindow(QWidget *parent = nullptr);
-    ~DepositWindow();
+ public:
+  explicit DepositWindow(QWidget *parent = nullptr);
+  ~DepositWindow();
 
-private slots:
-    void on_pushButton_addReplenishment_clicked();
+ private slots:
+  void on_pushButton_addReplenishment_clicked();
 
-private:
-    Ui::DepositWindow *ui;
+ private:
+  Ui::DepositWindow *ui;
 };
 
-#endif // DEPOSITWINDOW_H
+#endif  // DEPOSITWINDOW_H

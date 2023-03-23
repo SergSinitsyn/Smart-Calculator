@@ -7,14 +7,14 @@ class Credit {
  public:
   Credit() = default;
   ~Credit() = default;
-  void CalculateCredit(int type, double total_credit_amount, double term,
+  void CalculateCredit(int type, double total_credit_amount, int term,
                        double interest_rate);
   std::vector<double> GetMonthlyPayment();
   double GetTotalPayment();
   double GetOverpaymentOnCredit();
 
  private:
-  void LoadData(int type, double total_credit_amount, double term,
+  void LoadData(int type, double total_credit_amount, int term,
                 double interest_rate);
   void AnnuityCredit();
   void DifferentiatedCredit();

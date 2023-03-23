@@ -14,7 +14,7 @@ void Controller::CalculateValue(MainWindow *w) {
 
 void Controller::CalculateCredit(CreditWindow *c) {
   model_credit->CalculateCredit(c->GetCreditType(), c->GetTotalCreditAmount(),
-                                c->GetInterestRate(), c->GetTerm());
+                                c->GetTerm(), c->GetInterestRate());
   c->SetAnswer(model_credit->GetTotalPayment(),
                model_credit->GetOverpaymentOnCredit(),
                model_credit->GetMonthlyPayment());
