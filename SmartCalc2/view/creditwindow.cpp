@@ -52,3 +52,18 @@ void CreditWindow::on_comboBox_Term_currentIndexChanged(int index) {
 void CreditWindow::on_pushButton_Calculate_clicked() { Calculate(); }
 
 void CreditWindow::Calculate() { controller_credit_->CalculateCredit(this); }
+
+void CreditWindow::SetDefault(QSpinBox &sb) { sb.setValue(sb.minimum()); }
+
+void CreditWindow::SetDefault(QDoubleSpinBox &sb) { sb.setValue(sb.minimum()); }
+
+void CreditWindow::on_pushButton_Clear_clicked() {
+  SetDefault(*ui->doubleSpinBox_TotalCreditAmount);
+  SetDefault(*ui->doubleSpinBox_InterestRate);
+  SetDefault(*ui->doubleSpinBox_Overpayment);
+  SetDefault(*ui->doubleSpinBox_TotalPayment);
+  SetDefault(*ui->spinBox_Term);
+  ui->listWidget_MonthlyPayment->clear();
+  ui->comboBox_Term->setCurrentIndex(0);
+  ui->comboBox_Type->setCurrentIndex(0);
+}

@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="6">
-    <widget class="QWidget" name="widget" native="true"/>
+    <widget class="QCustomPlot" name="widget" native="true"/>
    </item>
    <item row="2" column="0">
     <widget class="QPushButton" name="pushButton_Print">
@@ -60,6 +60,19 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="5">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="3" column="0">
     <widget class="QPushButton" name="pushButton_Crear">
      <property name="text">
@@ -99,24 +112,26 @@
    <item row="3" column="4">
     <widget class="QDoubleSpinBox" name="doubleSpinBox_yMax"/>
    </item>
-   <item row="2" column="5" rowspan="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="0" colspan="6">
+   <item row="1" column="0" colspan="5">
     <widget class="QLineEdit" name="lineEdit_In"/>
+   </item>
+   <item row="1" column="5">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

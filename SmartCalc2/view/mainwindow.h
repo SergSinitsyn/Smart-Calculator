@@ -38,6 +38,7 @@ class MainWindow : public QMainWindow {
   void on_actionCredit_Calculator_triggered();
   void on_actionDeposit_Calculator_triggered();
   void on_actionGraph_View_triggered();
+  void SetExpression(QString expression);
 
  protected:
   void keyPressEvent(QKeyEvent* event);

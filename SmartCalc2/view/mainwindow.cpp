@@ -129,8 +129,13 @@ void MainWindow::on_actionDeposit_Calculator_triggered() {
 }
 
 void MainWindow::on_actionGraph_View_triggered() {
+  Graph->SetExpression(ui->lineEdit_iuput->text());
   this->hide();
   Deposit->hide();
   Credit->hide();
   Graph->show();
+}
+
+void MainWindow::SetExpression(QString expression) {
+  ui->lineEdit_iuput->setText(expression);
 }

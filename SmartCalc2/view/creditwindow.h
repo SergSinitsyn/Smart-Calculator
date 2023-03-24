@@ -1,6 +1,7 @@
 #ifndef CREDITWINDOW_H
 #define CREDITWINDOW_H
 
+#include <QDoubleSpinBox>
 #include <QWidget>
 #include <vector>
 
@@ -29,9 +30,13 @@ class CreditWindow : public QWidget {
 
   void on_comboBox_Term_currentIndexChanged(int index);
 
+  void on_pushButton_Clear_clicked();
+
  private:
   Ui::CreditWindow* ui;
   void Calculate();
+  void SetDefault(QSpinBox& sb);
+  void SetDefault(QDoubleSpinBox& sb);
 
   Controller* controller_credit_;
 };
