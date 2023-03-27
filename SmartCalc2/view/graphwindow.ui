@@ -38,7 +38,17 @@
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_xMin"/>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_xMin">
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.000000000000000</double>
+     </property>
+    </widget>
    </item>
    <item row="2" column="3">
     <widget class="QLabel" name="label_xMax">
@@ -57,6 +67,12 @@
     <widget class="QDoubleSpinBox" name="doubleSpinBox_xMax">
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
      </property>
     </widget>
    </item>
@@ -94,7 +110,14 @@
     </widget>
    </item>
    <item row="3" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMin"/>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMin">
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
+    </widget>
    </item>
    <item row="3" column="3">
     <widget class="QLabel" name="label_yMax">
@@ -110,7 +133,14 @@
     </widget>
    </item>
    <item row="3" column="4">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMax"/>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_yMax">
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0" colspan="5">
     <widget class="QLineEdit" name="lineEdit_In"/>

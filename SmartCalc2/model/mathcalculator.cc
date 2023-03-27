@@ -28,12 +28,12 @@ void MathCalculator::CalculateXY(int number_of_points, double x_start,
                                  double x_end) {
   CheckNumberOfPoints(number_of_points);
   CheckRange(x_start, x_end);
-  std::vector<double> x, y;
+  QVector<double> x, y;
   for (int i = 0; i < number_of_points; ++i) {
     x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
     y.push_back(PostfixNotationCalculation(x.back()));
   }
-  answer_graph_ = make_pair(x, y);
+  answer_graph_ = std::make_pair(x, y);
 }
 
 void MathCalculator::LoadExpression(const std::string& input_string) {
@@ -144,8 +144,7 @@ void MathCalculator::PushToken(std::string temp) {
     if (name == " ") {
     } else if ((name == "+" || name == "-") &&
                (input_.empty() ||
-                !(input_.back().GetPrecedence() == Precedence::kNumber ||
-                  input_.back().GetName() == ")"))) {
+                !kLastToken_[input_.back().GetPrecedence()])) {
       if (name == "-") {
         Token temp;
         temp.MakeUnaryNegation();

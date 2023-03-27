@@ -16,7 +16,6 @@ SOURCES += \
     model/date.cc \
     model/deposit.cc \
     model/mathcalculator.cc \
-    model/model.cc \
     model/token.cc \
     view/creditwindow.cpp \
     view/depositwindow.cpp \
@@ -31,7 +30,6 @@ HEADERS += \
      model/date.h \
      model/deposit.h \
      model/mathcalculator.h \
-     model/model.h \
      model/token.h \
      view/creditwindow.h \
      view/depositwindow.h \

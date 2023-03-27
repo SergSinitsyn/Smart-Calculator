@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>566</width>
+    <width>571</width>
     <height>453</height>
    </rect>
   </property>
@@ -14,8 +14,71 @@
    <string>Deposit Calculator</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
+    <widget class="QDateEdit" name="dateEdit">
+     <property name="displayFormat">
+      <string>dd/MM/yyyy</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1" colspan="4">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Calcilate Deposit</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Periodicity of Payments</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Tax Amount</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
+   </item>
+   <item row="5" column="2">
+    <widget class="QCheckBox" name="checkBox">
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhNone</set>
+     </property>
+     <property name="text">
+      <string>Capitalisation</string>
+     </property>
+     <property name="tristate">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="2">
     <widget class="QComboBox" name="comboBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <item>
       <property name="text">
        <string>Days</string>
@@ -38,98 +101,36 @@
      </item>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Start of Term</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QSpinBox" name="spinBox">
+   <item row="13" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>1000000</number>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QDateEdit" name="dateEdit">
-     <property name="displayFormat">
-      <string>dd/MM/yyyy</string>
-     </property>
-     <property name="calendarPopup">
+     <property name="readOnly">
       <bool>true</bool>
      </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
     </widget>
    </item>
-   <item row="5" column="2">
-    <widget class="QCheckBox" name="checkBox">
-     <property name="acceptDrops">
-      <bool>false</bool>
-     </property>
-     <property name="inputMethodHints">
-      <set>Qt::ImhNone</set>
-     </property>
+   <item row="4" column="2">
+    <widget class="QLabel" name="label_11">
      <property name="text">
-      <string>Capitalisation</string>
-     </property>
-     <property name="tristate">
-      <bool>false</bool>
+      <string>%</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>Tax Amount</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="4">
-    <widget class="QPushButton" name="pushButton_addReplenishment">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>20</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>X</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Interest Rate</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
+   <item row="12" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
      </property>
     </widget>
    </item>
@@ -143,15 +144,14 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="1" colspan="4">
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>Calcilate Deposit</string>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="1">
     <widget class="QComboBox" name="comboBox_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <item>
       <property name="text">
        <string>Daily</string>
@@ -189,20 +189,49 @@
      </item>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="QComboBox" name="comboBox_3"/>
-   </item>
-   <item row="10" column="0">
-    <widget class="QLabel" name="label_8">
+   <item row="3" column="2">
+    <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Accrued Interest</string>
+      <string>%</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_12">
+   <item row="7" column="4">
+    <widget class="QPushButton" name="pushButton_addReplenishment">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>20</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>X</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Tax Rate</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Interest Rate</string>
      </property>
     </widget>
    </item>
@@ -213,53 +242,57 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="2">
-    <widget class="QLabel" name="label_6">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>%</string>
+      <string>Placement Period</string>
      </property>
     </widget>
-   </item>
-   <item row="4" column="2">
-    <widget class="QLabel" name="label_11">
-     <property name="text">
-      <string>%</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="3">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
    </item>
    <item row="7" column="2">
-    <widget class="QDateEdit" name="dateEdit_2"/>
+    <widget class="QDateEdit" name="dateEdit_2">
+     <property name="displayFormat">
+      <string>dd/MM/yyyy</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
-   <item row="12" column="0">
+   <item row="2" column="1">
+    <widget class="QSpinBox" name="spinBox">
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QComboBox" name="comboBox_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="0">
     <widget class="QLabel" name="label_10">
      <property name="acceptDrops">
       <bool>false</bool>
@@ -291,8 +324,15 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Start of Term</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -304,31 +344,17 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Accrued Interest</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="2">
     <widget class="QPushButton" name="pushButton_2">
      <property name="text">
       <string>PushButton</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Periodicity of Payments</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Placement Period</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Tax Rate</string>
      </property>
     </widget>
    </item>
@@ -336,7 +362,6 @@
  </widget>
  <tabstops>
   <tabstop>pushButton</tabstop>
-  <tabstop>doubleSpinBox_4</tabstop>
  </tabstops>
  <resources/>
  <connections/>

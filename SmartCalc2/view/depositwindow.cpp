@@ -1,5 +1,6 @@
 #include "depositwindow.h"
 
+#include "../controller/controller.h"
 #include "ui_depositwindow.h"
 
 DepositWindow::DepositWindow(QWidget *parent)
@@ -13,6 +14,8 @@ DepositWindow::DepositWindow(QWidget *parent)
 }
 
 DepositWindow::~DepositWindow() { delete ui; }
+
+void DepositWindow::SetController(Controller *d) { controller_deposit_ = d; }
 
 // int count =0;
 

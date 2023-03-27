@@ -1,6 +1,7 @@
 #ifndef _MODEL_MATHCALCULATOR_H_
 #define _MODEL_MATHCALCULATOR_H_
 
+#include <QVector>
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -19,7 +20,7 @@
 #include "check.h"
 #include "token.h"
 
-using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
+using XYGraph = std::pair<QVector<double>, QVector<double>>;
 
 class MathCalculator {
  public:
