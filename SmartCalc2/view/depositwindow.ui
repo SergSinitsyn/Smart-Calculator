@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>571</width>
+    <width>598</width>
     <height>453</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">
-    <widget class="QDateEdit" name="dateEdit">
+    <widget class="QDateEdit" name="dateEdit_StartOfTerm">
      <property name="displayFormat">
       <string>dd/MM/yyyy</string>
      </property>
@@ -32,7 +32,7 @@
     </widget>
    </item>
    <item row="10" column="1" colspan="4">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="pushButton_Calculate">
      <property name="text">
       <string>Calcilate Deposit</string>
      </property>
@@ -56,7 +56,7 @@
     <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
    </item>
    <item row="5" column="2">
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="checkBox_Capitalisation">
      <property name="acceptDrops">
       <bool>false</bool>
      </property>
@@ -72,7 +72,7 @@
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="comboBox_PlacementPeriod">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -82,11 +82,6 @@
      <item>
       <property name="text">
        <string>Days</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Weeks</string>
       </property>
      </item>
      <item>
@@ -102,7 +97,7 @@
     </widget>
    </item>
    <item row="13" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_DepositAmountByTheEndOfTheTerm">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -122,7 +117,7 @@
     </widget>
    </item>
    <item row="12" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_TaxAmount">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -135,7 +130,7 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_InterestRate">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -145,7 +140,7 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="comboBox_PeriodicityOfPayments">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -260,7 +255,7 @@
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QSpinBox" name="spinBox">
+    <widget class="QSpinBox" name="spinBox_PlacementPeriod">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -283,7 +278,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_DepositAmount">
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
      </property>
@@ -312,7 +307,7 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_TaxRate">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -332,7 +327,7 @@
     </widget>
    </item>
    <item row="11" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_AccruedInterest">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -361,7 +356,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_Calculate</tabstop>
  </tabstops>
  <resources/>
  <connections/>

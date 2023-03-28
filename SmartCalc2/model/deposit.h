@@ -18,27 +18,41 @@ enum PeriodicityOfPayments {
 class Deposit {
  public:
   Deposit() = default;
-//  Deposit(double deposit_amount, Date start_date, Date end_date,
-//          double interest_rate, double tax_rate,
-//          PeriodicityOfPayments periodicity_of_payments,
-//          bool capitalization_of_interest,
-//          std::map<Date, double> replenishments_list,
-//          std::map<Date, double> partial_withdrawals_list);
+  //  Deposit(double deposit_amount, Date start_date, Date end_date,
+  //          double interest_rate, double tax_rate,
+  //          PeriodicityOfPayments periodicity_of_payments,
+  //          bool capitalization_of_interest,
+  //          std::map<Date, double> replenishments_list,
+  //          std::map<Date, double> partial_withdrawals_list);
   ~Deposit() = default;
-void LoadDepositData(double deposit_amount, Date start_date, Date end_date,
-                     double interest_rate, double tax_rate,
-                     PeriodicityOfPayments periodicity_of_payments,
-                     bool capitalization_of_interest,
-                     std::multimap<Date, double> replenishments_list,
-                     std::multimap<Date, double> partial_withdrawals_list);
-  void SetNextCapitalizationDate(int& count);
-  std::tuple<double, double, double> CalculateDeposit();
+
+  void CalculateDeposit(double deposit_amount, Date start_of_term,
+                        int placement_period, int placement_period_type,
+                        double interest_rate, double tax_rate,
+                        PeriodicityOfPayments periodicity_of_payments,
+                        bool capitalization_of_interest,
+                        std::multimap<Date, double> replenishments_list,
+                        std::multimap<Date, double> partial_withdrawals_list);
+
+  double GetAccruedInterest();
+  double GetTaxAmount();
+  double GetDepositAmountByTheEndOfTheTerm();
 
  private:
-   //input data
+  void LoadDepositData(double deposit_amount, Date start_date,
+                       int placement_period, int placement_period_type,
+                       double interest_rate, double tax_rate,
+                       PeriodicityOfPayments periodicity_of_payments,
+                       bool capitalization_of_interest,
+                       std::multimap<Date, double> replenishments_list,
+                       std::multimap<Date, double> partial_withdrawals_list);
+  void Calculation();
+  void SetNextCapitalizationDate(int& count);
+
+  // input data
   double deposit_amount_;
-  Date start_date_;
-  Date end_date_;
+  Date start_of_term_;
+  Date end_of_term_;
   double interest_rate_;
   double tax_rate_;
   PeriodicityOfPayments periodicity_of_payments_;

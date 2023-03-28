@@ -26,3 +26,40 @@ void DepositWindow::on_pushButton_addReplenishment_clicked() {
   //    QTableWidgetItem *tbl2 = new QTableWidgetItem(ui->dateEdit_2);
   //    count++;
 }
+
+void DepositWindow::on_pushButton_Calculate_clicked() { Calculate(); }
+
+void DepositWindow::Calculate() { controller_deposit_->CalculateDeposit(this); }
+
+double DepositWindow::GetDepositAmount() {
+  return ui->doubleSpinBox_DepositAmount->value();
+}
+
+QDate DepositWindow::GetStartOfTerm() {
+  return ui->dateEdit_StartOfTerm->date();
+}
+
+int DepositWindow::GetPlacementPeriod() {
+  return ui->spinBox_PlacementPeriod->value();
+}
+
+// 0-daily 1-monthly 2-annually
+int DepositWindow::GetPlacementPeriodType() {
+  return ui->comboBox_PlacementPeriod->currentIndex();
+}
+
+double DepositWindow::GetInterestRate() {
+  return ui->doubleSpinBox_InterestRate->value();
+}
+
+double DepositWindow::GetTaxRate() {
+  return ui->doubleSpinBox_TaxRate->value();
+}
+
+int DepositWindow::GetPeriodicityOfPayments() {
+  return ui->comboBox_PeriodicityOfPayments->currentIndex();
+}
+
+bool DepositWindow::GetCapitalisationOfInterest() {
+  return ui->checkBox_Capitalisation->checkState();
+}

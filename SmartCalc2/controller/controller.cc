@@ -26,8 +26,17 @@ void Controller::CalculateCredit(CreditWindow *c) {
                model_credit->GetMonthlyPayment());
 }
 
-void Controller::CalculateDeposit(CreditWindow *d) {
-  //    model_deposit->CalculateDeposit();
+void Controller::CalculateDeposit(DepositWindow *d) {
+  //  model_deposit->CalculateDeposit();
+  d->GetDepositAmount();
+  d->GetStartOfTerm();
+  d->GetPlacementPeriod();
+  d->GetPlacementPeriodType();
+  d->GetInterestRate();
+  d->GetTaxRate();
+  d->GetPeriodicityOfPayments();
+  d->GetCapitalisationOfInterest();
+
   //    d->SetAnswer(model_deposit->Get,
   //                 model_deposit->Get,
   //                 model_deposit->Get;

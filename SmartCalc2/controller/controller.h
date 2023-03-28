@@ -13,7 +13,7 @@ class Controller {
   void CalculateValue(MainWindow* w);
   void CalculateGraph(GraphWindow* g);
   void CalculateCredit(CreditWindow* c);
-  void CalculateDeposit(CreditWindow* d);
+  void CalculateDeposit(DepositWindow* d);
 
  private:
   MathCalculator* model_math;
