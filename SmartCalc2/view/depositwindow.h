@@ -26,9 +26,11 @@ class DepositWindow : public QWidget {
   int GetPeriodicityOfPayments();
   bool GetCapitalisationOfInterest();
 
-  void SetAccruedInterest();
-  void SetTaxAmount();
-  void SetDepositAmountByTheEndOfTheTerm();
+  void SetAnswer(double deposit_amount_by_the_end_of_the_term,
+                 double accrued_interest, double tax_amount);
+  //  void SetAccruedInterest();
+  //  void SetTaxAmount();
+  //  void SetDepositAmountByTheEndOfTheTerm();
 
  private slots:
   void on_pushButton_addReplenishment_clicked();

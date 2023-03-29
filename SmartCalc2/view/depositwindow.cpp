@@ -63,3 +63,11 @@ int DepositWindow::GetPeriodicityOfPayments() {
 bool DepositWindow::GetCapitalisationOfInterest() {
   return ui->checkBox_Capitalisation->checkState();
 }
+
+void DepositWindow::SetAnswer(double deposit_amount_by_the_end_of_the_term,
+                              double accrued_interest, double tax_amount) {
+  ui->doubleSpinBox_DepositAmountByTheEndOfTheTerm->setValue(
+      deposit_amount_by_the_end_of_the_term);
+  ui->doubleSpinBox_AccruedInterest->setValue(accrued_interest);
+  ui->doubleSpinBox_TaxAmount->setValue(tax_amount);
+}

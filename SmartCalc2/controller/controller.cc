@@ -27,17 +27,17 @@ void Controller::CalculateCredit(CreditWindow *c) {
 }
 
 void Controller::CalculateDeposit(DepositWindow *d) {
-  //  model_deposit->CalculateDeposit();
-  d->GetDepositAmount();
-  d->GetStartOfTerm();
-  d->GetPlacementPeriod();
-  d->GetPlacementPeriodType();
-  d->GetInterestRate();
-  d->GetTaxRate();
-  d->GetPeriodicityOfPayments();
-  d->GetCapitalisationOfInterest();
+  std::multimap<Date, double> replenishments_list;
+  std::multimap<Date, double> partial_withdrawals_list;
+  Date start_of_term(d->GetStartOfTerm().day(), d->GetStartOfTerm().month() - 1,
+                     d->GetStartOfTerm().year());
+  model_deposit->CalculateDeposit(
+      d->GetDepositAmount(), start_of_term, d->GetPlacementPeriod(),
+      d->GetPlacementPeriodType(), d->GetInterestRate(), d->GetTaxRate(),
+      d->GetPeriodicityOfPayments(), d->GetCapitalisationOfInterest(),
+      replenishments_list, partial_withdrawals_list);
 
-  //    d->SetAnswer(model_deposit->Get,
-  //                 model_deposit->Get,
-  //                 model_deposit->Get;
+  d->SetAnswer(model_deposit->GetDepositAmountByTheEndOfTheTerm(),
+               model_deposit->GetAccruedInterest(),
+               model_deposit->GetTaxAmount());
 }

@@ -5,6 +5,8 @@
 
 #include "date.h"
 
+double round_2d(double value);
+
 enum PeriodicityOfPayments {
   kDaily,
   kWeekly,
@@ -18,18 +20,12 @@ enum PeriodicityOfPayments {
 class Deposit {
  public:
   Deposit() = default;
-  //  Deposit(double deposit_amount, Date start_date, Date end_date,
-  //          double interest_rate, double tax_rate,
-  //          PeriodicityOfPayments periodicity_of_payments,
-  //          bool capitalization_of_interest,
-  //          std::map<Date, double> replenishments_list,
-  //          std::map<Date, double> partial_withdrawals_list);
   ~Deposit() = default;
 
   void CalculateDeposit(double deposit_amount, Date start_of_term,
                         int placement_period, int placement_period_type,
                         double interest_rate, double tax_rate,
-                        PeriodicityOfPayments periodicity_of_payments,
+                        int periodicity_of_payments,
                         bool capitalization_of_interest,
                         std::multimap<Date, double> replenishments_list,
                         std::multimap<Date, double> partial_withdrawals_list);
@@ -42,31 +38,32 @@ class Deposit {
   void LoadDepositData(double deposit_amount, Date start_date,
                        int placement_period, int placement_period_type,
                        double interest_rate, double tax_rate,
-                       PeriodicityOfPayments periodicity_of_payments,
+                       int periodicity_of_payments,
                        bool capitalization_of_interest,
                        std::multimap<Date, double> replenishments_list,
                        std::multimap<Date, double> partial_withdrawals_list);
   void Calculation();
-  void SetNextCapitalizationDate();
-  void CheckCapitalisationDate();      //!
-  void AddAccruedInterest();           //!
-  void CheckReplenishmentsList();      //!
-  void CheckPartialWithdrawalsList();  //!
+  void SetNextPaymentDate();
+  void CheckPaymentDate();
+  void AddAccruedInterest();
+  void CheckReplenishmentsList();
+  void CheckPartialWithdrawalsList();
 
   // input data
   double deposit_amount_;
   Date start_of_term_;
-  Date end_of_term_;
   double interest_rate_;
   double tax_rate_;
-  PeriodicityOfPayments periodicity_of_payments_;
+  int periodicity_of_payments_;
   bool capitalization_of_interest_;
   std::multimap<Date, double> replenishments_list_;
   std::multimap<Date, double> partial_withdrawals_list_;
 
   // temp data
+  Date end_of_term_;
   Date current_date_;
-  Date capitalisation_date_;
+  Date payment_date_;
+  double accrued_interest_receivable_;
 
   // output data
   double accrued_interest_;

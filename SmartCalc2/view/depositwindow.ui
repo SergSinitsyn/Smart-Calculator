@@ -107,6 +107,12 @@
      <property name="buttonSymbols">
       <enum>QAbstractSpinBox::NoButtons</enum>
      </property>
+     <property name="showGroupSeparator" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <double>1000000000000000.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="4" column="2">
@@ -126,6 +132,12 @@
      </property>
      <property name="buttonSymbols">
       <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="showGroupSeparator" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <double>1000000000000000.000000000000000</double>
      </property>
     </widget>
    </item>
@@ -285,6 +297,12 @@
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
+     <property name="showGroupSeparator" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <double>1000000000000000.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="13" column="0">
@@ -336,6 +354,12 @@
      </property>
      <property name="buttonSymbols">
       <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="showGroupSeparator" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <double>1000000000000000.000000000000000</double>
      </property>
     </widget>
    </item>

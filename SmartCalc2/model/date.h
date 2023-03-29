@@ -5,12 +5,9 @@
 
 class Date {
  public:
-  Date();
+  Date() = default;
   Date(int day, int month, int year);
-  //   Date(const Date& other);
-  //   Date(Date&& other);
-  //   Date& operator=(const Date& other);
-  //   Date& operator=(Date&& other);
+  ~Date() = default;
 
   int GetDay();
   int GetMonth();

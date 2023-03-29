@@ -2,15 +2,6 @@
 
 #include <algorithm>
 
-Date::Date()
-    : day_{0},
-      month_{0},
-      year_{0},
-      count_{0},
-      start_day_{0},
-      start_month_{0},
-      start_year_{0} {}
-
 Date::Date(int day, int month, int year) {
   std::tm tm{};
   tm.tm_year = year;
@@ -23,34 +14,14 @@ Date::Date(int day, int month, int year) {
   start_year_ = year_;
   start_month_ = month_;
   start_day_ = day_;
+  count_ = 0;
 }
-
-// Date::Date(const Date& other) {
-//   if (this != &other) {
-//     day_ = other.day_;
-//     month_ = other.month_;
-//     year_ = other.year_;
-//   }
-// }
-
-// Date::Date(Date&& other) : day_{0}, month_{0}, year_{0} {
-//   if (this != &other) {
-//     std::swap(day_, other.day_);
-//     std::swap(month_, other.month_);
-//     std::swap(year_, other.year_);
-//   }
-// }
 
 int Date::GetDay() { return day_; }
-int Date::GetMonth() { return month_; }
-int Date::GetYear() { return year_; }
 
-void Date::Add(int day, int month, int year) {
-  Date temp_date(day_ + day, month_ + month, year_ + year);
-  day_ = temp_date.day_;
-  month_ = temp_date.month_;
-  year_ = temp_date.year_;
-}
+int Date::GetMonth() { return month_; }
+
+int Date::GetYear() { return year_; }
 
 void Date::AddDays(int days) { Add(days, 0, 0); }
 
@@ -131,4 +102,11 @@ int Date::DaysInYear() {
     daysInYear = 366;
   }
   return daysInYear;
+}
+
+void Date::Add(int day, int month, int year) {
+  Date temp_date(day_ + day, month_ + month, year_ + year);
+  day_ = temp_date.day_;
+  month_ = temp_date.month_;
+  year_ = temp_date.year_;
 }
