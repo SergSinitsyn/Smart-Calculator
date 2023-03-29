@@ -57,13 +57,13 @@ void Deposit::LoadDepositData(
   end_of_term_ = start_of_term_;
   switch (placement_period_type) {
     case 0:
-      end_of_term_.Add(placement_period, 0, 0);
+      end_of_term_.AddDays(placement_period);
       break;
     case 1:
-      end_of_term_.Add(0, placement_period, 0);  //! check correction
+      end_of_term_.AddMonths(placement_period);
       break;
     case 2:
-      end_of_term_.Add(0, 0, placement_period);  //! check correction
+      end_of_term_.AddYears(placement_period);
       break;
   }
   interest_rate_ = interest_rate;
@@ -79,48 +79,33 @@ void Deposit::LoadDepositData(
   deposit_amount_by_the_end_of_the_term_ = 0;
 }
 
-void Deposit::SetNextCapitalizationDate(int& count) {
-  Date temp = start_of_term_;
+void Deposit::SetNextCapitalizationDate() {
   switch (periodicity_of_payments_) {
     case PeriodicityOfPayments::kDaily:
-      temp.Add(count, 0, 0);
+      capitalisation_date_.AddDays(1);
       break;
     case PeriodicityOfPayments::kWeekly:
-      temp.Add(7 * count, 0, 0);
+      capitalisation_date_.AddDays(7);
       break;
     case PeriodicityOfPayments::kMonthly:
-      temp.Add(0, count, 0);
-      while (temp.GetMonth() % 12 != (start_of_term_.GetMonth() + 1) % 12) {
-        temp.Add(-1, 0, 0);
-      }
+      capitalisation_date_.AddMonths(1);
       break;
     case PeriodicityOfPayments::kQuarterOfTheYear:
-      temp.Add(0, 3 * count, 0);
-      while (temp.GetMonth() % 12 != (start_of_term_.GetMonth() + 3) % 12) {
-        temp.Add(-1, 0, 0);
-      }
+      capitalisation_date_.AddMonths(3);
       break;
     case PeriodicityOfPayments::kHalfYear:
-      temp.Add(0, 6 * count, 0);
-      while (temp.GetMonth() % 12 != (start_of_term_.GetMonth() + 6) % 12) {
-        temp.Add(-1, 0, 0);
-      }
+      capitalisation_date_.AddMonths(6);
       break;
     case PeriodicityOfPayments::kAnnualy:
-      temp.Add(0, 0, count);
-      while (temp.GetMonth() != start_of_term_.GetMonth()) {
-        temp.Add(-1, 0, 0);
-      }
+      capitalisation_date_.AddYears(1);
       break;
     case PeriodicityOfPayments::kEndOfTerm:
-      temp = end_of_term_;
+      capitalisation_date_ = end_of_term_;
       break;
     default:
-      temp = end_of_term_;
+      capitalisation_date_ = end_of_term_;
       break;
   }
-  count++;
-  capitalisation_date_ = temp;
   if (capitalisation_date_ > end_of_term_) {
     capitalisation_date_ = end_of_term_;
   }
@@ -131,20 +116,23 @@ void Deposit::Calculation() {
     periodicity_of_payments_ = PeriodicityOfPayments::kEndOfTerm;
   }
   double start_deposit_ = deposit_amount_;
-  current_date_.Add(1, 0, 0);
-  int count = 1;  // capitalisation count
-  SetNextCapitalizationDate(count);
+  current_date_.AddDays(1);
+  SetNextCapitalizationDate();
   while (current_date_ <= end_of_term_) {
     // сheck capitalisation_date_
+    CheckCapitalisationDate();  //!
     if (current_date_ == capitalisation_date_) {
       deposit_amount_ += accrued_interest_;
       accrued_interest_ = 0;
-      SetNextCapitalizationDate(count);
+      SetNextCapitalizationDate();
     }
+
     // add accrued interest every day
+    AddAccruedInterest();  //!
     accrued_interest_ += round_2d(deposit_amount_ * interest_rate_ / 100.0 /
                                   current_date_.DaysInYear());
     // сheck replenishments_list_
+    CheckReplenishmentsList();  //!
     auto it1 = replenishments_list_.find(current_date_);
     while (it1 != replenishments_list_.end()) {
       deposit_amount_ += it1->second;
@@ -152,6 +140,7 @@ void Deposit::Calculation() {
       it1 = replenishments_list_.find(current_date_);
     }
     // сheck partial_withdrawals_list_
+    CheckPartialWithdrawalsList();  //!
     auto it2 = partial_withdrawals_list_.find(current_date_);
     while (it2 != partial_withdrawals_list_.end()) {
       deposit_amount_ -= it2->second;
@@ -162,7 +151,7 @@ void Deposit::Calculation() {
       it2 = partial_withdrawals_list_.find(current_date_);
     }
     // go to next day
-    current_date_.Add(1, 0, 0);
+    current_date_.AddDays(1);
   }
   accrued_interest_ = deposit_amount_ - start_deposit_;
   deposit_amount_by_the_end_of_the_term_ = deposit_amount_;

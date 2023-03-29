@@ -2,20 +2,27 @@
 
 #include <algorithm>
 
-Date::Date():
-    day_{0},
-    month_{0},
-    year_{0} {}
+Date::Date()
+    : day_{0},
+      month_{0},
+      year_{0},
+      count_{0},
+      start_day_{0},
+      start_month_{0},
+      start_year_{0} {}
 
 Date::Date(int day, int month, int year) {
-    std::tm tm{};
-    tm.tm_year = year;
-    tm.tm_mon = month;
-    tm.tm_mday = day;
-    std::mktime(&tm);
-    year_ = tm.tm_year;
-    month_ = tm.tm_mon;
-    day_ = tm.tm_mday;
+  std::tm tm{};
+  tm.tm_year = year;
+  tm.tm_mon = month;
+  tm.tm_mday = day;
+  std::mktime(&tm);
+  year_ = tm.tm_year;
+  month_ = tm.tm_mon;
+  day_ = tm.tm_mday;
+  start_year_ = year_;
+  start_month_ = month_;
+  start_day_ = day_;
 }
 
 // Date::Date(const Date& other) {
@@ -39,60 +46,89 @@ int Date::GetMonth() { return month_; }
 int Date::GetYear() { return year_; }
 
 void Date::Add(int day, int month, int year) {
-    Date temp_date(day_ + day, month_ + month, year_ + year);
-    day_ = temp_date.day_;
-    month_ = temp_date.month_;
-    year_ = temp_date.year_;
+  Date temp_date(day_ + day, month_ + month, year_ + year);
+  day_ = temp_date.day_;
+  month_ = temp_date.month_;
+  year_ = temp_date.year_;
+}
+
+void Date::AddDays(int days) { Add(days, 0, 0); }
+
+void Date::AddMonths(int months) {
+  ++count_;
+  Date start(start_day_, start_month_, start_year_);
+  Date temp(start_day_, start_month_, start_year_);
+  temp.Add(0, months * count_, 0);
+  while (temp.GetMonth() % 12 != (start.GetMonth() + months * count_) % 12) {
+    temp.AddDays(-1);
+  }
+  day_ = temp.GetDay();
+  month_ = temp.GetMonth();
+  year_ = temp.GetYear();
+}
+
+void Date::AddYears(int years) {
+  ++count_;
+  Date start(start_day_, start_month_, start_year_);
+  Date temp(start_day_, start_month_, start_year_);
+  Add(0, 0, years);
+  temp.Add(0, 0, years * count_);
+  while (temp.GetMonth() != start.GetMonth()) {
+    temp.AddDays(-1);
+  }
+  day_ = temp.GetDay();
+  month_ = temp.GetMonth();
+  year_ = temp.GetYear();
 }
 
 bool Date::operator==(const Date& other) const {
-    bool result = true;
-    if (this != &other) {
-        result = false;
-        if (year_ == other.year_ && month_ == other.month_ && day_ == other.day_) {
-            result = true;
-        }
+  bool result = true;
+  if (this != &other) {
+    result = false;
+    if (year_ == other.year_ && month_ == other.month_ && day_ == other.day_) {
+      result = true;
     }
-    return result;
+  }
+  return result;
 }
 
 bool Date::operator>(const Date& other) const {
-    bool result = false;
-    if (this != &other) {
-        result = true;
-        if (year_ > other.year_) {
-        } else if (month_ > other.month_) {
-        } else if (day_ > other.day_) {
-        } else {
-            result = false;
-        }
+  bool result = false;
+  if (this != &other) {
+    result = true;
+    if (year_ > other.year_) {
+    } else if (month_ > other.month_) {
+    } else if (day_ > other.day_) {
+    } else {
+      result = false;
     }
-    return result;
+  }
+  return result;
 }
 
 bool Date::operator<(const Date& other) const {
-    bool result = false;
-    if (this != &other) {
-        result = true;
-        if (year_ < other.year_) {
-        } else if (month_ < other.month_) {
-        } else if (day_ < other.day_) {
-        } else {
-            result = false;
-        }
+  bool result = false;
+  if (this != &other) {
+    result = true;
+    if (year_ < other.year_) {
+    } else if (month_ < other.month_) {
+    } else if (day_ < other.day_) {
+    } else {
+      result = false;
     }
-    return result;
+  }
+  return result;
 }
 
 bool Date::operator<=(const Date& other) const {
-    return (*this == other || *this < other);
+  return (*this == other || *this < other);
 }
 
 int Date::DaysInYear() {
-    int daysInYear = 365;
-    Date temp(29, 1, year_);
-    if (temp.day_ == 29) {
-        daysInYear = 366;
-    }
-    return daysInYear;
+  int daysInYear = 365;
+  Date temp(29, 1, year_);
+  if (temp.day_ == 29) {
+    daysInYear = 366;
+  }
+  return daysInYear;
 }

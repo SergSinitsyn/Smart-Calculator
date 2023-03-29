@@ -47,7 +47,11 @@ class Deposit {
                        std::multimap<Date, double> replenishments_list,
                        std::multimap<Date, double> partial_withdrawals_list);
   void Calculation();
-  void SetNextCapitalizationDate(int& count);
+  void SetNextCapitalizationDate();
+  void CheckCapitalisationDate();      //!
+  void AddAccruedInterest();           //!
+  void CheckReplenishmentsList();      //!
+  void CheckPartialWithdrawalsList();  //!
 
   // input data
   double deposit_amount_;
