@@ -37,6 +37,8 @@ class DepositWindow : public QWidget {
 
   void on_pushButton_Calculate_clicked();
 
+  void on_comboBox_PeriodicityOfPayments_currentIndexChanged(int index);
+
  private:
   Ui::DepositWindow *ui;
 

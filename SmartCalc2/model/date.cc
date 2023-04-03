@@ -14,7 +14,8 @@ Date::Date(int day, int month, int year) {
   start_year_ = year_;
   start_month_ = month_;
   start_day_ = day_;
-  count_ = 0;
+  count_month_ = 0;
+  count_year_ = 0;
 }
 
 int Date::GetDay() { return day_; }
@@ -26,11 +27,12 @@ int Date::GetYear() { return year_; }
 void Date::AddDays(int days) { Add(days, 0, 0); }
 
 void Date::AddMonths(int months) {
-  ++count_;
+  ++count_month_;
   Date start(start_day_, start_month_, start_year_);
   Date temp(start_day_, start_month_, start_year_);
-  temp.Add(0, months * count_, 0);
-  while (temp.GetMonth() % 12 != (start.GetMonth() + months * count_) % 12) {
+  temp.Add(0, months * count_month_, 0);
+  while (temp.GetMonth() % 12 !=
+         (start.GetMonth() + months * count_month_) % 12) {
     temp.AddDays(-1);
   }
   day_ = temp.GetDay();
@@ -39,11 +41,11 @@ void Date::AddMonths(int months) {
 }
 
 void Date::AddYears(int years) {
-  ++count_;
+  ++count_year_;
   Date start(start_day_, start_month_, start_year_);
   Date temp(start_day_, start_month_, start_year_);
   Add(0, 0, years);
-  temp.Add(0, 0, years * count_);
+  temp.Add(0, 0, years * count_year_);
   while (temp.GetMonth() != start.GetMonth()) {
     temp.AddDays(-1);
   }
@@ -64,35 +66,59 @@ bool Date::operator==(const Date& other) const {
 }
 
 bool Date::operator>(const Date& other) const {
-  bool result = false;
   if (this != &other) {
-    result = true;
     if (year_ > other.year_) {
-    } else if (month_ > other.month_) {
-    } else if (day_ > other.day_) {
+      return true;
+    } else if (year_ < other.year_) {
+      return false;
     } else {
-      result = false;
+      if (month_ > other.month_) {
+        return true;
+      } else if (month_ < other.month_) {
+        return false;
+      } else {
+        if (day_ > other.day_) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
+  } else {
+    return true;
   }
-  return result;
 }
 
 bool Date::operator<(const Date& other) const {
-  bool result = false;
   if (this != &other) {
-    result = true;
     if (year_ < other.year_) {
-    } else if (month_ < other.month_) {
-    } else if (day_ < other.day_) {
+      return true;
+    } else if (year_ > other.year_) {
+      return false;
     } else {
-      result = false;
+      if (month_ < other.month_) {
+        return true;
+      } else if (month_ > other.month_) {
+        return false;
+      } else {
+        if (day_ < other.day_) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
+  } else {
+    return true;
   }
-  return result;
 }
 
 bool Date::operator<=(const Date& other) const {
   return (*this == other || *this < other);
+}
+
+bool Date::operator>=(const Date& other) const {
+  return (*this == other || *this > other);
 }
 
 int Date::DaysInYear() {

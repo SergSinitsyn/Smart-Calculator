@@ -30,7 +30,7 @@ class Deposit {
                         std::multimap<Date, double> replenishments_list,
                         std::multimap<Date, double> partial_withdrawals_list);
 
-  double GetAccruedInterest();
+  long double GetAccruedInterest();
   double GetTaxAmount();
   double GetDepositAmountByTheEndOfTheTerm();
 
@@ -63,10 +63,10 @@ class Deposit {
   Date end_of_term_;
   Date current_date_;
   Date payment_date_;
-  double accrued_interest_receivable_;
+  long double accrued_interest_receivable_;
 
   // output data
-  double accrued_interest_;
+  long double accrued_interest_;
   double tax_amount_;
   double deposit_amount_by_the_end_of_the_term_;
 };

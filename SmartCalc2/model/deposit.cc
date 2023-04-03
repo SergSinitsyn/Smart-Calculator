@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-double round_2d(double value) { return round(value * 100) / 100.; }
+double round_2d(double value) { return round(value * 100.) / 100.; }
 
 void Deposit::CalculateDeposit(
     double deposit_amount, Date start_of_term, int placement_period,
@@ -17,7 +17,7 @@ void Deposit::CalculateDeposit(
   Calculation();
 }
 
-double Deposit::GetAccruedInterest() { return accrued_interest_; }
+long double Deposit::GetAccruedInterest() { return accrued_interest_; }
 double Deposit::GetTaxAmount() { return tax_amount_; }
 double Deposit::GetDepositAmountByTheEndOfTheTerm() {
   return deposit_amount_by_the_end_of_the_term_;
@@ -31,7 +31,7 @@ void Deposit::LoadDepositData(
     std::multimap<Date, double> partial_withdrawals_list) {
   deposit_amount_ = deposit_amount;
   start_of_term_ = start_of_term;
-  end_of_term_ = start_of_term_;
+  end_of_term_ = start_of_term;
   switch (placement_period_type) {
     case 0:
       end_of_term_.AddDays(placement_period);
@@ -51,10 +51,10 @@ void Deposit::LoadDepositData(
   partial_withdrawals_list_ = partial_withdrawals_list;
   current_date_ = start_of_term;
   payment_date_ = start_of_term;
-  accrued_interest_receivable_ = 0;
-  accrued_interest_ = 0;
-  tax_amount_ = 0;
-  deposit_amount_by_the_end_of_the_term_ = 0;
+  accrued_interest_receivable_ = 0.;
+  accrued_interest_ = 0.;
+  tax_amount_ = 0.;
+  deposit_amount_by_the_end_of_the_term_ = 0.;
 }
 
 void Deposit::Calculation() {
@@ -62,8 +62,8 @@ void Deposit::Calculation() {
   current_date_.AddDays(1);
   SetNextPaymentDate();
   while (current_date_ <= end_of_term_) {
-    CheckPaymentDate();
     AddAccruedInterest();
+    CheckPaymentDate();
     CheckReplenishmentsList();
     CheckPartialWithdrawalsList();
     current_date_.AddDays(1);
@@ -76,28 +76,25 @@ void Deposit::Calculation() {
 
 void Deposit::SetNextPaymentDate() {
   switch (periodicity_of_payments_) {
-    case PeriodicityOfPayments::kDaily:
+    case kDaily:
       payment_date_.AddDays(1);
       break;
-    case PeriodicityOfPayments::kWeekly:
+    case kWeekly:
       payment_date_.AddDays(7);
       break;
-    case PeriodicityOfPayments::kMonthly:
+    case kMonthly:
       payment_date_.AddMonths(1);
       break;
-    case PeriodicityOfPayments::kQuarterOfTheYear:
+    case kQuarterOfTheYear:
       payment_date_.AddMonths(3);
       break;
-    case PeriodicityOfPayments::kHalfYear:
+    case kHalfYear:
       payment_date_.AddMonths(6);
       break;
-    case PeriodicityOfPayments::kAnnualy:
+    case kAnnualy:
       payment_date_.AddYears(1);
       break;
-    case PeriodicityOfPayments::kEndOfTerm:
-      payment_date_ = end_of_term_;
-      break;
-    default:
+    case kEndOfTerm:
       payment_date_ = end_of_term_;
       break;
   }
@@ -109,9 +106,9 @@ void Deposit::SetNextPaymentDate() {
 void Deposit::CheckPaymentDate() {
   if (current_date_ == payment_date_) {
     if (capitalization_of_interest_) {
-      deposit_amount_ += accrued_interest_;
+      deposit_amount_ += round_2d(accrued_interest_);
     } else {
-      accrued_interest_receivable_ += accrued_interest_;
+      accrued_interest_receivable_ += round_2d(accrued_interest_);
     }
     accrued_interest_ = 0;
     SetNextPaymentDate();
@@ -119,8 +116,8 @@ void Deposit::CheckPaymentDate() {
 }
 
 void Deposit::AddAccruedInterest() {
-  accrued_interest_ += round_2d(deposit_amount_ * interest_rate_ / 100.0 /
-                                current_date_.DaysInYear());
+  accrued_interest_ += deposit_amount_ * interest_rate_ / 100.0 /
+                       (double)current_date_.DaysInYear();
 }
 
 void Deposit::CheckReplenishmentsList() {

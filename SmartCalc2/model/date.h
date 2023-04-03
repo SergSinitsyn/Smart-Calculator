@@ -23,13 +23,15 @@ class Date {
   bool operator>(const Date& other) const;
   bool operator<(const Date& other) const;
   bool operator<=(const Date& other) const;
+  bool operator>=(const Date& other) const;
 
  private:
   void Add(int day, int month, int year);
   int day_;
   int month_;
   int year_;
-  int count_;
+  int count_month_;
+  int count_year_;
   int start_day_;
   int start_month_;
   int start_year_;

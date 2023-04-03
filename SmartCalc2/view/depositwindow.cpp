@@ -6,6 +6,7 @@
 DepositWindow::DepositWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::DepositWindow) {
   ui->setupUi(this);
+  ui->dateEdit_StartOfTerm->setDate(QDate::currentDate());
   //    ui->tableWidget->setRowCount(0);
   //    ui->tableWidget->setColumnCount(3);
 
@@ -70,4 +71,9 @@ void DepositWindow::SetAnswer(double deposit_amount_by_the_end_of_the_term,
       deposit_amount_by_the_end_of_the_term);
   ui->doubleSpinBox_AccruedInterest->setValue(accrued_interest);
   ui->doubleSpinBox_TaxAmount->setValue(tax_amount);
+}
+
+void DepositWindow::on_comboBox_PeriodicityOfPayments_currentIndexChanged(
+    int index) {
+  ui->label_13->setText(QString::number(index, 'g', 8));
 }
