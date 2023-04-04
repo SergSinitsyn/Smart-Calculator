@@ -34,19 +34,24 @@ void GraphWindow::SetGraph(std::pair<QVector<double>, QVector<double>> graph) {
   if (count_ == colours_.size()) return;
   // create graph and assign data to it:
   ui->widget->addGraph();
+  ui->widget->graph(count_)->setName(ui->lineEdit_In->text());
 
   ui->widget->graph(count_)->setPen(QColor(colours_[count_]));
   ui->widget->graph(count_)->setLineStyle(QCPGraph::lsLine);
   //  ui->widget->graph(count_)->setScatterStyle(
   //      QCPScatterStyle(QCPScatterStyle::ssDot, Qt::red, Qt::white, 0.1));
   ui->widget->graph(count_)->setData(graph.first, graph.second);
+
+  ui->widget->legend->setVisible(count_ + 1);
+  ui->widget->axisRect()->insetLayout()->setInsetAlignment(
+      0, Qt::AlignTop | Qt::AlignRight);
+
   ui->widget->replot();
 
   //  //    ui->widget->removeGraph(0);
-
   //  //        int count = ui->widget-> graphCount();
 
-  ui->label->setText(QString::number(count_, 'g', 8));
+  ui->label->setText(QString::number(count_, 'g', 8));  //! delete
   ++count_;
 }
 
