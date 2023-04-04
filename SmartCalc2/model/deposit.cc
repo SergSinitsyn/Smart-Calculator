@@ -4,12 +4,13 @@
 
 double round_2d(double value) { return round(value * 100.) / 100.; }
 
-void Deposit::CalculateDeposit(
-    double deposit_amount, Date start_of_term, int placement_period,
-    int placement_period_type, double interest_rate, double tax_rate,
-    int periodicity_of_payments, bool capitalization_of_interest,
-    std::multimap<Date, double> replenishments_list,
-    std::multimap<Date, double> partial_withdrawals_list) {
+void Deposit::CalculateDeposit(double deposit_amount, Date start_of_term,
+                               int placement_period, int placement_period_type,
+                               double interest_rate, double tax_rate,
+                               int periodicity_of_payments,
+                               bool capitalization_of_interest,
+                               MAP replenishments_list,
+                               MAP partial_withdrawals_list) {
   LoadDepositData(deposit_amount, start_of_term, placement_period,
                   placement_period_type, interest_rate, tax_rate,
                   periodicity_of_payments, capitalization_of_interest,
@@ -23,12 +24,13 @@ double Deposit::GetDepositAmountByTheEndOfTheTerm() {
   return deposit_amount_by_the_end_of_the_term_;
 }
 
-void Deposit::LoadDepositData(
-    double deposit_amount, Date start_of_term, int placement_period,
-    int placement_period_type, double interest_rate, double tax_rate,
-    int periodicity_of_payments, bool capitalization_of_interest,
-    std::multimap<Date, double> replenishments_list,
-    std::multimap<Date, double> partial_withdrawals_list) {
+void Deposit::LoadDepositData(double deposit_amount, Date start_of_term,
+                              int placement_period, int placement_period_type,
+                              double interest_rate, double tax_rate,
+                              int periodicity_of_payments,
+                              bool capitalization_of_interest,
+                              MAP replenishments_list,
+                              MAP partial_withdrawals_list) {
   deposit_amount_ = deposit_amount;
   start_of_term_ = start_of_term;
   end_of_term_ = start_of_term;
@@ -123,7 +125,7 @@ void Deposit::AddAccruedInterest() {
 void Deposit::CheckReplenishmentsList() {
   auto it = replenishments_list_.find(current_date_);
   while (it != replenishments_list_.end()) {
-    deposit_amount_ += it->second;
+    deposit_amount_ += it->second.second;
     replenishments_list_.erase(it);
     it = replenishments_list_.find(current_date_);
   }
@@ -132,7 +134,7 @@ void Deposit::CheckReplenishmentsList() {
 void Deposit::CheckPartialWithdrawalsList() {
   auto it = partial_withdrawals_list_.find(current_date_);
   while (it != partial_withdrawals_list_.end()) {
-    deposit_amount_ -= it->second;
+    deposit_amount_ -= it->second.second;
     if (deposit_amount_ < 0) {
       deposit_amount_ = 0;  //!
     }

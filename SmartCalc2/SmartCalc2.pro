@@ -17,6 +17,7 @@ SOURCES += \
     model/deposit.cc \
     model/mathcalculator.cc \
     model/token.cc \
+    view/cell.cpp \
     view/creditwindow.cpp \
     view/depositwindow.cpp \
     view/graphwindow.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
      model/deposit.h \
      model/mathcalculator.h \
      model/token.h \
+     view/cell.h \
      view/creditwindow.h \
      view/depositwindow.h \
      view/graphwindow.h \
@@ -38,6 +40,7 @@ HEADERS += \
      view/qcustomplot.h
 
 FORMS += \
+   view/cell.ui \
    view/creditwindow.ui \
    view/depositwindow.ui \
    view/graphwindow.ui \

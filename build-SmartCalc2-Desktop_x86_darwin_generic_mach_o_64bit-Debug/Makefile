@@ -60,11 +60,13 @@ SOURCES       = ../SmartCalc2/controller/controller.cc \
 		../SmartCalc2/model/deposit.cc \
 		../SmartCalc2/model/mathcalculator.cc \
 		../SmartCalc2/model/token.cc \
+		../SmartCalc2/view/cell.cpp \
 		../SmartCalc2/view/creditwindow.cpp \
 		../SmartCalc2/view/depositwindow.cpp \
 		../SmartCalc2/view/graphwindow.cpp \
 		../SmartCalc2/view/mainwindow.cpp \
-		../SmartCalc2/view/qcustomplot.cpp moc_creditwindow.cpp \
+		../SmartCalc2/view/qcustomplot.cpp moc_cell.cpp \
+		moc_creditwindow.cpp \
 		moc_depositwindow.cpp \
 		moc_graphwindow.cpp \
 		moc_mainwindow.cpp \
@@ -77,11 +79,13 @@ OBJECTS       = controller.o \
 		deposit.o \
 		mathcalculator.o \
 		token.o \
+		cell.o \
 		creditwindow.o \
 		depositwindow.o \
 		graphwindow.o \
 		mainwindow.o \
 		qcustomplot.o \
+		moc_cell.o \
 		moc_creditwindow.o \
 		moc_depositwindow.o \
 		moc_graphwindow.o \
@@ -313,6 +317,7 @@ DIST          = /usr/local/share/qt/mkspecs/features/spec_pre.prf \
 		/usr/local/share/qt/mkspecs/features/qt_config.prf \
 		/usr/local/share/qt/mkspecs/macx-clang/qmake.conf \
 		/usr/local/share/qt/mkspecs/features/spec_post.prf \
+		../SmartCalc2/.qmake.stash \
 		/usr/local/share/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/local/share/qt/mkspecs/features/mac/sdk.prf \
 		/usr/local/share/qt/mkspecs/features/toolchain.prf \
@@ -348,6 +353,7 @@ DIST          = /usr/local/share/qt/mkspecs/features/spec_pre.prf \
 		../SmartCalc2/model/deposit.h \
 		../SmartCalc2/model/mathcalculator.h \
 		../SmartCalc2/model/token.h \
+		../SmartCalc2/view/cell.h \
 		../SmartCalc2/view/creditwindow.h \
 		../SmartCalc2/view/depositwindow.h \
 		../SmartCalc2/view/graphwindow.h \
@@ -360,6 +366,7 @@ DIST          = /usr/local/share/qt/mkspecs/features/spec_pre.prf \
 		../SmartCalc2/model/deposit.cc \
 		../SmartCalc2/model/mathcalculator.cc \
 		../SmartCalc2/model/token.cc \
+		../SmartCalc2/view/cell.cpp \
 		../SmartCalc2/view/creditwindow.cpp \
 		../SmartCalc2/view/depositwindow.cpp \
 		../SmartCalc2/view/graphwindow.cpp \
@@ -373,7 +380,7 @@ TARGET        = SmartCalc2.app/Contents/MacOS/SmartCalc2
 EXPORT_QMAKE_MAC_SDK = macosx
 EXPORT_QMAKE_MAC_SDK_VERSION = 12.1
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
-EXPORT__QMAKE_STASH_ = 
+EXPORT__QMAKE_STASH_ = /Users/bernarda/Projects_s21/cpp/SmartCalc/build-SmartCalc2-Desktop_x86_darwin_generic_mach_o_64bit-Debug/.qmake.stash
 EXPORT_VALID_ARCHS = x86_64
 EXPORT_DEFAULT_ARCHS = x86_64
 EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(EXPORT_DEFAULT_ARCHS), $(EXPORT_DEFAULT_ARCHS), $(EXPORT_VALID_ARCHS))))
@@ -385,7 +392,7 @@ include /usr/local/share/qt/mkspecs/features/mac/sdk.mk
 first: all
 ####### Build rules
 
-SmartCalc2.app/Contents/MacOS/SmartCalc2: ui_creditwindow.h ui_depositwindow.h ui_graphwindow.h ui_mainwindow.h $(OBJECTS)  
+SmartCalc2.app/Contents/MacOS/SmartCalc2: ui_cell.h ui_creditwindow.h ui_depositwindow.h ui_graphwindow.h ui_mainwindow.h $(OBJECTS)  
 	@test -d SmartCalc2.app/Contents/MacOS/ || mkdir -p SmartCalc2.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -615,6 +622,7 @@ Makefile: ../SmartCalc2/SmartCalc2.pro /usr/local/share/qt/mkspecs/macx-clang/qm
 		/usr/local/share/qt/mkspecs/features/qt_config.prf \
 		/usr/local/share/qt/mkspecs/macx-clang/qmake.conf \
 		/usr/local/share/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/local/share/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/local/share/qt/mkspecs/features/mac/sdk.prf \
 		/usr/local/share/qt/mkspecs/features/toolchain.prf \
@@ -875,6 +883,7 @@ Makefile: ../SmartCalc2/SmartCalc2.pro /usr/local/share/qt/mkspecs/macx-clang/qm
 /usr/local/share/qt/mkspecs/features/qt_config.prf:
 /usr/local/share/qt/mkspecs/macx-clang/qmake.conf:
 /usr/local/share/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/local/share/qt/mkspecs/features/exclusive_builds.prf:
 /usr/local/share/qt/mkspecs/features/mac/sdk.prf:
 /usr/local/share/qt/mkspecs/features/toolchain.prf:
@@ -938,9 +947,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/share/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../SmartCalc2/controller/controller.h ../SmartCalc2/model/check.h ../SmartCalc2/model/credit.h ../SmartCalc2/model/date.h ../SmartCalc2/model/deposit.h ../SmartCalc2/model/mathcalculator.h ../SmartCalc2/model/token.h ../SmartCalc2/view/creditwindow.h ../SmartCalc2/view/depositwindow.h ../SmartCalc2/view/graphwindow.h ../SmartCalc2/view/mainwindow.h ../SmartCalc2/view/qcustomplot.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../SmartCalc2/controller/controller.cc ../SmartCalc2/main.cpp ../SmartCalc2/model/check.cc ../SmartCalc2/model/credit.cc ../SmartCalc2/model/date.cc ../SmartCalc2/model/deposit.cc ../SmartCalc2/model/mathcalculator.cc ../SmartCalc2/model/token.cc ../SmartCalc2/view/creditwindow.cpp ../SmartCalc2/view/depositwindow.cpp ../SmartCalc2/view/graphwindow.cpp ../SmartCalc2/view/mainwindow.cpp ../SmartCalc2/view/qcustomplot.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../SmartCalc2/view/creditwindow.ui ../SmartCalc2/view/depositwindow.ui ../SmartCalc2/view/graphwindow.ui ../SmartCalc2/view/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../SmartCalc2/controller/controller.h ../SmartCalc2/model/check.h ../SmartCalc2/model/credit.h ../SmartCalc2/model/date.h ../SmartCalc2/model/deposit.h ../SmartCalc2/model/mathcalculator.h ../SmartCalc2/model/token.h ../SmartCalc2/view/cell.h ../SmartCalc2/view/creditwindow.h ../SmartCalc2/view/depositwindow.h ../SmartCalc2/view/graphwindow.h ../SmartCalc2/view/mainwindow.h ../SmartCalc2/view/qcustomplot.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../SmartCalc2/controller/controller.cc ../SmartCalc2/main.cpp ../SmartCalc2/model/check.cc ../SmartCalc2/model/credit.cc ../SmartCalc2/model/date.cc ../SmartCalc2/model/deposit.cc ../SmartCalc2/model/mathcalculator.cc ../SmartCalc2/model/token.cc ../SmartCalc2/view/cell.cpp ../SmartCalc2/view/creditwindow.cpp ../SmartCalc2/view/depositwindow.cpp ../SmartCalc2/view/graphwindow.cpp ../SmartCalc2/view/mainwindow.cpp ../SmartCalc2/view/qcustomplot.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../SmartCalc2/view/cell.ui ../SmartCalc2/view/creditwindow.ui ../SmartCalc2/view/depositwindow.ui ../SmartCalc2/view/graphwindow.ui ../SmartCalc2/view/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -950,6 +959,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r SmartCalc2.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -974,9 +984,16 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/share/qt/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/local/share/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_creditwindow.cpp moc_depositwindow.cpp moc_graphwindow.cpp moc_mainwindow.cpp moc_qcustomplot.cpp
+compiler_moc_header_make_all: moc_cell.cpp moc_creditwindow.cpp moc_depositwindow.cpp moc_graphwindow.cpp moc_mainwindow.cpp moc_qcustomplot.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_creditwindow.cpp moc_depositwindow.cpp moc_graphwindow.cpp moc_mainwindow.cpp moc_qcustomplot.cpp
+	-$(DEL_FILE) moc_cell.cpp moc_creditwindow.cpp moc_depositwindow.cpp moc_graphwindow.cpp moc_mainwindow.cpp moc_qcustomplot.cpp
+moc_cell.cpp: ../SmartCalc2/view/cell.h \
+		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
+		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
+		moc_predefs.h \
+		/usr/local/share/qt/libexec/moc
+	/usr/local/share/qt/libexec/moc $(DEFINES) --include /Users/bernarda/Projects_s21/cpp/SmartCalc/build-SmartCalc2-Desktop_x86_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/usr/local/share/qt/mkspecs/macx-clang -I/Users/bernarda/Projects_s21/cpp/SmartCalc/SmartCalc2 -I/usr/local/lib/QtPrintSupport.framework/Headers -I/usr/local/lib/QtWidgets.framework/Headers -I/usr/local/lib/QtGui.framework/Headers -I/usr/local/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/usr/local/lib ../SmartCalc2/view/cell.h -o moc_cell.cpp
+
 moc_creditwindow.cpp: ../SmartCalc2/view/creditwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QDoubleSpinBox \
 		/usr/local/lib/QtWidgets.framework/Headers/qspinbox.h \
@@ -987,8 +1004,11 @@ moc_creditwindow.cpp: ../SmartCalc2/view/creditwindow.h \
 	/usr/local/share/qt/libexec/moc $(DEFINES) --include /Users/bernarda/Projects_s21/cpp/SmartCalc/build-SmartCalc2-Desktop_x86_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/usr/local/share/qt/mkspecs/macx-clang -I/Users/bernarda/Projects_s21/cpp/SmartCalc/SmartCalc2 -I/usr/local/lib/QtPrintSupport.framework/Headers -I/usr/local/lib/QtWidgets.framework/Headers -I/usr/local/lib/QtGui.framework/Headers -I/usr/local/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/usr/local/lib ../SmartCalc2/view/creditwindow.h -o moc_creditwindow.cpp
 
 moc_depositwindow.cpp: ../SmartCalc2/view/depositwindow.h \
+		/usr/local/lib/QtCore.framework/Headers/QVector \
+		/usr/local/lib/QtCore.framework/Headers/qvector.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
+		../SmartCalc2/view/cell.h \
 		moc_predefs.h \
 		/usr/local/share/qt/libexec/moc
 	/usr/local/share/qt/libexec/moc $(DEFINES) --include /Users/bernarda/Projects_s21/cpp/SmartCalc/build-SmartCalc2-Desktop_x86_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/usr/local/share/qt/mkspecs/macx-clang -I/Users/bernarda/Projects_s21/cpp/SmartCalc/SmartCalc2 -I/usr/local/lib/QtPrintSupport.framework/Headers -I/usr/local/lib/QtWidgets.framework/Headers -I/usr/local/lib/QtGui.framework/Headers -I/usr/local/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/usr/local/lib ../SmartCalc2/view/depositwindow.h -o moc_depositwindow.cpp
@@ -1023,6 +1043,7 @@ moc_mainwindow.cpp: ../SmartCalc2/view/mainwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
 		../SmartCalc2/view/depositwindow.h \
+		../SmartCalc2/view/cell.h \
 		../SmartCalc2/view/graphwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QLineEdit \
 		/usr/local/lib/QtWidgets.framework/Headers/qlineedit.h \
@@ -1046,9 +1067,13 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_creditwindow.h ui_depositwindow.h ui_graphwindow.h ui_mainwindow.h
+compiler_uic_make_all: ui_cell.h ui_creditwindow.h ui_depositwindow.h ui_graphwindow.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_creditwindow.h ui_depositwindow.h ui_graphwindow.h ui_mainwindow.h
+	-$(DEL_FILE) ui_cell.h ui_creditwindow.h ui_depositwindow.h ui_graphwindow.h ui_mainwindow.h
+ui_cell.h: ../SmartCalc2/view/cell.ui \
+		/usr/local/share/qt/libexec/uic
+	/usr/local/share/qt/libexec/uic ../SmartCalc2/view/cell.ui -o ui_cell.h
+
 ui_creditwindow.h: ../SmartCalc2/view/creditwindow.ui \
 		/usr/local/share/qt/libexec/uic
 	/usr/local/share/qt/libexec/uic ../SmartCalc2/view/creditwindow.ui -o ui_creditwindow.h
@@ -1099,6 +1124,7 @@ controller.o: ../SmartCalc2/controller/controller.cc ../SmartCalc2/controller/co
 		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
 		../SmartCalc2/view/depositwindow.h \
+		../SmartCalc2/view/cell.h \
 		../SmartCalc2/view/graphwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QLineEdit \
 		/usr/local/lib/QtWidgets.framework/Headers/qlineedit.h \
@@ -1132,6 +1158,7 @@ main.o: ../SmartCalc2/main.cpp /usr/local/lib/QtWidgets.framework/Headers/QAppli
 		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
 		../SmartCalc2/view/depositwindow.h \
+		../SmartCalc2/view/cell.h \
 		../SmartCalc2/view/graphwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QLineEdit \
 		/usr/local/lib/QtWidgets.framework/Headers/qlineedit.h \
@@ -1168,6 +1195,12 @@ mathcalculator.o: ../SmartCalc2/model/mathcalculator.cc ../SmartCalc2/model/mode
 token.o: ../SmartCalc2/model/token.cc ../SmartCalc2/model/token.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o token.o ../SmartCalc2/model/token.cc
 
+cell.o: ../SmartCalc2/view/cell.cpp ../SmartCalc2/view/cell.h \
+		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
+		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui_cell.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cell.o ../SmartCalc2/view/cell.cpp
+
 creditwindow.o: ../SmartCalc2/view/creditwindow.cpp ../SmartCalc2/view/creditwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QDoubleSpinBox \
 		/usr/local/lib/QtWidgets.framework/Headers/qspinbox.h \
@@ -1190,6 +1223,7 @@ creditwindow.o: ../SmartCalc2/view/creditwindow.cpp ../SmartCalc2/view/creditwin
 		/usr/local/lib/QtWidgets.framework/Headers/QMessageBox \
 		/usr/local/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../SmartCalc2/view/depositwindow.h \
+		../SmartCalc2/view/cell.h \
 		../SmartCalc2/view/graphwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QLineEdit \
 		/usr/local/lib/QtWidgets.framework/Headers/qlineedit.h \
@@ -1201,15 +1235,22 @@ creditwindow.o: ../SmartCalc2/view/creditwindow.cpp ../SmartCalc2/view/creditwin
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o creditwindow.o ../SmartCalc2/view/creditwindow.cpp
 
 depositwindow.o: ../SmartCalc2/view/depositwindow.cpp ../SmartCalc2/view/depositwindow.h \
+		/usr/local/lib/QtCore.framework/Headers/QVector \
+		/usr/local/lib/QtCore.framework/Headers/qvector.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
+		../SmartCalc2/view/cell.h \
+		/usr/local/lib/QtWidgets.framework/Headers/QPushButton \
+		/usr/local/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		/usr/local/lib/QtCore.framework/Headers/QString \
+		/usr/local/lib/QtCore.framework/Headers/qstring.h \
+		/usr/local/lib/QtWidgets.framework/Headers/QVBoxLayout \
+		/usr/local/lib/QtWidgets.framework/Headers/qboxlayout.h \
 		../SmartCalc2/controller/controller.h \
 		../SmartCalc2/model/credit.h \
 		../SmartCalc2/model/deposit.h \
 		../SmartCalc2/model/date.h \
 		../SmartCalc2/model/mathcalculator.h \
-		/usr/local/lib/QtCore.framework/Headers/QVector \
-		/usr/local/lib/QtCore.framework/Headers/qvector.h \
 		../SmartCalc2/model/check.h \
 		../SmartCalc2/model/token.h \
 		../SmartCalc2/view/mainwindow.h \
@@ -1261,6 +1302,7 @@ graphwindow.o: ../SmartCalc2/view/graphwindow.cpp ../SmartCalc2/view/graphwindow
 		/usr/local/lib/QtWidgets.framework/Headers/QDoubleSpinBox \
 		/usr/local/lib/QtWidgets.framework/Headers/qspinbox.h \
 		../SmartCalc2/view/depositwindow.h \
+		../SmartCalc2/view/cell.h \
 		ui_graphwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphwindow.o ../SmartCalc2/view/graphwindow.cpp
 
@@ -1279,6 +1321,7 @@ mainwindow.o: ../SmartCalc2/view/mainwindow.cpp ../SmartCalc2/view/mainwindow.h 
 		/usr/local/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/lib/QtWidgets.framework/Headers/qwidget.h \
 		../SmartCalc2/view/depositwindow.h \
+		../SmartCalc2/view/cell.h \
 		../SmartCalc2/view/graphwindow.h \
 		/usr/local/lib/QtWidgets.framework/Headers/QLineEdit \
 		/usr/local/lib/QtWidgets.framework/Headers/qlineedit.h \
@@ -1301,6 +1344,9 @@ qcustomplot.o: ../SmartCalc2/view/qcustomplot.cpp ../SmartCalc2/view/qcustomplot
 		/usr/local/lib/QtCore.framework/Headers/qnumeric.h \
 		/usr/local/lib/QtCore.framework/Headers/QtNumeric
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qcustomplot.o ../SmartCalc2/view/qcustomplot.cpp
+
+moc_cell.o: moc_cell.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cell.o moc_cell.cpp
 
 moc_creditwindow.o: moc_creditwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_creditwindow.o moc_creditwindow.cpp

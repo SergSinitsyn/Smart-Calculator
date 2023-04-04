@@ -7,6 +7,8 @@
 
 double round_2d(double value);
 
+using MAP = std::multimap<Date, std::pair<int, double>>;
+
 enum PeriodicityOfPayments {
   kDaily,
   kWeekly,
@@ -27,8 +29,7 @@ class Deposit {
                         double interest_rate, double tax_rate,
                         int periodicity_of_payments,
                         bool capitalization_of_interest,
-                        std::multimap<Date, double> replenishments_list,
-                        std::multimap<Date, double> partial_withdrawals_list);
+                        MAP replenishments_list, MAP partial_withdrawals_list);
 
   long double GetAccruedInterest();
   double GetTaxAmount();
@@ -39,9 +40,8 @@ class Deposit {
                        int placement_period, int placement_period_type,
                        double interest_rate, double tax_rate,
                        int periodicity_of_payments,
-                       bool capitalization_of_interest,
-                       std::multimap<Date, double> replenishments_list,
-                       std::multimap<Date, double> partial_withdrawals_list);
+                       bool capitalization_of_interest, MAP replenishments_list,
+                       MAP partial_withdrawals_list);
   void Calculation();
   void SetNextPaymentDate();
   void CheckPaymentDate();
@@ -56,8 +56,8 @@ class Deposit {
   double tax_rate_;
   int periodicity_of_payments_;
   bool capitalization_of_interest_;
-  std::multimap<Date, double> replenishments_list_;
-  std::multimap<Date, double> partial_withdrawals_list_;
+  MAP replenishments_list_;
+  MAP partial_withdrawals_list_;
 
   // temp data
   Date end_of_term_;

@@ -55,61 +55,57 @@ void Date::AddYears(int years) {
 }
 
 bool Date::operator==(const Date& other) const {
-  bool result = true;
-  if (this != &other) {
-    result = false;
-    if (year_ == other.year_ && month_ == other.month_ && day_ == other.day_) {
-      result = true;
-    }
+  if (this == &other) {
+    return true;
   }
-  return result;
+  if (year_ == other.year_ && month_ == other.month_ && day_ == other.day_) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
+bool Date::operator!=(const Date& other) const { return !(*this == other); }
+
 bool Date::operator>(const Date& other) const {
-  if (this != &other) {
-    if (year_ > other.year_) {
-      return true;
-    } else if (year_ < other.year_) {
-      return false;
-    } else {
-      if (month_ > other.month_) {
-        return true;
-      } else if (month_ < other.month_) {
-        return false;
-      } else {
-        if (day_ > other.day_) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    }
-  } else {
+  if (this == &other) {
     return true;
+  }
+  if (year_ > other.year_) {
+    return true;
+  } else if (year_ < other.year_) {
+    return false;
+  }
+  if (month_ > other.month_) {
+    return true;
+  } else if (month_ < other.month_) {
+    return false;
+  }
+  if (day_ > other.day_) {
+    return true;
+  } else {
+    return false;
   }
 }
 
 bool Date::operator<(const Date& other) const {
-  if (this != &other) {
-    if (year_ < other.year_) {
-      return true;
-    } else if (year_ > other.year_) {
-      return false;
-    } else {
-      if (month_ < other.month_) {
-        return true;
-      } else if (month_ > other.month_) {
-        return false;
-      } else {
-        if (day_ < other.day_) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    }
-  } else {
+  if (this == &other) {
     return true;
+  }
+  if (year_ < other.year_) {
+    return true;
+  } else if (year_ > other.year_) {
+    return false;
+  }
+  if (month_ < other.month_) {
+    return true;
+  } else if (month_ > other.month_) {
+    return false;
+  }
+  if (day_ < other.day_) {
+    return true;
+  } else {
+    return false;
   }
 }
 
