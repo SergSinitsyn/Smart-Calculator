@@ -29,6 +29,9 @@ class MainWindow : public QMainWindow {
   std::string GetInputStringX();
   void SetAnswer(double x);
 
+ public slots:
+  void TakeExpressionFromGraph(QString expression);
+
  private slots:
   void input_buttons();
   void on_toolButton_equal_clicked();
@@ -38,7 +41,8 @@ class MainWindow : public QMainWindow {
   void on_actionCredit_Calculator_triggered();
   void on_actionDeposit_Calculator_triggered();
   void on_actionGraph_View_triggered();
-  void SetExpression(QString expression);
+
+  void on_lineEdit_iuput_textChanged(const QString& arg1);
 
  protected:
   void keyPressEvent(QKeyEvent* event);
@@ -49,7 +53,9 @@ class MainWindow : public QMainWindow {
   DepositWindow* Deposit;
   GraphWindow* Graph;
   Controller* controller_;
-
   void Calculate();
+
+ signals:
+  void SendExpressionToGraph(QString);
 };
 #endif  // MAINWINDOW_H

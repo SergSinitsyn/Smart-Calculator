@@ -18,10 +18,6 @@ GraphWindow::~GraphWindow() { delete ui; }
 
 void GraphWindow::SetController(Controller *g) { controller_graph_ = g; }
 
-void GraphWindow::SetExpression(QString expression) {
-  ui->lineEdit_In->setText(expression);
-}
-
 std::string GraphWindow::GetInputString() {
   return ui->lineEdit_In->text().toStdString();
 }
@@ -36,8 +32,9 @@ void GraphWindow::SetGraph(std::pair<QVector<double>, QVector<double>> graph) {
   ui->widget->addGraph();
   ui->widget->graph(count_)->setName(ui->lineEdit_In->text());
 
-  ui->widget->graph(count_)->setPen(QColor(colours_[count_]));
   ui->widget->graph(count_)->setLineStyle(QCPGraph::lsLine);
+  ui->widget->graph(count_)->setPen(QPen(QColor(colours_[count_]), 1.5));
+
   //  ui->widget->graph(count_)->setScatterStyle(
   //      QCPScatterStyle(QCPScatterStyle::ssDot, Qt::red, Qt::white, 0.1));
   ui->widget->graph(count_)->setData(graph.first, graph.second);
@@ -47,12 +44,11 @@ void GraphWindow::SetGraph(std::pair<QVector<double>, QVector<double>> graph) {
       0, Qt::AlignTop | Qt::AlignRight);
 
   ui->widget->replot();
-
-  //  //    ui->widget->removeGraph(0);
-  //  //        int count = ui->widget-> graphCount();
-
-  ui->label->setText(QString::number(count_, 'g', 8));  //! delete
   ++count_;
+}
+
+void GraphWindow::TakeExpressionFromCalc(QString expression) {
+  ui->lineEdit_In->setText(expression);
 }
 
 void GraphWindow::on_pushButton_Print_clicked() {
@@ -102,4 +98,8 @@ void GraphWindow::SetupBox() {
   ui->doubleSpinBox_xMax->setValue(100);
   ui->doubleSpinBox_yMin->setValue(0);
   ui->doubleSpinBox_yMax->setValue(100);
+}
+
+void GraphWindow::on_lineEdit_In_textChanged(const QString &arg1) {
+  emit SendExpressionToCalc(arg1);
 }

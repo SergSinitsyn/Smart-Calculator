@@ -30,8 +30,20 @@ void MathCalculator::CalculateXY(int number_of_points, double x_start,
   CheckRange(x_start, x_end);
   QVector<double> x, y;
   for (int i = 0; i < number_of_points; ++i) {
-    x.push_back(x_start + (double)i * (x_end - x_start) / number_of_points);
-    y.push_back(PostfixNotationCalculation(x.back()));
+    double x_value = x_start + (double)i * (x_end - x_start) / number_of_points;
+    double y_value = PostfixNotationCalculation(x_value);
+
+    //    if (i && abs(abs(y.back()) + abs(y_value) / (x_value - x.back())) >
+    //    1000 &&
+    //        (y.back() * y_value) < 0) {
+    //      y.push_back(NAN);
+    //    } else {
+    //      y.push_back(y_value);
+    //    }
+    //    x.push_back(x_value);
+
+    x.push_back(x_value);
+    y.push_back(y_value);
   }
   answer_graph_ = std::make_pair(x, y);
 }

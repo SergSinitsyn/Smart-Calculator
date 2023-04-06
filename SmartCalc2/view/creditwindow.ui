@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>396</width>
+    <width>400</width>
     <height>329</height>
    </rect>
   </property>
@@ -14,89 +14,6 @@
    <string>Credit Calculator</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_TotalPayment">
-     <property name="text">
-      <string>Total Payment</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_InterestRate">
-     <property name="text">
-      <string>Interest Rate</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QComboBox" name="comboBox_Term">
-     <item>
-      <property name="text">
-       <string>Months</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Years</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QSpinBox" name="spinBox_Term">
-     <property name="font">
-      <font>
-       <pointsize>13</pointsize>
-      </font>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>600</number>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_Type">
-     <property name="text">
-      <string>Type</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_MonthlyPayment">
-     <property name="text">
-      <string>Monthly payment</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_InterestRate">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="minimum">
-      <double>0.010000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_TotalCreditAmount">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="showGroupSeparator" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="maximum">
-      <double>1000000000000000000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_Term">
      <property name="text">
@@ -104,42 +21,14 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="QLabel" name="label_Overpayment">
      <property name="text">
       <string>Overtayment on credit</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QLabel" name="label_prc">
-     <property name="text">
-      <string>%</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QComboBox" name="comboBox_Type">
-     <item>
-      <property name="text">
-       <string>Annuity</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Differentiated</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_TotalCreditAmount">
-     <property name="text">
-      <string>Total Credit Amount</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1" colspan="2">
+   <item row="8" column="1" colspan="2">
     <widget class="QListWidget" name="listWidget_MonthlyPayment">
      <property name="font">
       <font>
@@ -160,7 +49,121 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1" colspan="2">
+   <item row="1" column="2">
+    <widget class="QComboBox" name="comboBox_Term">
+     <item>
+      <property name="text">
+       <string>Months</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Years</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_InterestRate">
+     <property name="text">
+      <string>Interest Rate</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="pushButton_Clear">
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="text">
+      <string>Clear</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_TotalCreditAmount">
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="showGroupSeparator" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <double>1000000000000000000.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QLabel" name="label_prc">
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_Type">
+     <property name="text">
+      <string>Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QComboBox" name="comboBox_Type">
+     <item>
+      <property name="text">
+       <string>Annuity</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Differentiated</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_TotalPayment">
+     <property name="text">
+      <string>Total Payment</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_InterestRate">
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="minimum">
+      <double>0.010000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSpinBox" name="spinBox_Term">
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>600</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_TotalCreditAmount">
+     <property name="text">
+      <string>Total Credit Amount</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1" colspan="2">
     <widget class="QDoubleSpinBox" name="doubleSpinBox_TotalPayment">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -179,7 +182,7 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="1" colspan="2">
+   <item row="7" column="1" colspan="2">
     <widget class="QDoubleSpinBox" name="doubleSpinBox_Overpayment">
      <property name="font">
       <font>
@@ -203,17 +206,27 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QPushButton" name="pushButton_Calculate">
+   <item row="8" column="0" alignment="Qt::AlignTop">
+    <widget class="QLabel" name="label_MonthlyPayment">
      <property name="text">
-      <string>Calculate</string>
+      <string>Monthly payment</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
-    <widget class="QPushButton" name="pushButton_Clear">
+   <item row="4" column="0" colspan="2">
+    <widget class="QPushButton" name="pushButton_Calculate">
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
-      <string>Clear</string>
+      <string>Calculate Credit</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -226,8 +239,10 @@
   <tabstop>doubleSpinBox_InterestRate</tabstop>
   <tabstop>comboBox_Type</tabstop>
   <tabstop>pushButton_Calculate</tabstop>
+  <tabstop>pushButton_Clear</tabstop>
   <tabstop>doubleSpinBox_TotalPayment</tabstop>
   <tabstop>doubleSpinBox_Overpayment</tabstop>
+  <tabstop>listWidget_MonthlyPayment</tabstop>
  </tabstops>
  <resources/>
  <connections/>

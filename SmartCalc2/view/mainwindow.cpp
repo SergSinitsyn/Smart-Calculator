@@ -47,6 +47,11 @@ MainWindow::MainWindow(QWidget *parent)
           SLOT(input_buttons()));
   connect(ui->toolButton_closeBracket, SIGNAL(clicked()), this,
           SLOT(input_buttons()));
+
+  connect(this, &MainWindow::SendExpressionToGraph, Graph,
+          &GraphWindow::TakeExpressionFromCalc);
+  connect(Graph, &GraphWindow::SendExpressionToCalc, this,
+          &MainWindow::TakeExpressionFromGraph);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -63,6 +68,10 @@ std::string MainWindow::GetInputStringX() {
 
 void MainWindow::SetAnswer(double x) {
   ui->lineEdit_output->setText(QString::number(x, 'g', 8));
+}
+
+void MainWindow::TakeExpressionFromGraph(QString expression) {
+  ui->lineEdit_iuput->setText(expression);
 }
 
 void MainWindow::input_buttons() {
@@ -116,7 +125,6 @@ void MainWindow::on_actionDeposit_Calculator_triggered() {
 }
 
 void MainWindow::on_actionGraph_View_triggered() {
-  Graph->SetExpression(ui->lineEdit_iuput->text());  // TODO connect
   Graph->SetController(this->controller_);
   this->hide();
   Deposit->hide();
@@ -124,6 +132,6 @@ void MainWindow::on_actionGraph_View_triggered() {
   Graph->show();
 }
 
-void MainWindow::SetExpression(QString expression) {
-  ui->lineEdit_iuput->setText(expression);
+void MainWindow::on_lineEdit_iuput_textChanged(const QString &arg1) {
+  emit SendExpressionToGraph(arg1);
 }

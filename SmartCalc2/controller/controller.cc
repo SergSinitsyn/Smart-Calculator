@@ -13,7 +13,7 @@ void Controller::CalculateValue(MainWindow *w) {
 }
 
 void Controller::CalculateGraph(GraphWindow *g) {
-  model_math->CalculateGraph(g->GetInputString(), 100000, g->GetMinX(),
+  model_math->CalculateGraph(g->GetInputString(), 10000, g->GetMinX(),
                              g->GetMaxX());
   g->SetGraph(model_math->GetGraph());
 }
@@ -33,7 +33,8 @@ void Controller::CalculateDeposit(DepositWindow *d) {
       d->GetDepositAmount(), start_of_term, d->GetPlacementPeriod(),
       d->GetPlacementPeriodType(), d->GetInterestRate(), d->GetTaxRate(),
       d->GetPeriodicityOfPayments(), d->GetCapitalisationOfInterest(),
-      d->GetReplenishmentsList(), d->GetPartialWithdrawalsList());
+      d->GetReplenishmentsList(), d->GetPartialWithdrawalsList(),
+      d->GetMinimumBalance());
 
   d->SetAnswer(model_deposit->GetDepositAmountByTheEndOfTheTerm(),
                model_deposit->GetAccruedInterest(),

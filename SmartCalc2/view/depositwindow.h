@@ -27,6 +27,7 @@ class DepositWindow : public QWidget {
   double GetTaxRate();
   int GetPeriodicityOfPayments();
   bool GetCapitalisationOfInterest();
+  double GetMinimumBalance();
   std::multimap<Date, std::pair<int, double>> GetReplenishmentsList();
   std::multimap<Date, std::pair<int, double>> GetPartialWithdrawalsList();
 
@@ -38,23 +39,26 @@ class DepositWindow : public QWidget {
   void on_pushButton_Calculate_clicked();
   void on_pushButton_AddReplenishment_clicked();
 
+  void on_pushButton_AddPartialWithdrawal_clicked();
+  void CloseCell(int CellNumber, int CellType);
+
  private:
   Ui::DepositWindow *ui;
 
   void Calculate();
-  void AddNewCell();
-  void CloseCell(int CellNumber);
+  void AddNewCellReplenishment();
+  void AddNewCellPartialWithdrawal();
 
   void FillList(QVector<Cell *> vector,
-                std::multimap<Date, std::pair<int, double>> map);
+                std::multimap<Date, std::pair<int, double>> &map);
   void FillReplenishmentsList();
   void FillPartialWithdrawalsList();
 
-  int CellNumberTotalReplenishment;
-  int CellNumberTotalPartialWithdrawal;
+  int cell_number_total_replenishment_;
+  int cell_number_total_partial_withdrawal_;
 
-  QVector<Cell *> AllCellReplenishmentPtr;
-  QVector<Cell *> AllCellPartialWithdrawalPtr;
+  QVector<Cell *> all_cell_replenishment_ptr_;
+  QVector<Cell *> all_cell_partial_withdrawal_ptr_;
 
   std::multimap<Date, std::pair<int, double>> replenishments_list_;
   std::multimap<Date, std::pair<int, double>> partial_withdrawals_list_;

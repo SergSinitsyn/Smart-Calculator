@@ -14,15 +14,17 @@ class Cell : public QWidget {
   explicit Cell(QWidget *parent = nullptr);
   ~Cell();
   int CellNumber;
+  int CellType;
   int GetType();
   QDate GetDate();
   double GetValue();
 
+ signals:
+  void CloseThisCell(int, int);
+
  private:
   Ui::Cell *ui;
 
- signals:
-  void CloseThisCell(int);
  private slots:
   void on_pushButton_clicked();
 };
