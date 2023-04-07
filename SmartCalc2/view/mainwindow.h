@@ -41,8 +41,7 @@ class MainWindow : public QMainWindow {
   void on_actionCredit_Calculator_triggered();
   void on_actionDeposit_Calculator_triggered();
   void on_actionGraph_View_triggered();
-
-  void on_lineEdit_iuput_textChanged(const QString& arg1);
+  void on_lineEdit_input_textChanged(const QString& arg);
 
  protected:
   void keyPressEvent(QKeyEvent* event);
@@ -53,7 +52,11 @@ class MainWindow : public QMainWindow {
   DepositWindow* Deposit;
   GraphWindow* Graph;
   Controller* controller_;
+
+  void ConnectInputButtons();
   void Calculate();
+  QLineEdit* LineOnFocus();
+  void HideAllWindows();
 
  signals:
   void SendExpressionToGraph(QString);

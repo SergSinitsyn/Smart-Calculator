@@ -43,8 +43,12 @@ class GraphWindow : public QWidget {
 
   void on_lineEdit_In_textChanged(const QString &arg1);
 
+ protected:
+  //  void keyPressEvent(QKeyEvent *event);
+
  private:
   void UpdateRange();
+  void Calculate();
 
   Ui::GraphWindow *ui;
   unsigned int count_{0};

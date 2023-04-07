@@ -33,8 +33,8 @@ void DepositWindow::Calculate() {
 
 void DepositWindow::AddNewCellReplenishment() {
   Cell* NewCell = new Cell(this);
-  ui->verticalLayout_Replenishments->addWidget(
-      NewCell, cell_number_total_replenishment_);
+  ui->verticalLayout_Replenishments->insertWidget(
+      cell_number_total_replenishment_, NewCell);
   connect(NewCell, SIGNAL(CloseThisCell(int, int)), this,
           SLOT(CloseCell(int, int)));
   NewCell->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -46,8 +46,8 @@ void DepositWindow::AddNewCellReplenishment() {
 
 void DepositWindow::AddNewCellPartialWithdrawal() {
   Cell* NewCell = new Cell(this);
-  ui->verticalLayout_PartialWithdrawals->addWidget(
-      NewCell, cell_number_total_partial_withdrawal_);
+  ui->verticalLayout_PartialWithdrawals->insertWidget(
+      cell_number_total_partial_withdrawal_, NewCell);
   connect(NewCell, SIGNAL(CloseThisCell(int, int)), this,
           SLOT(CloseCell(int, int)));
   NewCell->setAttribute(Qt::WA_DeleteOnClose, true);

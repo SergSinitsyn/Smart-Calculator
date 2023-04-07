@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../controller/controller.h"
-#include "qcustomplot.h"
+//#include "qcustomplot.h"
 #include "ui_graphwindow.h"
 
 GraphWindow::GraphWindow(QWidget *parent)
@@ -12,6 +12,14 @@ GraphWindow::GraphWindow(QWidget *parent)
   ui->setupUi(this);
   SetupBox();
   SetupWidget();
+
+  //  connect(ui->widget->xAxis->range(), SIGNAL(rangeChanged(QCPRange)), this,
+  //          SLOT(xAxisChanged()));
+
+  //  connect(ui->widget->xAxis->range(), SIGNAL(rangeChanged), this,
+  //          SLOT(xAxisChanged()));
+  //  connect(ui->widget->yAxis->range(), SIGNAL(rangeChanged), this,
+  //          SLOT(yAxisChanged()));
 }
 
 GraphWindow::~GraphWindow() { delete ui; }
@@ -39,7 +47,7 @@ void GraphWindow::SetGraph(std::pair<QVector<double>, QVector<double>> graph) {
   //      QCPScatterStyle(QCPScatterStyle::ssDot, Qt::red, Qt::white, 0.1));
   ui->widget->graph(count_)->setData(graph.first, graph.second);
 
-  ui->widget->legend->setVisible(count_ + 1);
+  ui->widget->legend->setVisible(1);
   ui->widget->axisRect()->insetLayout()->setInsetAlignment(
       0, Qt::AlignTop | Qt::AlignRight);
 
@@ -48,31 +56,40 @@ void GraphWindow::SetGraph(std::pair<QVector<double>, QVector<double>> graph) {
 }
 
 void GraphWindow::TakeExpressionFromCalc(QString expression) {
+  ui->lineEdit_In->blockSignals(true);
   ui->lineEdit_In->setText(expression);
+  ui->lineEdit_In->blockSignals(false);
 }
 
-void GraphWindow::on_pushButton_Print_clicked() {
-  try {
-    controller_graph_->CalculateGraph(this);
-  } catch (const std::exception &e) {
-    QMessageBox::critical(this, "Warning", e.what());
-  }
-}
+void GraphWindow::on_pushButton_Print_clicked() { Calculate(); }
+
+// void MainWindow::keyPressEvent(QKeyEvent *event) {
+//   if (event->key() == Qt::Key_Return) Calculate();
+// }
 
 void GraphWindow::on_pushButton_Crear_clicked() {
   count_ = 0;
+  ui->widget->clearGraphs();
   ui->widget->clearPlottables();
   ui->widget->clearItems();
+  ui->widget->legend->setVisible(0);
   ui->widget->replot();
 }
 
 void GraphWindow::UpdateRange() {
-  // set axes ranges, so we see all data:
   ui->widget->xAxis->setRange(ui->doubleSpinBox_xMin->value(),
                               ui->doubleSpinBox_xMax->value());
   ui->widget->yAxis->setRange(ui->doubleSpinBox_yMin->value(),
                               ui->doubleSpinBox_yMax->value());
   ui->widget->replot();
+}
+
+void GraphWindow::Calculate() {
+  try {
+    controller_graph_->CalculateGraph(this);
+  } catch (const std::exception &e) {
+    QMessageBox::critical(this, "Warning", e.what());
+  }
 }
 
 void GraphWindow::on_doubleSpinBox_xMin_valueChanged() { UpdateRange(); }
@@ -84,20 +101,19 @@ void GraphWindow::on_doubleSpinBox_yMin_valueChanged() { UpdateRange(); }
 void GraphWindow::on_doubleSpinBox_yMax_valueChanged() { UpdateRange(); }
 
 void GraphWindow::SetupWidget() {
-  // give the axes some labels:
   ui->widget->xAxis->setLabel("X");
   ui->widget->yAxis->setLabel("Y");
-
+  ui->widget->setInteraction(QCP::iRangeZoom, true);
+  ui->widget->setInteraction(QCP::iRangeDrag, true);
+  //  ui->widget->xAxis->range().minRange();
   UpdateRange();
-  //  ui->widget_plot->setBackground(Qt::GlobalColor::transparent);
-  //  ui->widget_plot->setBackground(QColor(200, 200, 200, 0));  // !
 }
 
 void GraphWindow::SetupBox() {
-  ui->doubleSpinBox_xMin->setValue(0);
-  ui->doubleSpinBox_xMax->setValue(100);
-  ui->doubleSpinBox_yMin->setValue(0);
-  ui->doubleSpinBox_yMax->setValue(100);
+  ui->doubleSpinBox_xMin->setValue(-10);
+  ui->doubleSpinBox_xMax->setValue(10);
+  ui->doubleSpinBox_yMin->setValue(-10);
+  ui->doubleSpinBox_yMax->setValue(10);
 }
 
 void GraphWindow::on_lineEdit_In_textChanged(const QString &arg1) {

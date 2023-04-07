@@ -15,7 +15,7 @@ QDate Cell::GetDate() { return ui->dateEdit->date(); }
 
 double Cell::GetValue() { return ui->doubleSpinBox->value(); }
 
-void Cell::on_pushButton_clicked() {
+void Cell::on_toolButton_delete_clicked() {
   emit CloseThisCell(CellNumber, CellType);
   this->close();
 }

@@ -1,4 +1,4 @@
-#include "model.h"
+#include "mathcalculator.h"
 
 void MathCalculator::CalculateAnswer(std::string str) {
   if (input_expression_ != str || !correct_load_) LoadExpression(str);
@@ -28,22 +28,25 @@ void MathCalculator::CalculateXY(int number_of_points, double x_start,
                                  double x_end) {
   CheckNumberOfPoints(number_of_points);
   CheckRange(x_start, x_end);
+
+  double step = (x_end - x_start) / number_of_points;
+  double threshold = step * 1000.0;
   QVector<double> x, y;
   for (int i = 0; i < number_of_points; ++i) {
-    double x_value = x_start + (double)i * (x_end - x_start) / number_of_points;
+    double x_value = x_start + (double)i * step;
     double y_value = PostfixNotationCalculation(x_value);
 
-    //    if (i && abs(abs(y.back()) + abs(y_value) / (x_value - x.back())) >
-    //    1000 &&
-    //        (y.back() * y_value) < 0) {
-    //      y.push_back(NAN);
-    //    } else {
-    //      y.push_back(y_value);
-    //    }
-    //    x.push_back(x_value);
+    long double delta = 0;
+    if (i && !isnan(y.back())) {
+      delta = fabs((y_value - y.back()) / step);
+    }
 
+    if (delta > threshold && (y_value * y.back()) < 0) {
+      y.push_back(std::numeric_limits<double>::quiet_NaN());
+    } else {
+      y.push_back(y_value);
+    }
     x.push_back(x_value);
-    y.push_back(y_value);
   }
   answer_graph_ = std::make_pair(x, y);
 }
@@ -57,8 +60,9 @@ void MathCalculator::LoadExpression(const std::string& input_string) {
   input_expression_ = input_string;
   CheckLength(input_expression_);
   input_expression_ = ConvertToLowercase(input_expression_);
-  CreateTokenMap(token_map_);
+  CreateTokenMap(token_map_);  // TODO
   Parsing();
+  SpacesAndUnarySigns();
   CheckSequence();
   ShuntingYardAlgorithm();
   correct_load_ = true;
@@ -85,7 +89,8 @@ void MathCalculator::Parsing() {
   while (i < input_expression_.size()) {
     if (isdigit(input_expression_[i])) {
       Token number;
-      number.MakeNumber("", ReadNumber(input_expression_, i));
+      auto new_number = ReadNumber(input_expression_, i);
+      number.MakeNumber(new_number.second, new_number.first);
       input_.push(number);
     } else if (isalpha(input_expression_[i])) {
       PushToken(ReadWord(input_expression_, i));
@@ -97,7 +102,8 @@ void MathCalculator::Parsing() {
   if (input_.empty()) throw std::logic_error("Empty expression");
 }
 
-double MathCalculator::ReadNumber(std::string& str, size_t& start) {
+std::pair<double, std::string> MathCalculator::ReadNumber(std::string& str,
+                                                          size_t& start) {
   std::regex r("\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
   std::sregex_iterator i =
       std::sregex_iterator(str.begin() + start, str.end(), r);
@@ -106,7 +112,7 @@ double MathCalculator::ReadNumber(std::string& str, size_t& start) {
   std::stringstream ss(m.str());
   double d = 0;
   ss >> d;
-  return d;
+  return make_pair(d, m.str());
 }
 
 std::string MathCalculator::ReadWord(std::string& str, size_t& start) {
@@ -116,6 +122,27 @@ std::string MathCalculator::ReadWord(std::string& str, size_t& start) {
   std::smatch m = *i;
   start += m.length();
   return m.str();
+}
+
+void MathCalculator::SpacesAndUnarySigns() {
+  while (!input_.empty()) {
+    std::string name = input_.front().GetName();
+    if (name == " ") {
+      input_.pop();
+    } else if ((name == "+" || name == "-") &&
+               (output_.empty() ||
+                !kLastToken_[output_.back().GetPrecedence()])) {
+      if (name == "-") {
+        Token temp;
+        temp.MakeUnaryNegation();
+        output_.push(temp);
+      }
+      input_.pop();
+    } else {
+      FromInputToOutput();
+    }
+  }
+  input_.swap(output_);
 }
 
 void MathCalculator::ReadX(std::string str) {
@@ -152,19 +179,7 @@ void MathCalculator::ReadX(std::string str) {
 
 void MathCalculator::PushToken(std::string temp) {
   if (auto it = token_map_.find(temp); it != token_map_.end()) {
-    std::string name = it->second.GetName();
-    if (name == " ") {
-    } else if ((name == "+" || name == "-") &&
-               (input_.empty() ||
-                !kLastToken_[input_.back().GetPrecedence()])) {
-      if (name == "-") {
-        Token temp;
-        temp.MakeUnaryNegation();
-        input_.push(temp);
-      }
-    } else {
-      input_.push(it->second);
-    }
+    input_.push(it->second);
   } else {
     throw std::logic_error("Incorrect symbol: " + temp);
   }

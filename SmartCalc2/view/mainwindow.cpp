@@ -12,42 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 {
   ui->setupUi(this);
-  connect(ui->toolButton_x, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_0, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_1, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_2, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_3, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_4, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_5, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_6, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_7, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_8, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_9, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_point, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_E, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_add, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_sub, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_mult, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_div, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_acos, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_asin, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_atan, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_cos, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_sin, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_tan, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_pi, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_ln, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_log, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_exp, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_mod, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_power, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_sqrt, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_qbrt, SIGNAL(clicked()), this, SLOT(input_buttons()));
-  connect(ui->toolButton_openBracket, SIGNAL(clicked()), this,
-          SLOT(input_buttons()));
-  connect(ui->toolButton_closeBracket, SIGNAL(clicked()), this,
-          SLOT(input_buttons()));
-
+  ConnectInputButtons();
   connect(this, &MainWindow::SendExpressionToGraph, Graph,
           &GraphWindow::TakeExpressionFromCalc);
   connect(Graph, &GraphWindow::SendExpressionToCalc, this,
@@ -59,7 +24,7 @@ MainWindow::~MainWindow() { delete ui; }
 void MainWindow::SetController(Controller *c) { controller_ = c; }
 
 std::string MainWindow::GetInputString() {
-  return ui->lineEdit_iuput->text().toStdString();
+  return ui->lineEdit_input->text().toStdString();
 }
 
 std::string MainWindow::GetInputStringX() {
@@ -71,18 +36,42 @@ void MainWindow::SetAnswer(double x) {
 }
 
 void MainWindow::TakeExpressionFromGraph(QString expression) {
-  ui->lineEdit_iuput->setText(expression);
+  ui->lineEdit_input->setText(expression);
 }
 
 void MainWindow::input_buttons() {
   QToolButton *button = (QToolButton *)sender();
-  ui->lineEdit_iuput->insert(button->text());
+  LineOnFocus()->insert(button->text());
 }
 
 void MainWindow::on_toolButton_equal_clicked() { Calculate(); }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
   if (event->key() == Qt::Key_Return) Calculate();
+}
+
+void MainWindow::ConnectInputButtons() {
+  QVector<QToolButton *> buttons_ = {
+      ui->toolButton_x,           ui->toolButton_0,
+      ui->toolButton_1,           ui->toolButton_2,
+      ui->toolButton_3,           ui->toolButton_4,
+      ui->toolButton_5,           ui->toolButton_6,
+      ui->toolButton_7,           ui->toolButton_8,
+      ui->toolButton_9,           ui->toolButton_point,
+      ui->toolButton_E,           ui->toolButton_add,
+      ui->toolButton_sub,         ui->toolButton_mult,
+      ui->toolButton_div,         ui->toolButton_acos,
+      ui->toolButton_asin,        ui->toolButton_atan,
+      ui->toolButton_cos,         ui->toolButton_sin,
+      ui->toolButton_tan,         ui->toolButton_pi,
+      ui->toolButton_ln,          ui->toolButton_log,
+      ui->toolButton_exp,         ui->toolButton_mod,
+      ui->toolButton_power,       ui->toolButton_sqrt,
+      ui->toolButton_qbrt,        ui->toolButton_openBracket,
+      ui->toolButton_closeBracket};
+  for (auto it = buttons_.begin(); it < buttons_.end(); it++) {
+    connect(*it, SIGNAL(clicked()), this, SLOT(input_buttons()));
+  }
 }
 
 void MainWindow::Calculate() {
@@ -93,45 +82,49 @@ void MainWindow::Calculate() {
   }
 }
 
-void MainWindow::on_toolButton_deleteAll_clicked() {
-  ui->lineEdit_iuput->clear();
+QLineEdit *MainWindow::LineOnFocus() {
+  if (ui->lineEdit_input_x->hasFocus()) {
+    return ui->lineEdit_input_x;
+  }
+  return ui->lineEdit_input;
 }
 
-void MainWindow::on_toolButton_backspace_clicked() {
-  ui->lineEdit_iuput->backspace();
-}
-
-void MainWindow::on_actionEngineer_Calculator_triggered() {
+void MainWindow::HideAllWindows() {
+  this->hide();
   Credit->hide();
   Graph->hide();
   Deposit->hide();
+}
+
+void MainWindow::on_toolButton_deleteAll_clicked() { LineOnFocus()->clear(); }
+
+void MainWindow::on_toolButton_backspace_clicked() {
+  LineOnFocus()->backspace();
+}
+
+void MainWindow::on_actionEngineer_Calculator_triggered() {
+  HideAllWindows();
   this->show();
 }
 
 void MainWindow::on_actionCredit_Calculator_triggered() {
   Credit->SetController(this->controller_);
-  this->hide();
-  Graph->hide();
-  Deposit->hide();
+  HideAllWindows();
   Credit->show();
 }
 
 void MainWindow::on_actionDeposit_Calculator_triggered() {
   Deposit->SetController(this->controller_);
-  this->hide();
-  Graph->hide();
-  Credit->hide();
+  HideAllWindows();
   Deposit->show();
 }
 
 void MainWindow::on_actionGraph_View_triggered() {
   Graph->SetController(this->controller_);
-  this->hide();
-  Deposit->hide();
-  Credit->hide();
+  HideAllWindows();
   Graph->show();
 }
 
-void MainWindow::on_lineEdit_iuput_textChanged(const QString &arg1) {
-  emit SendExpressionToGraph(arg1);
+void MainWindow::on_lineEdit_input_textChanged(const QString &arg) {
+  emit SendExpressionToGraph(arg);
 }

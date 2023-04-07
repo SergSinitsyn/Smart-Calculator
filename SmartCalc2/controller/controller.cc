@@ -13,7 +13,7 @@ void Controller::CalculateValue(MainWindow *w) {
 }
 
 void Controller::CalculateGraph(GraphWindow *g) {
-  model_math->CalculateGraph(g->GetInputString(), 10000, g->GetMinX(),
+  model_math->CalculateGraph(g->GetInputString(), 1000, g->GetMinX(),
                              g->GetMaxX());
   g->SetGraph(model_math->GetGraph());
 }

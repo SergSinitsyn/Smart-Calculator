@@ -26,7 +26,7 @@ class Cell : public QWidget {
   Ui::Cell *ui;
 
  private slots:
-  void on_pushButton_clicked();
+  void on_toolButton_delete_clicked();
 };
 
 #endif  // CELL_H

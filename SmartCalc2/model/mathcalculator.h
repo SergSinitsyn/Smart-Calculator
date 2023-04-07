@@ -41,8 +41,9 @@ class MathCalculator {
   std::string ConvertToLowercase(std::string str);
   void Parsing();
   void PushToken(std::string temp);
-  double ReadNumber(std::string& str, size_t& start);
+  std::pair<double, std::string> ReadNumber(std::string& str, size_t& start);
   std::string ReadWord(std::string& str, size_t& start);
+  void SpacesAndUnarySigns();
   void CheckSequence();
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
