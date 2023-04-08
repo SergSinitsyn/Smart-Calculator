@@ -758,6 +758,9 @@
       <property name="text">
        <string>=</string>
       </property>
+      <property name="shortcut">
+       <string>Return</string>
+      </property>
      </widget>
     </item>
     <item row="3" column="6">

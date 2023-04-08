@@ -24,7 +24,7 @@ using XYGraph = std::pair<QVector<double>, QVector<double>>;
 
 class MathCalculator {
  public:
-  MathCalculator() = default;
+  MathCalculator();
   ~MathCalculator() = default;
 
   void CalculateAnswer(std::string str);
@@ -58,6 +58,7 @@ class MathCalculator {
   double answer_{NAN};
   XYGraph answer_graph_;
 
+  std::string raw_input_expression_;
   std::string input_expression_;
   std::string input_x_;
   double x_value_{NAN};

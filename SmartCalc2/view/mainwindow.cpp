@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this);
   ConnectInputButtons();
+  ConnectInputButtonsExtra();
   connect(this, &MainWindow::SendExpressionToGraph, Graph,
           &GraphWindow::TakeExpressionFromCalc);
   connect(Graph, &GraphWindow::SendExpressionToCalc, this,
@@ -44,14 +45,22 @@ void MainWindow::input_buttons() {
   LineOnFocus()->insert(button->text());
 }
 
-void MainWindow::on_toolButton_equal_clicked() { Calculate(); }
+void MainWindow::input_buttons_extra() {
+  QToolButton *button = (QToolButton *)sender();
+  LineOnFocus()->insert(button->text() + "()");
+  LineOnFocus()->setCursorPosition(LineOnFocus()->cursorPosition() - 1);
+}
 
-void MainWindow::keyPressEvent(QKeyEvent *event) {
-  if (event->key() == Qt::Key_Return) Calculate();
+void MainWindow::on_toolButton_equal_clicked() {
+  try {
+    controller_->CalculateValue(this);
+  } catch (const std::exception &e) {
+    QMessageBox::critical(this, "Warning", e.what());
+  }
 }
 
 void MainWindow::ConnectInputButtons() {
-  QVector<QToolButton *> buttons_ = {
+  QVector<QToolButton *> buttons = {
       ui->toolButton_x,           ui->toolButton_0,
       ui->toolButton_1,           ui->toolButton_2,
       ui->toolButton_3,           ui->toolButton_4,
@@ -60,25 +69,23 @@ void MainWindow::ConnectInputButtons() {
       ui->toolButton_9,           ui->toolButton_point,
       ui->toolButton_E,           ui->toolButton_add,
       ui->toolButton_sub,         ui->toolButton_mult,
-      ui->toolButton_div,         ui->toolButton_acos,
-      ui->toolButton_asin,        ui->toolButton_atan,
-      ui->toolButton_cos,         ui->toolButton_sin,
-      ui->toolButton_tan,         ui->toolButton_pi,
-      ui->toolButton_ln,          ui->toolButton_log,
-      ui->toolButton_exp,         ui->toolButton_mod,
-      ui->toolButton_power,       ui->toolButton_sqrt,
-      ui->toolButton_qbrt,        ui->toolButton_openBracket,
-      ui->toolButton_closeBracket};
-  for (auto it = buttons_.begin(); it < buttons_.end(); it++) {
+      ui->toolButton_div,         ui->toolButton_pi,
+      ui->toolButton_mod,         ui->toolButton_power,
+      ui->toolButton_openBracket, ui->toolButton_closeBracket};
+  for (auto it = buttons.begin(); it < buttons.end(); it++) {
     connect(*it, SIGNAL(clicked()), this, SLOT(input_buttons()));
   }
 }
 
-void MainWindow::Calculate() {
-  try {
-    controller_->CalculateValue(this);
-  } catch (const std::exception &e) {
-    QMessageBox::critical(this, "Warning", e.what());
+void MainWindow::ConnectInputButtonsExtra() {
+  QVector<QToolButton *> buttons_extra = {
+      ui->toolButton_acos, ui->toolButton_asin, ui->toolButton_atan,
+      ui->toolButton_cos,  ui->toolButton_sin,  ui->toolButton_tan,
+      ui->toolButton_ln,   ui->toolButton_log,  ui->toolButton_exp,
+      ui->toolButton_sqrt, ui->toolButton_qbrt,
+  };
+  for (auto it = buttons_extra.begin(); it < buttons_extra.end(); it++) {
+    connect(*it, SIGNAL(clicked()), this, SLOT(input_buttons_extra()));
   }
 }
 

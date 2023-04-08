@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>26</height>
+    <width>415</width>
+    <height>30</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,8 +49,11 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>20</height>
+       <height>24</height>
       </size>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
      </property>
      <item>
       <property name="text">
@@ -85,7 +88,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>20</height>
+       <height>24</height>
       </size>
      </property>
      <property name="displayFormat">
@@ -107,7 +110,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>20</height>
+       <height>24</height>
       </size>
      </property>
      <property name="layoutDirection">
@@ -125,6 +128,9 @@
      <property name="maximum">
       <double>1000000000.000000000000000</double>
      </property>
+     <property name="stepType">
+      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -137,8 +143,8 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>24</width>
+       <height>24</height>
       </size>
      </property>
      <property name="font">
@@ -153,7 +159,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>✕</string>
+      <string>X</string>
      </property>
     </widget>
    </item>

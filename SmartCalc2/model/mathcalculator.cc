@@ -1,14 +1,16 @@
 #include "mathcalculator.h"
 
+MathCalculator::MathCalculator() { CreateTokenMap(token_map_); }
+
 void MathCalculator::CalculateAnswer(std::string str) {
-  if (input_expression_ != str || !correct_load_) LoadExpression(str);
+  if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
   if ("" != input_x_ || !correct_load_x_) LoadX("");
   if (correct_load_ && correct_load_x_)
     answer_ = PostfixNotationCalculation(x_value_);
 }
 
 void MathCalculator::CalculateAnswer(std::string str, std::string str_x) {
-  if (input_expression_ != str || !correct_load_) LoadExpression(str);
+  if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
   if (str_x != input_x_ || !correct_load_x_) LoadX(str_x);
   if (correct_load_ && correct_load_x_)
     answer_ = PostfixNotationCalculation(x_value_);
@@ -16,7 +18,7 @@ void MathCalculator::CalculateAnswer(std::string str, std::string str_x) {
 
 void MathCalculator::CalculateGraph(std::string str, int number_of_points,
                                     double x_start, double x_end) {
-  if (input_expression_ != str || !correct_load_) LoadExpression(str);
+  if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
   if (correct_load_) CalculateXY(number_of_points, x_start, x_end);
 }
 
@@ -30,23 +32,21 @@ void MathCalculator::CalculateXY(int number_of_points, double x_start,
   CheckRange(x_start, x_end);
 
   double step = (x_end - x_start) / number_of_points;
-  double threshold = step * 1000.0;
+  long double threshold = step * 1000.0;
   QVector<double> x, y;
   for (int i = 0; i < number_of_points; ++i) {
-    double x_value = x_start + (double)i * step;
-    double y_value = PostfixNotationCalculation(x_value);
+    x.push_back(x_start + (double)i * step);
+    double y_value = PostfixNotationCalculation(x.back());
 
     long double delta = 0;
     if (i && !isnan(y.back())) {
       delta = fabs((y_value - y.back()) / step);
     }
-
     if (delta > threshold && (y_value * y.back()) < 0) {
       y.push_back(std::numeric_limits<double>::quiet_NaN());
     } else {
       y.push_back(y_value);
     }
-    x.push_back(x_value);
   }
   answer_graph_ = std::make_pair(x, y);
 }
@@ -57,10 +57,9 @@ void MathCalculator::LoadExpression(const std::string& input_string) {
   stack_ = {};
   output_ = {};
   result_ = {};
-  input_expression_ = input_string;
-  CheckLength(input_expression_);
-  input_expression_ = ConvertToLowercase(input_expression_);
-  CreateTokenMap(token_map_);  // TODO
+  raw_input_expression_ = input_string;
+  CheckLength(raw_input_expression_);
+  input_expression_ = ConvertToLowercase(raw_input_expression_);
   Parsing();
   SpacesAndUnarySigns();
   CheckSequence();
@@ -143,6 +142,7 @@ void MathCalculator::SpacesAndUnarySigns() {
     }
   }
   input_.swap(output_);
+  if (input_.empty()) throw std::logic_error("Empty expression");
 }
 
 void MathCalculator::ReadX(std::string str) {

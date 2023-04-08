@@ -31,7 +31,7 @@ class GraphWindow : public QWidget {
 
  private slots:
   void on_pushButton_Print_clicked();
-  void on_pushButton_Crear_clicked();
+  void on_pushButton_Delete_clicked();
 
   void on_doubleSpinBox_xMin_valueChanged();
   void on_doubleSpinBox_xMax_valueChanged();
@@ -41,14 +41,12 @@ class GraphWindow : public QWidget {
   void SetupWidget();
   void SetupBox();
 
-  void on_lineEdit_In_textChanged(const QString &arg1);
+  void on_lineEdit_In_textChanged(const QString &arg);
 
- protected:
-  //  void keyPressEvent(QKeyEvent *event);
+  void on_pushButton_default_axis_clicked();
 
  private:
   void UpdateRange();
-  void Calculate();
 
   Ui::GraphWindow *ui;
   unsigned int count_{0};

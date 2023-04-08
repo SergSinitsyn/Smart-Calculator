@@ -34,6 +34,7 @@ class MainWindow : public QMainWindow {
 
  private slots:
   void input_buttons();
+  void input_buttons_extra();
   void on_toolButton_equal_clicked();
   void on_toolButton_deleteAll_clicked();
   void on_toolButton_backspace_clicked();
@@ -43,9 +44,6 @@ class MainWindow : public QMainWindow {
   void on_actionGraph_View_triggered();
   void on_lineEdit_input_textChanged(const QString& arg);
 
- protected:
-  void keyPressEvent(QKeyEvent* event);
-
  private:
   Ui::MainWindow* ui;
   CreditWindow* Credit;
@@ -54,11 +52,13 @@ class MainWindow : public QMainWindow {
   Controller* controller_;
 
   void ConnectInputButtons();
-  void Calculate();
+  void ConnectInputButtonsExtra();
+
   QLineEdit* LineOnFocus();
   void HideAllWindows();
 
  signals:
   void SendExpressionToGraph(QString);
 };
+
 #endif  // MAINWINDOW_H
