@@ -19,14 +19,14 @@ class Cell : public QWidget {
   QDate GetDate();
   double GetValue();
 
- signals:
-  void CloseThisCell(int, int);
-
  private:
   Ui::Cell *ui;
 
  private slots:
   void on_toolButton_delete_clicked();
+
+ signals:
+  void CloseThisCell(int, int);
 };
 
 #endif  // CELL_H

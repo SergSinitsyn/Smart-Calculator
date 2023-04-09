@@ -30,25 +30,16 @@ class DepositWindow : public QWidget {
   double GetMinimumBalance();
   std::multimap<Date, std::pair<int, double>> GetReplenishmentsList();
   std::multimap<Date, std::pair<int, double>> GetPartialWithdrawalsList();
-
   void SetAnswer(double deposit_amount_by_the_end_of_the_term,
                  double accrued_interest, double tax_amount);
 
- private slots:
-
-  void on_pushButton_Calculate_clicked();
-  void on_pushButton_AddReplenishment_clicked();
-
-  void on_pushButton_AddPartialWithdrawal_clicked();
-  void CloseCell(int CellNumber, int CellType);
-
  private:
   Ui::DepositWindow *ui;
+  Controller *controller_deposit_;
 
   void Calculate();
   void AddNewCellReplenishment();
   void AddNewCellPartialWithdrawal();
-
   void FillList(QVector<Cell *> vector,
                 std::multimap<Date, std::pair<int, double>> &map);
   void FillReplenishmentsList();
@@ -56,14 +47,16 @@ class DepositWindow : public QWidget {
 
   int cell_number_total_replenishment_;
   int cell_number_total_partial_withdrawal_;
-
   QVector<Cell *> all_cell_replenishment_ptr_;
   QVector<Cell *> all_cell_partial_withdrawal_ptr_;
-
   std::multimap<Date, std::pair<int, double>> replenishments_list_;
   std::multimap<Date, std::pair<int, double>> partial_withdrawals_list_;
 
-  Controller *controller_deposit_;
+ private slots:
+  void on_pushButton_Calculate_clicked();
+  void on_pushButton_AddReplenishment_clicked();
+  void on_pushButton_AddPartialWithdrawal_clicked();
+  void CloseCell(int CellNumber, int CellType);
 };
 
 #endif  // DEPOSITWINDOW_H
