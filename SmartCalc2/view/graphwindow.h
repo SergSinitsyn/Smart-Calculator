@@ -29,26 +29,30 @@ class GraphWindow : public QWidget {
   void SetGraph(XYGraph graph);
 
  private:
-  void UpdateRange();
+  int SetColor();
   void SetupWidget();
   void SetupBox();
+  void UpdateRange();
 
   Ui::GraphWindow *ui;
-  unsigned int count_{0};
   Controller *controller_graph_;
-  std::array<QColor, 8> colours_ = {QColor("cyan"),     QColor("magenta"),
-                                    QColor("red"),      QColor("darkRed"),
-                                    QColor("darkCyan"), QColor("black"),
-                                    QColor("orange"),   QColor("blue")};
+  unsigned int count_{0};
+  std::vector<QColor> colors_ = {
+      QColor("black"),  QColor("red"),    QColor("green"),
+      QColor("blue"),   QColor("cyan"),   QColor("magenta"),
+      QColor("grey"),   QColor("orange"), QColor("brown"),
+      QColor("coral"),  QColor("gold"),   QColor("coral"),
+      QColor("ingigo"), QColor("teal"),   QColor("yellowgreen"),
+      QColor("tan")};
 
  public slots:
   void TakeExpressionFromCalc(QString expression);
 
  private slots:
-  void on_pushButton_Print_clicked();
   void on_lineEdit_In_textChanged(const QString &arg);
-  void DeleteGraph(QListWidgetItem *item);
-
+  void on_pushButton_Print_clicked();
+  void on_pushButton_Color_clicked();
+  void on_pushButton_Delete_clicked();
   void on_pushButton_default_axis_clicked();
   void on_doubleSpinBox_xMin_valueChanged();
   void on_doubleSpinBox_xMax_valueChanged();
