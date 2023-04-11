@@ -9,15 +9,15 @@ class Credit {
   ~Credit() = default;
   void CalculateCredit(int type, double total_credit_amount, int term,
                        double interest_rate);
-  std::vector<double> GetMonthlyPayment();
-  double GetTotalPayment();
-  double GetOverpaymentOnCredit();
+  std::vector<double> GetMonthlyPayment() const;
+  double GetTotalPayment() const;
+  double GetOverpaymentOnCredit() const;
 
  private:
   void LoadData(int type, double total_credit_amount, int term,
                 double interest_rate);
-  void AnnuityCredit();
-  void DifferentiatedCredit();
+  void CalculateAnnuityCredit();
+  void CalculateDifferentiatedCredit();
 
   int type_;
   double total_credit_amount_;

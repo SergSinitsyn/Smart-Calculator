@@ -20,40 +20,45 @@
 #include "check.h"
 #include "token.h"
 
-using XYGraph = std::pair<QVector<double>, QVector<double>>;
-
 class MathCalculator {
  public:
+  using XYGraph = std::pair<QVector<double>, QVector<double>>;
+
   MathCalculator();
   ~MathCalculator() = default;
 
   void CalculateAnswer(std::string str);
   void CalculateAnswer(std::string str, std::string str_x);
   void CalculateGraph(std::string str, int number_of_points, double x_start,
-                      double x_end);
-  double GetAnswer();
-  XYGraph GetGraph();
+                      double x_end, double y_min, double y_max);
+  double GetAnswer() const;
+  XYGraph GetGraph() const;
 
  private:
   void LoadExpression(const std::string& input_string);
   void LoadX(const std::string& input_x);
-  void CalculateXY(int number_of_points, double x_start, double x_end);
+
   std::string ConvertToLowercase(std::string str);
   void Parsing();
+  std::pair<double, std::string> ReadNumber(std::string& str,
+                                            size_t& start) const;
+  std::string ReadWord(std::string& str, size_t& start) const;
   void PushToken(std::string temp);
-  std::pair<double, std::string> ReadNumber(std::string& str, size_t& start);
-  std::string ReadWord(std::string& str, size_t& start);
-  void SpacesAndUnarySigns();
-  void CheckSequence();
+  void FindSpacesAndUnarySigns();
+  void CheckSequenceOfTokens();
   void ShuntingYardAlgorithm();
   void FromInputToOutput();
   void FromInputToStack();
   void FromStackToOutput();
+
   void ReadX(std::string str);
   double PostfixNotationCalculation(double x);
-  void ToResult();
-  void ToResult(double x);
-  double FromResult();
+  void PushToResult();
+  void PushToResult(double x);
+  double PopFromResult();
+
+  void CalculateXY(int number_of_points, double x_start, double x_end,
+                   double y_min, double y_max);
 
   double answer_{NAN};
   XYGraph answer_graph_;

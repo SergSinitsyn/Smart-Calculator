@@ -2,41 +2,45 @@
 
 #include <string>
 
-Controller::Controller(MathCalculator *m1, Credit *m2, Deposit *m3)
-    : model_math(m1), model_credit(m2), model_deposit(m3){};
+Controller::Controller(MathCalculator *model_1, Credit *model_2,
+                       Deposit *model_3)
+    : model_math_(model_1), model_credit_(model_2), model_deposit_(model_3){};
 
 Controller::~Controller(){};
 
-void Controller::CalculateValue(MainWindow *w) {
-  model_math->CalculateAnswer(w->GetInputString(), w->GetInputStringX());
-  w->SetAnswer(model_math->GetAnswer());
+void Controller::CalculateValue(MainWindow *mw) {
+  model_math_->CalculateAnswer(mw->GetInputString(), mw->GetInputStringX());
+  mw->SetAnswer(model_math_->GetAnswer());
 }
 
-void Controller::CalculateGraph(GraphWindow *g) {
-  model_math->CalculateGraph(g->GetInputString(), g->GetResolution(),
-                             g->GetMinX(), g->GetMaxX());
-  g->SetGraph(model_math->GetGraph());
+void Controller::CalculateGraph(GraphWindow *gw) {
+  model_math_->CalculateGraph(gw->GetInputString(), gw->GetResolution(),
+                              gw->GetMinX(), gw->GetMaxX(), gw->GetMinY(),
+                              gw->GetMaxY());
+  gw->SetGraph(model_math_->GetGraph());
 }
 
-void Controller::CalculateCredit(CreditWindow *c) {
-  model_credit->CalculateCredit(c->GetCreditType(), c->GetTotalCreditAmount(),
-                                c->GetTerm(), c->GetInterestRate());
-  c->SetAnswer(model_credit->GetTotalPayment(),
-               model_credit->GetOverpaymentOnCredit(),
-               model_credit->GetMonthlyPayment());
+void Controller::CalculateCredit(CreditWindow *cw) {
+  model_credit_->CalculateCredit(cw->GetCreditType(),
+                                 cw->GetTotalCreditAmount(), cw->GetTerm(),
+                                 cw->GetInterestRate());
+  cw->SetAnswer(model_credit_->GetTotalPayment(),
+                model_credit_->GetOverpaymentOnCredit(),
+                model_credit_->GetMonthlyPayment());
 }
 
-void Controller::CalculateDeposit(DepositWindow *d) {
-  Date start_of_term(d->GetStartOfTerm().day(), d->GetStartOfTerm().month() - 1,
-                     d->GetStartOfTerm().year());
-  model_deposit->CalculateDeposit(
-      d->GetDepositAmount(), start_of_term, d->GetPlacementPeriod(),
-      d->GetPlacementPeriodType(), d->GetInterestRate(), d->GetTaxRate(),
-      d->GetPeriodicityOfPayments(), d->GetCapitalisationOfInterest(),
-      d->GetReplenishmentsList(), d->GetPartialWithdrawalsList(),
-      d->GetMinimumBalance());
+void Controller::CalculateDeposit(DepositWindow *dw) {
+  Date start_of_term(dw->GetStartOfTerm().day(),
+                     dw->GetStartOfTerm().month() - 1,
+                     dw->GetStartOfTerm().year());
+  model_deposit_->CalculateDeposit(
+      dw->GetDepositAmount(), start_of_term, dw->GetPlacementPeriod(),
+      dw->GetPlacementPeriodType(), dw->GetInterestRate(), dw->GetTaxRate(),
+      dw->GetPeriodicityOfPayments(), dw->GetCapitalisationOfInterest(),
+      dw->GetReplenishmentsList(), dw->GetPartialWithdrawalsList(),
+      dw->GetMinimumBalance());
 
-  d->SetAnswer(model_deposit->GetDepositAmountByTheEndOfTheTerm(),
-               model_deposit->GetAccruedInterest(),
-               model_deposit->GetTaxAmount());
+  dw->SetAnswer(model_deposit_->GetDepositAmountByTheEndOfTheTerm(),
+                model_deposit_->GetAccruedInterest(),
+                model_deposit_->GetTaxAmount());
 }

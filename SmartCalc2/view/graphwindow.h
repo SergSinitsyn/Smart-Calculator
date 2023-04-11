@@ -26,17 +26,21 @@ class GraphWindow : public QWidget {
   int GetResolution();
   double GetMinX();
   double GetMaxX();
+  double GetMinY();
+  double GetMaxY();
   void SetGraph(XYGraph graph);
 
  private:
   int SetColor();
   void SetupWidget();
   void SetupBox();
-  void UpdateRange();
+  void UpdateXAxisRange();
+  void UpdateYAxisRange();
 
   Ui::GraphWindow *ui;
   Controller *controller_graph_;
   unsigned int count_{0};
+  constexpr static unsigned int kMaxGraphs_ = 8;
   std::vector<QColor> colors_ = {
       QColor("black"),  QColor("red"),    QColor("green"),
       QColor("blue"),   QColor("cyan"),   QColor("magenta"),

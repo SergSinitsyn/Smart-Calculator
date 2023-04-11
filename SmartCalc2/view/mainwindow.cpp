@@ -8,9 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
       ui(new Ui::MainWindow),
       Credit(new CreditWindow()),
       Deposit(new DepositWindow()),
-      Graph(new GraphWindow())
-
-{
+      Graph(new GraphWindow()) {
   ui->setupUi(this);
   ConnectInputButtons();
   ConnectInputButtonsExtra();
@@ -24,39 +22,16 @@ MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::SetController(Controller *c) { controller_ = c; }
 
-std::string MainWindow::GetInputString() {
+std::string MainWindow::GetInputString() const {
   return ui->lineEdit_input->text().toStdString();
 }
 
-std::string MainWindow::GetInputStringX() {
+std::string MainWindow::GetInputStringX() const {
   return ui->lineEdit_input_x->text().toStdString();
 }
 
 void MainWindow::SetAnswer(double x) {
   ui->lineEdit_output->setText(QString::number(x, 'g', 8));
-}
-
-void MainWindow::TakeExpressionFromGraph(QString expression) {
-  ui->lineEdit_input->setText(expression);
-}
-
-void MainWindow::input_buttons() {
-  QToolButton *button = (QToolButton *)sender();
-  LineOnFocus()->insert(button->text());
-}
-
-void MainWindow::input_buttons_extra() {
-  QToolButton *button = (QToolButton *)sender();
-  LineOnFocus()->insert(button->text() + "()");
-  LineOnFocus()->setCursorPosition(LineOnFocus()->cursorPosition() - 1);
-}
-
-void MainWindow::on_toolButton_equal_clicked() {
-  try {
-    controller_->CalculateValue(this);
-  } catch (const std::exception &e) {
-    QMessageBox::critical(this, "Warning", e.what());
-  }
 }
 
 void MainWindow::ConnectInputButtons() {
@@ -82,18 +57,11 @@ void MainWindow::ConnectInputButtonsExtra() {
       ui->toolButton_acos, ui->toolButton_asin, ui->toolButton_atan,
       ui->toolButton_cos,  ui->toolButton_sin,  ui->toolButton_tan,
       ui->toolButton_ln,   ui->toolButton_log,  ui->toolButton_exp,
-      ui->toolButton_sqrt, ui->toolButton_qbrt,
+      ui->toolButton_sqrt, ui->toolButton_cbrt,
   };
   for (auto it = buttons_extra.begin(); it < buttons_extra.end(); it++) {
     connect(*it, SIGNAL(clicked()), this, SLOT(input_buttons_extra()));
   }
-}
-
-QLineEdit *MainWindow::LineOnFocus() {
-  if (ui->lineEdit_input_x->hasFocus()) {
-    return ui->lineEdit_input_x;
-  }
-  return ui->lineEdit_input;
 }
 
 void MainWindow::HideAllWindows() {
@@ -103,7 +71,39 @@ void MainWindow::HideAllWindows() {
   Deposit->hide();
 }
 
-void MainWindow::on_toolButton_deleteAll_clicked() { LineOnFocus()->clear(); }
+QLineEdit *MainWindow::LineOnFocus() {
+  if (ui->lineEdit_input_x->hasFocus()) {
+    return ui->lineEdit_input_x;
+  }
+  return ui->lineEdit_input;
+}
+
+void MainWindow::TakeExpressionFromGraph(QString expression) {
+  ui->lineEdit_input->blockSignals(true);
+  ui->lineEdit_input->setText(expression);
+  ui->lineEdit_input->blockSignals(false);
+}
+
+void MainWindow::input_buttons() {
+  QToolButton *button = (QToolButton *)sender();
+  LineOnFocus()->insert(button->text());
+}
+
+void MainWindow::input_buttons_extra() {
+  QToolButton *button = (QToolButton *)sender();
+  LineOnFocus()->insert(button->text() + "()");
+  LineOnFocus()->setCursorPosition(LineOnFocus()->cursorPosition() - 1);
+}
+
+void MainWindow::on_toolButton_equal_clicked() {
+  try {
+    controller_->CalculateValue(this);
+  } catch (const std::exception &e) {
+    QMessageBox::critical(this, "Warning", e.what());
+  }
+}
+
+void MainWindow::on_toolButton_all_clean_clicked() { LineOnFocus()->clear(); }
 
 void MainWindow::on_toolButton_backspace_clicked() {
   LineOnFocus()->backspace();

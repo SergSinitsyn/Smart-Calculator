@@ -449,7 +449,7 @@
      </widget>
     </item>
     <item row="6" column="3">
-     <widget class="QToolButton" name="toolButton_qbrt">
+     <widget class="QToolButton" name="toolButton_cbrt">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -695,7 +695,7 @@
      </widget>
     </item>
     <item row="2" column="4">
-     <widget class="QToolButton" name="toolButton_deleteAll">
+     <widget class="QToolButton" name="toolButton_all_clean">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -925,7 +925,7 @@
      <x>0</x>
      <y>0</y>
      <width>672</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="font">
@@ -970,7 +970,7 @@
   <tabstop>lineEdit_output</tabstop>
   <tabstop>toolButton_x</tabstop>
   <tabstop>lineEdit_input_x</tabstop>
-  <tabstop>toolButton_deleteAll</tabstop>
+  <tabstop>toolButton_all_clean</tabstop>
   <tabstop>toolButton_backspace</tabstop>
   <tabstop>toolButton_equal</tabstop>
   <tabstop>toolButton_pi</tabstop>
@@ -1000,7 +1000,7 @@
   <tabstop>toolButton_tan</tabstop>
   <tabstop>toolButton_atan</tabstop>
   <tabstop>toolButton_log</tabstop>
-  <tabstop>toolButton_qbrt</tabstop>
+  <tabstop>toolButton_cbrt</tabstop>
   <tabstop>toolButton_0</tabstop>
   <tabstop>toolButton_point</tabstop>
   <tabstop>toolButton_E</tabstop>

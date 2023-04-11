@@ -18,11 +18,11 @@ Date::Date(int day, int month, int year) {
   count_year_ = 0;
 }
 
-int Date::GetDay() { return day_; }
+int Date::GetDay() const { return day_; }
 
-int Date::GetMonth() { return month_; }
+int Date::GetMonth() const { return month_; }
 
-int Date::GetYear() { return year_; }
+int Date::GetYear() const { return year_; }
 
 void Date::AddDays(int days) { Add(days, 0, 0); }
 
@@ -117,7 +117,7 @@ bool Date::operator>=(const Date& other) const {
   return (*this == other || *this > other);
 }
 
-int Date::DaysInYear() {
+int Date::DaysInYear() const {
   int daysInYear = 365;
   Date temp(29, 1, year_);
   if (temp.day_ == 29) {

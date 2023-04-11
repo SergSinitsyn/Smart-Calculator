@@ -10,12 +10,12 @@ Token::Token(const std::string& name, Precedence precedence,
       value_(value),
       function_(function){};
 
-std::string Token::GetName() { return name_; }
-Precedence Token::GetPrecedence() { return precedence_; }
-Associativity Token::GetAssociativity() { return associativity_; }
-OperationType Token::GetOperationType() { return operation_type_; }
-double Token::GetValue() { return value_; }
-fp_variant Token::GetFunction() { return function_; }
+std::string Token::GetName() const { return name_; }
+Precedence Token::GetPrecedence() const { return precedence_; }
+Associativity Token::GetAssociativity() const { return associativity_; }
+OperationType Token::GetOperationType() const { return operation_type_; }
+double Token::GetValue() const { return value_; }
+fp_variant Token::GetFunction() const { return function_; }
 
 void Token::MakeNumber(std::string name, double value) {
   Token result(name, kNumber, kNone, kOperand, value, nullptr);

@@ -8,8 +8,6 @@
 double round_2d(double value);
 std::string FromDoubleToString(double value);
 
-using MAP = std::multimap<Date, std::pair<int, double>>;
-
 enum PeriodicityOfPayments {
   kDaily,
   kWeekly,
@@ -21,10 +19,11 @@ enum PeriodicityOfPayments {
 };
 
 class Deposit {
+  using MAP = std::multimap<Date, std::pair<int, double>>;
+
  public:
   Deposit() = default;
   ~Deposit() = default;
-
   void CalculateDeposit(double deposit_amount, Date start_of_term,
                         int placement_period, int placement_period_type,
                         double interest_rate, double tax_rate,
@@ -32,10 +31,9 @@ class Deposit {
                         bool capitalization_of_interest,
                         MAP replenishments_list, MAP partial_withdrawals_list,
                         double minimum_balance);
-
-  long double GetAccruedInterest();
-  double GetTaxAmount();
-  double GetDepositAmountByTheEndOfTheTerm();
+  long double GetAccruedInterest() const;
+  double GetTaxAmount() const;
+  double GetDepositAmountByTheEndOfTheTerm() const;
 
  private:
   void LoadDepositData(double deposit_amount, Date start_date,
@@ -68,7 +66,7 @@ class Deposit {
   Date payment_date_;
   long double accrued_interest_receivable_;
   double start_deposit_;
-  double total_withdrawal_;
+  //  double total_withdrawal_;
 
   // output data
   long double accrued_interest_;

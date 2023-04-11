@@ -18,27 +18,24 @@ class CreditWindow : public QWidget {
   explicit CreditWindow(QWidget* parent = nullptr);
   ~CreditWindow();
   void SetController(Controller* c);
-  double GetTotalCreditAmount();
-  double GetInterestRate();
-  int GetTerm();
-  int GetCreditType();
+  double GetTotalCreditAmount() const;
+  double GetInterestRate() const;
+  int GetTerm() const;
+  int GetCreditType() const;
   void SetAnswer(double total_payment, double overpayment_on_credit,
                  std::vector<double> monthly_payment);
 
- private slots:
-  void on_pushButton_Calculate_clicked();
-
-  void on_comboBox_Term_currentIndexChanged(int index);
-
-  void on_pushButton_Clear_clicked();
-
  private:
   Ui::CreditWindow* ui;
-  void Calculate();
+  Controller* controller_credit_;
+
   void SetDefault(QSpinBox& sb);
   void SetDefault(QDoubleSpinBox& sb);
 
-  Controller* controller_credit_;
+ private slots:
+  void on_pushButton_Calculate_clicked();
+  void on_pushButton_Clear_clicked();
+  void on_comboBox_Term_currentIndexChanged(int index);
 };
 
 #endif  // CREDITWINDOW_H

@@ -9,15 +9,15 @@ class Date {
   Date(int day, int month, int year);
   ~Date() = default;
 
-  int GetDay();
-  int GetMonth();
-  int GetYear();
+  int GetDay() const;
+  int GetMonth() const;
+  int GetYear() const;
 
   void AddDays(int days);
   void AddMonths(int months);
   void AddYears(int years);
 
-  int DaysInYear();
+  int DaysInYear() const;
 
   bool operator==(const Date& other) const;
   bool operator!=(const Date& other) const;

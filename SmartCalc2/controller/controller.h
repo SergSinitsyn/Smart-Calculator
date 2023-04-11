@@ -8,17 +8,17 @@
 
 class Controller {
  public:
-  Controller(MathCalculator* m1, Credit* m2, Deposit* m3);
+  Controller(MathCalculator* model_1, Credit* model_2, Deposit* model_3);
   ~Controller();
-  void CalculateValue(MainWindow* w);
-  void CalculateGraph(GraphWindow* g);
-  void CalculateCredit(CreditWindow* c);
-  void CalculateDeposit(DepositWindow* d);
+  void CalculateValue(MainWindow* mw);
+  void CalculateGraph(GraphWindow* gw);
+  void CalculateCredit(CreditWindow* cw);
+  void CalculateDeposit(DepositWindow* dw);
 
  private:
-  MathCalculator* model_math;
-  Credit* model_credit;
-  Deposit* model_deposit;
+  MathCalculator* model_math_;
+  Credit* model_credit_;
+  Deposit* model_deposit_;
 };
 
 #endif  // _CONTROLLER_CONTROLLER_H_

@@ -9,7 +9,7 @@
 
 /**
  * @brief Макрос для определения основных арифметических функций с одним
- * аргументом в таблице fun_ptr_t
+ * аргументом
  * @details lamdas function with one argument
  * @param[in] SIGN operator простых унарных арифметических выражений
  * @return Возращает указатель на унарную функцию
@@ -18,7 +18,7 @@
 
 /**
  * @brief Макрос для определения основных арифметических функций с двумя
- * аргументами в таблице fun_ptr_t
+ * аргументами
  * @details lamdas function with two arguments
  * @param[in] SIGN operator простых бинарных арифметических выражений
  * @return Возращает указатель на бинарную функцию
@@ -44,7 +44,7 @@ using fcast_1arg = double (*)(double);
 /// @brief function cast on a function with two arguments
 using fcast_2arg = double (*)(double, double);
 
-/// @brief function points on a function with one argument
+/// @brief function pointer on a function with one argument
 using fp_1arg = std::function<double(double)>;
 
 /// @brief function pointer on a function with two arguments
@@ -88,12 +88,12 @@ class Token {
         fp_variant function);
   ~Token() = default;
 
-  std::string GetName();
-  Precedence GetPrecedence();
-  Associativity GetAssociativity();
-  OperationType GetOperationType();
-  double GetValue();
-  fp_variant GetFunction();
+  std::string GetName() const;
+  Precedence GetPrecedence() const;
+  Associativity GetAssociativity() const;
+  OperationType GetOperationType() const;
+  double GetValue() const;
+  fp_variant GetFunction() const;
 
   void MakeNumber(std::string name, double value);
   void MakeUnaryNegation();

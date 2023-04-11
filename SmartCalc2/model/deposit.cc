@@ -29,9 +29,9 @@ void Deposit::CalculateDeposit(double deposit_amount, Date start_of_term,
   Calculation();
 }
 
-long double Deposit::GetAccruedInterest() { return accrued_interest_; }
-double Deposit::GetTaxAmount() { return tax_amount_; }
-double Deposit::GetDepositAmountByTheEndOfTheTerm() {
+long double Deposit::GetAccruedInterest() const { return accrued_interest_; }
+double Deposit::GetTaxAmount() const { return tax_amount_; }
+double Deposit::GetDepositAmountByTheEndOfTheTerm() const {
   return deposit_amount_by_the_end_of_the_term_;
 }
 
@@ -45,7 +45,7 @@ void Deposit::LoadDepositData(double deposit_amount, Date start_of_term,
                               double minimum_balance) {
   deposit_amount_ = deposit_amount;
   start_deposit_ = deposit_amount_;
-  total_withdrawal_ = 0;
+  //  total_withdrawal_ = 0;
   start_of_term_ = start_of_term;
   end_of_term_ = start_of_term;
   switch (placement_period_type) {
@@ -89,8 +89,7 @@ void Deposit::Calculation() {
   accrued_interest_ =
       accrued_interest_receivable_ + deposit_amount_ - start_deposit_;
   deposit_amount_by_the_end_of_the_term_ = deposit_amount_;
-  tax_amount_ =
-      round_2d((accrued_interest_ + total_withdrawal_) * tax_rate_ / 100.);
+  tax_amount_ = round_2d((accrued_interest_)*tax_rate_ / 100.);
 }
 
 void Deposit::SetNextPaymentDate() {
@@ -186,7 +185,7 @@ void Deposit::CheckPartialWithdrawalsList() {
           FromDoubleToString(minimum_balance_));
     }
     start_deposit_ -= value;
-    total_withdrawal_ += value;
+    //    total_withdrawal_ += value;
     switch (type) {
       case 0:  // one-time
         break;

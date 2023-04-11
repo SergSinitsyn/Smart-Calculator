@@ -25,8 +25,8 @@ class MainWindow : public QMainWindow {
   MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
   void SetController(Controller* c);
-  std::string GetInputString();
-  std::string GetInputStringX();
+  std::string GetInputString() const;
+  std::string GetInputStringX() const;
   void SetAnswer(double x);
 
  private:
@@ -48,7 +48,7 @@ class MainWindow : public QMainWindow {
   void input_buttons();
   void input_buttons_extra();
   void on_toolButton_equal_clicked();
-  void on_toolButton_deleteAll_clicked();
+  void on_toolButton_all_clean_clicked();
   void on_toolButton_backspace_clicked();
   void on_actionEngineer_Calculator_triggered();
   void on_actionCredit_Calculator_triggered();

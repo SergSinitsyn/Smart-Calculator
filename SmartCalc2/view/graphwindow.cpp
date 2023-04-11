@@ -30,18 +30,22 @@ std::string GraphWindow::GetInputString() {
 int GraphWindow::GetResolution() {
   switch (ui->comboBox_resolution->currentIndex()) {
     case 0:
-      return 512;
+      return 128;
     case 1:
-      return 2048;
+      return 1024;
     case 2:
       return 8192;
   }
-  return 2048;
+  return 1024;
 }
 
 double GraphWindow::GetMinX() { return ui->doubleSpinBox_xMin->value(); }
 
 double GraphWindow::GetMaxX() { return ui->doubleSpinBox_xMax->value(); }
+
+double GraphWindow::GetMinY() { return ui->doubleSpinBox_yMin->value(); }
+
+double GraphWindow::GetMaxY() { return ui->doubleSpinBox_yMax->value(); }
 
 void GraphWindow::SetGraph(XYGraph graph) {
   ui->widget->addGraph();
@@ -71,18 +75,21 @@ void GraphWindow::SetupBox() {
   ui->doubleSpinBox_xMax->setValue(10);
   ui->doubleSpinBox_yMin->setValue(-10);
   ui->doubleSpinBox_yMax->setValue(10);
-  UpdateRange();
 }
 
-void GraphWindow::UpdateRange() {
+void GraphWindow::UpdateXAxisRange() {
   ui->widget->xAxis->blockSignals(true);
-  ui->widget->yAxis->blockSignals(true);
   ui->widget->xAxis->setRange(ui->doubleSpinBox_xMin->value(),
                               ui->doubleSpinBox_xMax->value());
+  ui->widget->replot();
+  ui->widget->xAxis->blockSignals(false);
+}
+
+void GraphWindow::UpdateYAxisRange() {
+  ui->widget->yAxis->blockSignals(true);
   ui->widget->yAxis->setRange(ui->doubleSpinBox_yMin->value(),
                               ui->doubleSpinBox_yMax->value());
   ui->widget->replot();
-  ui->widget->xAxis->blockSignals(false);
   ui->widget->yAxis->blockSignals(false);
 }
 
@@ -97,7 +104,7 @@ void GraphWindow::on_lineEdit_In_textChanged(const QString &arg) {
 }
 
 void GraphWindow::on_pushButton_Print_clicked() {
-  if (count_ == 8) {
+  if (count_ == kMaxGraphs_) {
     QMessageBox::warning(this, "Warning",
                          "The maximum number of graphs has been reached");
     return;
@@ -129,21 +136,22 @@ void GraphWindow::on_pushButton_Delete_clicked() {
       QMessageBox::Yes | QMessageBox::No);
   if (reply == QMessageBox::Yes) {
     ui->widget->removeGraph(selected);
-    ui->widget->replot();
     delete ui->listWidget->takeItem(selected);
     --count_;
+    ui->widget->legend->setVisible(count_);
+    ui->widget->replot();
   }
 }
 
 void GraphWindow::on_pushButton_default_axis_clicked() { SetupBox(); }
 
-void GraphWindow::on_doubleSpinBox_xMin_valueChanged() { UpdateRange(); }
+void GraphWindow::on_doubleSpinBox_xMin_valueChanged() { UpdateXAxisRange(); }
 
-void GraphWindow::on_doubleSpinBox_xMax_valueChanged() { UpdateRange(); }
+void GraphWindow::on_doubleSpinBox_xMax_valueChanged() { UpdateXAxisRange(); }
 
-void GraphWindow::on_doubleSpinBox_yMin_valueChanged() { UpdateRange(); }
+void GraphWindow::on_doubleSpinBox_yMin_valueChanged() { UpdateYAxisRange(); }
 
-void GraphWindow::on_doubleSpinBox_yMax_valueChanged() { UpdateRange(); }
+void GraphWindow::on_doubleSpinBox_yMax_valueChanged() { UpdateYAxisRange(); }
 
 void GraphWindow::xAxisChanged(QCPRange range) {
   ui->doubleSpinBox_xMin->setValue(range.lower);
