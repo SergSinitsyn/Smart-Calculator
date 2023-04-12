@@ -19,6 +19,9 @@ class Controller {
   MathCalculator* model_math_;
   Credit* model_credit_;
   Deposit* model_deposit_;
+
+  Date ConvertDate(QDate old) const;
+  MultiMapDate ConvertDateMap(MultiMapQDate old) const;
 };
 
 #endif  // _CONTROLLER_CONTROLLER_H_

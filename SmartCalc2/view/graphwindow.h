@@ -13,7 +13,7 @@ class GraphWindow;
 
 class Controller;
 
-using XYGraph = std::pair<QVector<double>, QVector<double>>;
+using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
 
 class GraphWindow : public QWidget {
   Q_OBJECT

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../model/model.h"
+#include "../model/mathcalculator.h"
 
 TEST(logic_error, character_limit_exceeded) {
   MathCalculator calc;

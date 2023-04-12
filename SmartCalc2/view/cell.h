@@ -13,14 +13,18 @@ class Cell : public QWidget {
  public:
   explicit Cell(QWidget *parent = nullptr);
   ~Cell();
-  int CellNumber;
-  int CellType;
-  int GetType();
-  QDate GetDate();
-  double GetValue();
+  int GetPeriodicity() const;
+  QDate GetDate() const;
+  double GetValue() const;
+  int GetNumber() const;
+  int GetType() const;
+  void SetNumber(int newNumber);
+  void SetType(int newType);
 
  private:
   Ui::Cell *ui;
+  int number_;
+  int type_;
 
  private slots:
   void on_toolButton_delete_clicked();

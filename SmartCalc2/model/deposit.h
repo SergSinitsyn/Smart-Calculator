@@ -2,11 +2,15 @@
 #define _MODEL_DEPOSIT_H_
 
 #include <map>
+#include <sstream>
+#include <string>
 
 #include "date.h"
+#include "round.h"
 
-double round_2d(double value);
 std::string FromDoubleToString(double value);
+
+using MultiMapDate = std::multimap<Date, std::pair<int, double>>;
 
 enum PeriodicityOfPayments {
   kDaily,
@@ -19,8 +23,6 @@ enum PeriodicityOfPayments {
 };
 
 class Deposit {
-  using MAP = std::multimap<Date, std::pair<int, double>>;
-
  public:
   Deposit() = default;
   ~Deposit() = default;
@@ -29,7 +31,8 @@ class Deposit {
                         double interest_rate, double tax_rate,
                         int periodicity_of_payments,
                         bool capitalization_of_interest,
-                        MAP replenishments_list, MAP partial_withdrawals_list,
+                        MultiMapDate replenishments_list,
+                        MultiMapDate partial_withdrawals_list,
                         double minimum_balance);
   long double GetAccruedInterest() const;
   double GetTaxAmount() const;
@@ -40,8 +43,10 @@ class Deposit {
                        int placement_period, int placement_period_type,
                        double interest_rate, double tax_rate,
                        int periodicity_of_payments,
-                       bool capitalization_of_interest, MAP replenishments_list,
-                       MAP partial_withdrawals_list, double minimum_balance);
+                       bool capitalization_of_interest,
+                       MultiMapDate replenishments_list,
+                       MultiMapDate partial_withdrawals_list,
+                       double minimum_balance);
   void Calculation();
   void SetNextPaymentDate();
   void CheckPaymentDate();
@@ -56,8 +61,8 @@ class Deposit {
   double tax_rate_;
   int periodicity_of_payments_;
   bool capitalization_of_interest_;
-  MAP replenishments_list_;
-  MAP partial_withdrawals_list_;
+  MultiMapDate replenishments_list_;
+  MultiMapDate partial_withdrawals_list_;
   double minimum_balance_;
 
   // temp data

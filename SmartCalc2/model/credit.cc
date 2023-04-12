@@ -3,12 +3,6 @@
 #include <cmath>
 #include <tuple>
 
-double RoundToTwoDecimalPlaces(double value);
-
-double RoundToTwoDecimalPlaces(double value) {
-  return round(value * 100.) / 100.;
-}
-
 void Credit::LoadData(int type, double total_credit_amount, int term,
                       double interest_rate) {
   type_ = type;

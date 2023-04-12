@@ -1,10 +1,6 @@
 #include "deposit.h"
 
 #include <cmath>
-#include <sstream>
-#include <string>
-
-double round_2d(double value) { return round(value * 100.) / 100.; }
 
 std::string FromDoubleToString(double value) {
   std::stringstream ss;
@@ -18,8 +14,8 @@ void Deposit::CalculateDeposit(double deposit_amount, Date start_of_term,
                                double interest_rate, double tax_rate,
                                int periodicity_of_payments,
                                bool capitalization_of_interest,
-                               MAP replenishments_list,
-                               MAP partial_withdrawals_list,
+                               MultiMapDate replenishments_list,
+                               MultiMapDate partial_withdrawals_list,
                                double minimum_balance) {
   LoadDepositData(deposit_amount, start_of_term, placement_period,
                   placement_period_type, interest_rate, tax_rate,
@@ -40,8 +36,8 @@ void Deposit::LoadDepositData(double deposit_amount, Date start_of_term,
                               double interest_rate, double tax_rate,
                               int periodicity_of_payments,
                               bool capitalization_of_interest,
-                              MAP replenishments_list,
-                              MAP partial_withdrawals_list,
+                              MultiMapDate replenishments_list,
+                              MultiMapDate partial_withdrawals_list,
                               double minimum_balance) {
   deposit_amount_ = deposit_amount;
   start_deposit_ = deposit_amount_;
@@ -89,7 +85,7 @@ void Deposit::Calculation() {
   accrued_interest_ =
       accrued_interest_receivable_ + deposit_amount_ - start_deposit_;
   deposit_amount_by_the_end_of_the_term_ = deposit_amount_;
-  tax_amount_ = round_2d((accrued_interest_)*tax_rate_ / 100.);
+  tax_amount_ = RoundToTwoDecimalPlaces((accrued_interest_)*tax_rate_ / 100.);
 }
 
 void Deposit::SetNextPaymentDate() {
@@ -124,9 +120,10 @@ void Deposit::SetNextPaymentDate() {
 void Deposit::CheckPaymentDate() {
   if (current_date_ == payment_date_) {
     if (capitalization_of_interest_) {
-      deposit_amount_ += round_2d(accrued_interest_);
+      deposit_amount_ += RoundToTwoDecimalPlaces(accrued_interest_);
     } else {
-      accrued_interest_receivable_ += round_2d(accrued_interest_);
+      accrued_interest_receivable_ +=
+          RoundToTwoDecimalPlaces(accrued_interest_);
     }
     accrued_interest_ = 0;
     SetNextPaymentDate();

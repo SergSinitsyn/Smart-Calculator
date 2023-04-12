@@ -4,7 +4,6 @@
 #include <exception>
 #include <string>
 
-void CheckVariable(double x);
 void CheckLength(std::string expression);
 void CheckNumberOfPoints(int size);
 void CheckRange(double x_start, double x_end);

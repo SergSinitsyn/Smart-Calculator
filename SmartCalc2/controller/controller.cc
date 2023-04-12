@@ -30,17 +30,28 @@ void Controller::CalculateCredit(CreditWindow *cw) {
 }
 
 void Controller::CalculateDeposit(DepositWindow *dw) {
-  Date start_of_term(dw->GetStartOfTerm().day(),
-                     dw->GetStartOfTerm().month() - 1,
-                     dw->GetStartOfTerm().year());
   model_deposit_->CalculateDeposit(
-      dw->GetDepositAmount(), start_of_term, dw->GetPlacementPeriod(),
-      dw->GetPlacementPeriodType(), dw->GetInterestRate(), dw->GetTaxRate(),
-      dw->GetPeriodicityOfPayments(), dw->GetCapitalisationOfInterest(),
-      dw->GetReplenishmentsList(), dw->GetPartialWithdrawalsList(),
-      dw->GetMinimumBalance());
+      dw->GetDepositAmount(), ConvertDate(dw->GetStartOfTerm()),
+      dw->GetPlacementPeriod(), dw->GetPlacementPeriodType(),
+      dw->GetInterestRate(), dw->GetTaxRate(), dw->GetPeriodicityOfPayments(),
+      dw->GetCapitalisationOfInterest(),
+      ConvertDateMap(dw->GetReplenishmentsList()),
+      ConvertDateMap(dw->GetPartialWithdrawalsList()), dw->GetMinimumBalance());
 
   dw->SetAnswer(model_deposit_->GetDepositAmountByTheEndOfTheTerm(),
                 model_deposit_->GetAccruedInterest(),
                 model_deposit_->GetTaxAmount());
+}
+
+Date Controller::ConvertDate(QDate old) const {
+  Date result(old.day(), old.month() - 1, old.year());
+  return result;
+}
+
+MultiMapDate Controller::ConvertDateMap(MultiMapQDate old) const {
+  MultiMapDate result;
+  for (auto it = old.begin(); it != old.end(); ++it) {
+    result.insert(std::make_pair(ConvertDate(it->first), it->second));
+  }
+  return result;
 }

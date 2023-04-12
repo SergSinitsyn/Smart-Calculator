@@ -12,19 +12,20 @@ INCLUDEPATH += ./view
 
 SOURCES += \
     controller/controller.cc \
-    main.cpp \
+    main.cc \
     model/check.cc \
     model/credit.cc \
     model/date.cc \
     model/deposit.cc \
     model/mathcalculator.cc \
+    model/round.cc \
     model/token.cc \
-    view/cell.cpp \
-    view/creditwindow.cpp \
-    view/depositwindow.cpp \
-    view/graphwindow.cpp \
-    view/mainwindow.cpp \
-    view/qcustomplot.cpp
+    view/cell.cc \
+    view/creditwindow.cc \
+    view/depositwindow.cc \
+    view/graphwindow.cc \
+    view/mainwindow.cc \
+    view/qcustomplot.cc
 
 HEADERS += \
      controller/controller.h \
@@ -33,6 +34,7 @@ HEADERS += \
      model/date.h \
      model/deposit.h \
      model/mathcalculator.h \
+     model/round.h \
      model/token.h \
      view/cell.h \
      view/creditwindow.h \

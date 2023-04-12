@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "../model/model.h"
+#include "../model/credit.h"
+#include "../model/deposit.h"
+#include "../model/mathcalculator.h"
 
 #define kAcc 1e-6
 
@@ -271,13 +273,31 @@ TEST(calculation, expression_23) {
 
 TEST(calculation_graph, expression) {
   MathCalculator calc;
-  calc.CalculateGraph("x*x", 11, 0, 10);
-  XYGraph result = calc.GetGraph();
-  std::vector res_x = result.first;
-  std::vector res_y = result.second;
+  calc.CalculateGraph("x*x", 11, 0, 10, -10, 100);
+  MathCalculator::XYGraph result = calc.GetGraph();
   std::vector<double> expected_x = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   std::vector<double> expected_y = {0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100};
-  ASSERT_TRUE((res_x == expected_x) && (res_y == expected_y));
+  ASSERT_TRUE((result.first == expected_x) && (result.second == expected_y));
+}
+
+TEST(credit, ann) {
+  Credit calc;
+  calc.CalculateCredit(0, 123456, 120, 4.56);
+  ASSERT_NEAR(calc.GetTotalPayment(), 153966.00, kAcc);
+  ASSERT_NEAR(calc.GetOverpaymentOnCredit(), 30510.00, kAcc);
+  ASSERT_NEAR(calc.GetMonthlyPayment().at(0), 1283.05, kAcc);
+}
+
+TEST(credit, diff) {
+  Credit calc;
+  calc.CalculateCredit(1, 100000, 6, 12.5);
+  ASSERT_NEAR(calc.GetTotalPayment(), 103645.83, kAcc);
+  ASSERT_NEAR(calc.GetOverpaymentOnCredit(), 3645.83, kAcc);
+  std::vector<double> expected_mp = {17708.33, 17534.72, 17361.11,
+                                     17187.50, 17013.89, 16840.28};
+  for (int i = 0; i < 6; ++i) {
+    ASSERT_NEAR(calc.GetMonthlyPayment().at(i), expected_mp.at(i), kAcc);
+  }
 }
 
 int main(int argc, char* argv[]) {

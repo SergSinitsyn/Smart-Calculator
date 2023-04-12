@@ -1,7 +1,6 @@
 #ifndef _MODEL_MATHCALCULATOR_H_
 #define _MODEL_MATHCALCULATOR_H_
 
-#include <QVector>
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -22,8 +21,7 @@
 
 class MathCalculator {
  public:
-  using XYGraph = std::pair<QVector<double>, QVector<double>>;
-
+  using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
   MathCalculator();
   ~MathCalculator() = default;
 

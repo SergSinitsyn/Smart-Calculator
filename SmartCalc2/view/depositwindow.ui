@@ -311,6 +311,9 @@
      <property name="minimum">
       <double>0.010000000000000</double>
      </property>
+     <property name="maximum">
+      <double>99.989999999999995</double>
+     </property>
      <property name="stepType">
       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
      </property>
@@ -417,7 +420,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>50000</number>
+      <number>18250</number>
      </property>
      <property name="stepType">
       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>

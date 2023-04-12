@@ -293,14 +293,14 @@ void MathCalculator::CalculateXY(int number_of_points, double x_start,
   y_min *= 1.2;
   y_max *= 1.2;
 
-  QVector<double> x, y;
-  double step = (x_end - x_start) / number_of_points;
+  std::vector<double> x, y;
+  double step = (x_end - x_start) / (number_of_points - 1);
   long double threshold = fabs(step * 1000.0);
   long double delta = 0;
   for (int i = 0; i < number_of_points; ++i) {
     x.push_back(x_start + (double)i * step);
     double y_value = PostfixNotationCalculation(x.back());
-    if (i && !isnan(y.back())) {
+    if (i && !std::isnan(y.back())) {
       delta = fabs((y_value - y.back()) / step);
     } else {
       delta = 0;

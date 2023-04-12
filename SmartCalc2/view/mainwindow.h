@@ -31,13 +31,14 @@ class MainWindow : public QMainWindow {
 
  private:
   Ui::MainWindow* ui;
-  CreditWindow* Credit;
-  DepositWindow* Deposit;
-  GraphWindow* Graph;
+  CreditWindow* credit_view_;
+  DepositWindow* deposit_view_;
+  GraphWindow* graph_view_;
   Controller* controller_;
 
   void ConnectInputButtons();
   void ConnectInputButtonsExtra();
+
   void HideAllWindows();
   QLineEdit* LineOnFocus();
 
@@ -45,15 +46,15 @@ class MainWindow : public QMainWindow {
   void TakeExpressionFromGraph(QString expression);
 
  private slots:
-  void input_buttons();
-  void input_buttons_extra();
+  void InputButtons();
+  void InputButtonsWithBrakets();
   void on_toolButton_equal_clicked();
   void on_toolButton_all_clean_clicked();
   void on_toolButton_backspace_clicked();
   void on_actionEngineer_Calculator_triggered();
+  void on_actionGraph_View_triggered();
   void on_actionCredit_Calculator_triggered();
   void on_actionDeposit_Calculator_triggered();
-  void on_actionGraph_View_triggered();
   void on_lineEdit_input_textChanged(const QString& arg);
 
  signals:
