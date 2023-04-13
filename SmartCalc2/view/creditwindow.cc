@@ -3,6 +3,7 @@
 #include "../controller/controller.h"
 #include "ui_creditwindow.h"
 
+namespace MyNamespace {
 CreditWindow::CreditWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::CreditWindow) {
   ui->setupUi(this);
@@ -73,3 +74,5 @@ void CreditWindow::on_comboBox_Term_currentIndexChanged(int index) {
 void CreditWindow::SetDefault(QSpinBox &sb) { sb.setValue(sb.minimum()); }
 
 void CreditWindow::SetDefault(QDoubleSpinBox &sb) { sb.setValue(sb.minimum()); }
+
+};  // namespace MyNamespace

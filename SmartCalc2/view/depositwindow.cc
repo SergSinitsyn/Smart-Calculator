@@ -1,12 +1,9 @@
 #include "depositwindow.h"
 
-#include <QPushButton>
-#include <QString>
-#include <QVBoxLayout>
-
 #include "../controller/controller.h"
 #include "ui_depositwindow.h"
 
+namespace MyNamespace {
 DepositWindow::DepositWindow(QWidget* parent)
     : QWidget(parent), ui(new Ui::DepositWindow) {
   ui->setupUi(this);
@@ -80,6 +77,7 @@ void DepositWindow::AddNewCellReplenishment() {
   NewCell->setAttribute(Qt::WA_DeleteOnClose, true);
   NewCell->SetNumber(cell_number_total_replenishment_);
   NewCell->SetType(1);
+  NewCell->SetMinimumDate(ui->dateEdit_StartOfTerm->date());
   all_cell_replenishment_ptr_.append(NewCell);
   ++cell_number_total_replenishment_;
 }
@@ -92,7 +90,9 @@ void DepositWindow::AddNewCellPartialWithdrawal() {
           SLOT(CloseCell(int, int)));
   NewCell->setAttribute(Qt::WA_DeleteOnClose, true);
   NewCell->SetNumber(cell_number_total_partial_withdrawal_);
+
   NewCell->SetType(-1);
+  NewCell->SetMinimumDate(ui->dateEdit_StartOfTerm->date());
   all_cell_partial_withdrawal_ptr_.append(NewCell);
   ++cell_number_total_partial_withdrawal_;
 }
@@ -141,6 +141,15 @@ void DepositWindow::on_comboBox_PlacementPeriod_currentIndexChanged(int index) {
   if (index == 2) ui->spinBox_PlacementPeriod->setMaximum(50);
 }
 
+void DepositWindow::on_dateEdit_StartOfTerm_userDateChanged(const QDate& date) {
+  for (int i = 0; i < all_cell_replenishment_ptr_.length(); ++i) {
+    all_cell_replenishment_ptr_.at(i)->SetMinimumDate(date);
+  }
+  for (int i = 0; i < all_cell_partial_withdrawal_ptr_.length(); ++i) {
+    all_cell_partial_withdrawal_ptr_.at(i)->SetMinimumDate(date);
+  }
+}
+
 void DepositWindow::CloseCell(int CellNumber, int CellType) {
   if (CellType == 1) {
     all_cell_replenishment_ptr_[CellNumber]->close();
@@ -163,3 +172,5 @@ void DepositWindow::CloseCell(int CellNumber, int CellType) {
     all_cell_partial_withdrawal_ptr_.remove(CellNumber);
   }
 }
+
+};  // namespace MyNamespace

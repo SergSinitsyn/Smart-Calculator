@@ -1,6 +1,7 @@
 #ifndef _MODEL_DEPOSIT_H_
 #define _MODEL_DEPOSIT_H_
 
+#include <cmath>
 #include <map>
 #include <sstream>
 #include <string>

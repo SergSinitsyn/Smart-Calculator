@@ -522,6 +522,11 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>24</pointsize>
+       </font>
+      </property>
      </widget>
     </item>
     <item row="5" column="0">
@@ -962,7 +967,7 @@
   </action>
   <action name="actionGraph_View">
    <property name="text">
-    <string>Graph View</string>
+    <string>Graph Plot</string>
    </property>
   </action>
  </widget>

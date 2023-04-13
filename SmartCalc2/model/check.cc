@@ -1,11 +1,5 @@
 #include "check.h"
 
-#include <cmath>
-#include <exception>
-#include <iostream>
-#include <stdexcept>
-#include <string>
-
 void CheckLength(std::string expression) {
   if (expression.size() > 255)
     throw std::invalid_argument("Character limit exceeded");

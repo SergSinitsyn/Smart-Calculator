@@ -2,6 +2,7 @@
 
 #include "ui_cell.h"
 
+namespace MyNamespace {
 Cell::Cell(QWidget *parent) : QWidget(parent), ui(new Ui::Cell) {
   ui->setupUi(this);
   ui->dateEdit->setDate(QDate::currentDate());
@@ -23,7 +24,10 @@ void Cell::SetNumber(int newNumber) { number_ = newNumber; }
 
 void Cell::SetType(int newType) { type_ = newType; }
 
+void Cell::SetMinimumDate(QDate date) { ui->dateEdit->setMinimumDate(date); }
+
 void Cell::on_toolButton_delete_clicked() {
   emit CloseThisCell(number_, type_);
   this->close();
 }
+};  // namespace MyNamespace

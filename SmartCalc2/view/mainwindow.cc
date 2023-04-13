@@ -3,6 +3,7 @@
 #include "../controller/controller.h"
 #include "ui_mainwindow.h"
 
+namespace MyNamespace {
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
@@ -20,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::SetController(Controller *c) { controller_ = c; }
+void MainWindow::SetController(MyNamespace::Controller *c) { controller_ = c; }
 
 std::string MainWindow::GetInputString() const {
   return ui->lineEdit_input->text().toStdString();
@@ -31,7 +32,7 @@ std::string MainWindow::GetInputStringX() const {
 }
 
 void MainWindow::SetAnswer(double x) {
-  ui->lineEdit_output->setText(QString::number(x, 'g', 8));
+  ui->lineEdit_output->setText(QString::number(x, 'g', 16));
 }
 
 void MainWindow::ConnectInputButtons() {
@@ -134,3 +135,4 @@ void MainWindow::on_actionDeposit_Calculator_triggered() {
 void MainWindow::on_lineEdit_input_textChanged(const QString &arg) {
   emit SendExpressionToGraph(arg);
 }
+};  // namespace MyNamespace

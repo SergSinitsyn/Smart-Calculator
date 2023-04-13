@@ -2,8 +2,11 @@
 #define GRAPHWINDOW_H
 
 #include <QLineEdit>
+#include <QMessageBox>
 #include <QVector>
 #include <QWidget>
+#include <random>
+#include <vector>
 
 #include "qcustomplot.h"
 
@@ -11,6 +14,7 @@ namespace Ui {
 class GraphWindow;
 }
 
+namespace MyNamespace {
 class Controller;
 
 using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
@@ -68,5 +72,6 @@ class GraphWindow : public QWidget {
  signals:
   void SendExpressionToCalc(QString);
 };
+};  // namespace MyNamespace
 
 #endif  // GRAPHWINDOW_H

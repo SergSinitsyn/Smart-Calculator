@@ -430,7 +430,7 @@
    <item row="11" column="0">
     <widget class="QLabel" name="label_MinimumBalance">
      <property name="text">
-      <string>MinimumBalance</string>
+      <string>Minimum Balance</string>
      </property>
     </widget>
    </item>

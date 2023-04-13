@@ -1,13 +1,9 @@
 #include "graphwindow.h"
 
-#include <QMessageBox>
-#include <QVector>
-#include <random>
-#include <vector>
-
 #include "../controller/controller.h"
 #include "ui_graphwindow.h"
 
+namespace MyNamespace {
 GraphWindow::GraphWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::GraphWindow) {
   ui->setupUi(this);
@@ -164,3 +160,4 @@ void GraphWindow::yAxisChanged(QCPRange range) {
   ui->doubleSpinBox_yMin->setValue(range.lower);
   ui->doubleSpinBox_yMax->setValue(range.upper);
 }
+};  // namespace MyNamespace

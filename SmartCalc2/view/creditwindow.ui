@@ -133,11 +133,17 @@
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
+     <property name="accelerated">
+      <bool>true</bool>
+     </property>
      <property name="minimum">
       <double>0.010000000000000</double>
      </property>
      <property name="maximum">
       <double>999.990000000000009</double>
+     </property>
+     <property name="stepType">
+      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
      </property>
     </widget>
    </item>

@@ -1,6 +1,7 @@
 #ifndef _MODEL_CREDIT_H_
 #define _MODEL_CREDIT_H_
 
+#include <cmath>
 #include <vector>
 
 #include "round.h"

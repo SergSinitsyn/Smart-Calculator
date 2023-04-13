@@ -1,14 +1,17 @@
 #ifndef DEPOSITWINDOW_H
 #define DEPOSITWINDOW_H
+#include <QPushButton>
+#include <QString>
+#include <QVBoxLayout>
 #include <QVector>
 #include <QWidget>
 
-//#include "../model/date.h"
 #include "cell.h"
 namespace Ui {
 class DepositWindow;
 }
 
+namespace MyNamespace {
 class Controller;
 
 using MultiMapQDate = std::multimap<QDate, std::pair<int, double>>;
@@ -58,7 +61,9 @@ class DepositWindow : public QWidget {
   void on_pushButton_AddReplenishment_clicked();
   void on_pushButton_AddPartialWithdrawal_clicked();
   void on_comboBox_PlacementPeriod_currentIndexChanged(int index);
+  void on_dateEdit_StartOfTerm_userDateChanged(const QDate &date);
   void CloseCell(int CellNumber, int CellType);
 };
+};  // namespace MyNamespace
 
 #endif  // DEPOSITWINDOW_H

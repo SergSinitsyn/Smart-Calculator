@@ -6,7 +6,7 @@
 namespace Ui {
 class Cell;
 }
-
+namespace MyNamespace {
 class Cell : public QWidget {
   Q_OBJECT
 
@@ -20,6 +20,7 @@ class Cell : public QWidget {
   int GetType() const;
   void SetNumber(int newNumber);
   void SetType(int newType);
+  void SetMinimumDate(QDate date);
 
  private:
   Ui::Cell *ui;
@@ -32,5 +33,6 @@ class Cell : public QWidget {
  signals:
   void CloseThisCell(int, int);
 };
+};  // namespace MyNamespace
 
 #endif  // CELL_H

@@ -1,7 +1,5 @@
 #include "deposit.h"
 
-#include <cmath>
-
 std::string FromDoubleToString(double value) {
   std::stringstream ss;
   ss << value;

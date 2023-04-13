@@ -16,8 +16,9 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class Controller;
+namespace MyNamespace {
 
+class Controller;
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
@@ -60,5 +61,5 @@ class MainWindow : public QMainWindow {
  signals:
   void SendExpressionToGraph(QString);
 };
-
+};      // namespace MyNamespace
 #endif  // MAINWINDOW_H

@@ -1,7 +1,10 @@
 #ifndef _MODEL_CHECK_H_
 #define _MODEL_CHECK_H_
 
+#include <cmath>
 #include <exception>
+#include <iostream>
+#include <stdexcept>
 #include <string>
 
 void CheckLength(std::string expression);

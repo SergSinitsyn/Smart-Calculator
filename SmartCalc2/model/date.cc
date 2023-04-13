@@ -1,7 +1,5 @@
 #include "date.h"
 
-#include <algorithm>
-
 MyNamespace::Date::Date(int day, int month, int year) {
   std::tm tm{};
   tm.tm_year = year;

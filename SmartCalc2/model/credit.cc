@@ -1,8 +1,5 @@
 #include "credit.h"
 
-#include <cmath>
-#include <tuple>
-
 void MyNamespace::Credit::LoadData(int type, double total_credit_amount,
                                    int term, double interest_rate) {
   type_ = type;

@@ -37,7 +37,8 @@ void MyNamespace::Token::MakeUnaryNegation() {
   *this = result;
 }
 
-void CreateTokenMap(std::map<std::string, MyNamespace::Token>& temp_map) {
+void MyNamespace::CreateTokenMap(
+    std::map<std::string, MyNamespace::Token>& temp_map) {
   using namespace MyNamespace;
   using namespace std;
   initializer_list<pair<const string, Token>> list = {

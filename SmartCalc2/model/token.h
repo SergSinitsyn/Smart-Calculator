@@ -7,22 +7,18 @@
 #include <string>
 #include <variant>
 
-/**
- * @brief Макрос для определения основных арифметических функций с одним
- * аргументом
- * @details lamdas function with one argument
- * @param[in] SIGN operator простых унарных арифметических выражений
- * @return Возращает указатель на унарную функцию
- */
+/// @brief Макрос для определения основных арифметических функций с одним
+/// аргументом
+/// @details lamdas function with one argument
+/// @param[in] SIGN operator простых унарных арифметических выражений
+/// @return Возращает указатель на унарную функцию
 #define lamdas_f1arg(SIGN) [](double src) -> double { return SIGN(src); }
 
-/**
- * @brief Макрос для определения основных арифметических функций с двумя
- * аргументами
- * @details lamdas function with two arguments
- * @param[in] SIGN operator простых бинарных арифметических выражений
- * @return Возращает указатель на бинарную функцию
- */
+/// @brief Макрос для определения основных арифметических функций с двумя
+/// аргументами
+/// @details lamdas function with two arguments
+/// @param[in] SIGN operator простых бинарных арифметических выражений
+/// @return Возращает указатель на бинарную функцию
 #define lamdas_f2arg(SIGN) \
   [](double lhs, double rhs) -> double { return lhs SIGN rhs; }
 
@@ -107,8 +103,9 @@ class Token {
   double value_;
   fp_variant function_;
 };
-};  // namespace MyNamespace
 
 void CreateTokenMap(std::map<std::string, MyNamespace::Token>& temp_map);
+
+};  // namespace MyNamespace
 
 #endif  // _MODEL_TOKEN_H_

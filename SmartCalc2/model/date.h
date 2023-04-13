@@ -1,6 +1,7 @@
 #ifndef _MODEL_DATE_H_
 #define _MODEL_DATE_H_
 
+#include <algorithm>
 #include <ctime>
 
 namespace MyNamespace {

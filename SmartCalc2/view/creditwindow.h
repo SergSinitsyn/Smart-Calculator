@@ -9,6 +9,7 @@ namespace Ui {
 class CreditWindow;
 }
 
+namespace MyNamespace {
 class Controller;
 
 class CreditWindow : public QWidget {
@@ -37,5 +38,6 @@ class CreditWindow : public QWidget {
   void on_pushButton_Clear_clicked();
   void on_comboBox_Term_currentIndexChanged(int index);
 };
+};  // namespace MyNamespace
 
 #endif  // CREDITWINDOW_H
