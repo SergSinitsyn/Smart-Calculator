@@ -3,6 +3,7 @@
 
 #include <ctime>
 
+namespace MyNamespace {
 class Date {
  public:
   Date() = default;
@@ -37,5 +38,6 @@ class Date {
   int start_month_;
   int start_year_;
 };
+};  // namespace MyNamespace
 
 #endif  // _MODEL_DATE_H_

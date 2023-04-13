@@ -1,36 +1,40 @@
 #include "mathcalculator.h"
 
-MathCalculator::MathCalculator() { CreateTokenMap(token_map_); }
+MyNamespace::MathCalculator::MathCalculator() { CreateTokenMap(token_map_); }
 
-void MathCalculator::CalculateAnswer(std::string str) {
+void MyNamespace::MathCalculator::CalculateAnswer(std::string str) {
   if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
   if ("" != input_x_ || !correct_load_x_) LoadX("");
   if (correct_load_ && correct_load_x_)
     answer_ = PostfixNotationCalculation(x_value_);
 }
 
-void MathCalculator::CalculateAnswer(std::string str, std::string str_x) {
+void MyNamespace::MathCalculator::CalculateAnswer(std::string str,
+                                                  std::string str_x) {
   if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
   if (str_x != input_x_ || !correct_load_x_) LoadX(str_x);
   if (correct_load_ && correct_load_x_)
     answer_ = PostfixNotationCalculation(x_value_);
 }
 
-void MathCalculator::CalculateGraph(std::string str, int number_of_points,
-                                    double x_start, double x_end, double y_min,
-                                    double y_max) {
+void MyNamespace::MathCalculator::CalculateGraph(std::string str,
+                                                 int number_of_points,
+                                                 double x_start, double x_end,
+                                                 double y_min, double y_max) {
   if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
   if (correct_load_)
     CalculateXY(number_of_points, x_start, x_end, y_min, y_max);
 }
 
-double MathCalculator::GetAnswer() const { return answer_; }
+double MyNamespace::MathCalculator::GetAnswer() const { return answer_; }
 
-MathCalculator::XYGraph MathCalculator::GetGraph() const {
+MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::GetGraph()
+    const {
   return answer_graph_;
 }
 
-void MathCalculator::LoadExpression(const std::string& input_string) {
+void MyNamespace::MathCalculator::LoadExpression(
+    const std::string& input_string) {
   correct_load_ = false;
   input_ = {};
   stack_ = {};
@@ -46,7 +50,7 @@ void MathCalculator::LoadExpression(const std::string& input_string) {
   correct_load_ = true;
 }
 
-void MathCalculator::LoadX(const std::string& input_x) {
+void MyNamespace::MathCalculator::LoadX(const std::string& input_x) {
   correct_load_x_ = false;
   input_x_ = input_x;
   input_x_ = ConvertToLowercase(input_x_);
@@ -54,7 +58,7 @@ void MathCalculator::LoadX(const std::string& input_x) {
   correct_load_x_ = true;
 }
 
-std::string MathCalculator::ConvertToLowercase(std::string str) {
+std::string MyNamespace::MathCalculator::ConvertToLowercase(std::string str) {
   std::string result;
   for (size_t i = 0; i < str.size(); ++i) {
     result.push_back(tolower(str[i]));
@@ -62,7 +66,7 @@ std::string MathCalculator::ConvertToLowercase(std::string str) {
   return result;
 }
 
-void MathCalculator::Parsing() {
+void MyNamespace::MathCalculator::Parsing() {
   size_t i = 0;
   while (i < input_expression_.size()) {
     if (isdigit(input_expression_[i])) {
@@ -80,8 +84,8 @@ void MathCalculator::Parsing() {
   if (input_.empty()) throw std::logic_error("Empty expression");
 }
 
-std::pair<double, std::string> MathCalculator::ReadNumber(std::string& str,
-                                                          size_t& start) const {
+std::pair<double, std::string> MyNamespace::MathCalculator::ReadNumber(
+    std::string& str, size_t& start) const {
   std::regex r("\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
   std::sregex_iterator i =
       std::sregex_iterator(str.begin() + start, str.end(), r);
@@ -93,7 +97,8 @@ std::pair<double, std::string> MathCalculator::ReadNumber(std::string& str,
   return make_pair(d, match.str());
 }
 
-std::string MathCalculator::ReadWord(std::string& str, size_t& start) const {
+std::string MyNamespace::MathCalculator::ReadWord(std::string& str,
+                                                  size_t& start) const {
   std::regex r("([a-z]+)");
   std::sregex_iterator i =
       std::sregex_iterator(str.begin() + start, str.end(), r);
@@ -102,7 +107,7 @@ std::string MathCalculator::ReadWord(std::string& str, size_t& start) const {
   return match.str();
 }
 
-void MathCalculator::PushToken(std::string temp) {
+void MyNamespace::MathCalculator::PushToken(std::string temp) {
   if (auto it = token_map_.find(temp); it != token_map_.end()) {
     input_.push(it->second);
   } else {
@@ -110,7 +115,7 @@ void MathCalculator::PushToken(std::string temp) {
   }
 }
 
-void MathCalculator::FindSpacesAndUnarySigns() {
+void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
   while (!input_.empty()) {
     std::string name = input_.front().GetName();
     if (name == " ") {
@@ -132,7 +137,7 @@ void MathCalculator::FindSpacesAndUnarySigns() {
   if (input_.empty()) throw std::logic_error("Empty expression");
 }
 
-void MathCalculator::CheckSequenceOfTokens() {
+void MyNamespace::MathCalculator::CheckSequenceOfTokens() {
   if (!kFirstToken_[input_.front().GetPrecedence()]) {
     throw std::logic_error("Wrong sequence: expression starts with " +
                            input_.front().GetName());
@@ -155,7 +160,7 @@ void MathCalculator::CheckSequenceOfTokens() {
   input_.swap(output_);
 }
 
-void MathCalculator::ShuntingYardAlgorithm() {
+void MyNamespace::MathCalculator::ShuntingYardAlgorithm() {
   while (!input_.empty()) {
     if (input_.front().GetPrecedence() == Precedence::kNumber) {
       FromInputToOutput();
@@ -196,22 +201,22 @@ void MathCalculator::ShuntingYardAlgorithm() {
   }
 }
 
-void MathCalculator::FromInputToOutput() {
+void MyNamespace::MathCalculator::FromInputToOutput() {
   output_.push(input_.front());
   input_.pop();
 }
 
-void MathCalculator::FromInputToStack() {
+void MyNamespace::MathCalculator::FromInputToStack() {
   stack_.push(input_.front());
   input_.pop();
 }
 
-void MathCalculator::FromStackToOutput() {
+void MyNamespace::MathCalculator::FromStackToOutput() {
   output_.push(stack_.top());
   stack_.pop();
 }
 
-void MathCalculator::ReadX(std::string str) {
+void MyNamespace::MathCalculator::ReadX(std::string str) {
   std::string origin_str = str;
   if (!str.size()) {
     x_value_ = NAN;
@@ -243,7 +248,7 @@ void MathCalculator::ReadX(std::string str) {
   }
 }
 
-double MathCalculator::PostfixNotationCalculation(double x) {
+double MyNamespace::MathCalculator::PostfixNotationCalculation(double x) {
   input_ = output_;
   while (!input_.empty()) {
     std::visit(
@@ -265,24 +270,25 @@ double MathCalculator::PostfixNotationCalculation(double x) {
   return PopFromResult();
 }
 
-void MathCalculator::PushToResult() {
+void MyNamespace::MathCalculator::PushToResult() {
   result_.push(input_.front().GetValue());
   input_.pop();
 }
 
-void MathCalculator::PushToResult(double x) {
+void MyNamespace::MathCalculator::PushToResult(double x) {
   result_.push(x);
   input_.pop();
 }
 
-double MathCalculator::PopFromResult() {
+double MyNamespace::MathCalculator::PopFromResult() {
   double value = result_.top();
   result_.pop();
   return value;
 }
 
-void MathCalculator::CalculateXY(int number_of_points, double x_start,
-                                 double x_end, double y_min, double y_max) {
+void MyNamespace::MathCalculator::CalculateXY(int number_of_points,
+                                              double x_start, double x_end,
+                                              double y_min, double y_max) {
   CheckNumberOfPoints(number_of_points);
   CheckRange(x_start, x_end);
 

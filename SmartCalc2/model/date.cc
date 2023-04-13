@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-Date::Date(int day, int month, int year) {
+MyNamespace::Date::Date(int day, int month, int year) {
   std::tm tm{};
   tm.tm_year = year;
   tm.tm_mon = month;
@@ -18,15 +18,15 @@ Date::Date(int day, int month, int year) {
   count_year_ = 0;
 }
 
-int Date::GetDay() const { return day_; }
+int MyNamespace::Date::GetDay() const { return day_; }
 
-int Date::GetMonth() const { return month_; }
+int MyNamespace::Date::GetMonth() const { return month_; }
 
-int Date::GetYear() const { return year_; }
+int MyNamespace::Date::GetYear() const { return year_; }
 
-void Date::AddDays(int days) { Add(days, 0, 0); }
+void MyNamespace::Date::AddDays(int days) { Add(days, 0, 0); }
 
-void Date::AddMonths(int months) {
+void MyNamespace::Date::AddMonths(int months) {
   ++count_month_;
   Date start(start_day_, start_month_, start_year_);
   Date temp(start_day_, start_month_, start_year_);
@@ -40,7 +40,7 @@ void Date::AddMonths(int months) {
   year_ = temp.GetYear();
 }
 
-void Date::AddYears(int years) {
+void MyNamespace::Date::AddYears(int years) {
   ++count_year_;
   Date start(start_day_, start_month_, start_year_);
   Date temp(start_day_, start_month_, start_year_);
@@ -54,7 +54,7 @@ void Date::AddYears(int years) {
   year_ = temp.GetYear();
 }
 
-bool Date::operator==(const Date& other) const {
+bool MyNamespace::Date::operator==(const Date& other) const {
   if (this == &other) {
     return true;
   }
@@ -65,9 +65,11 @@ bool Date::operator==(const Date& other) const {
   }
 }
 
-bool Date::operator!=(const Date& other) const { return !(*this == other); }
+bool MyNamespace::Date::operator!=(const Date& other) const {
+  return !(*this == other);
+}
 
-bool Date::operator>(const Date& other) const {
+bool MyNamespace::Date::operator>(const Date& other) const {
   if (this == &other) {
     return true;
   }
@@ -88,7 +90,7 @@ bool Date::operator>(const Date& other) const {
   }
 }
 
-bool Date::operator<(const Date& other) const {
+bool MyNamespace::Date::operator<(const Date& other) const {
   if (this == &other) {
     return true;
   }
@@ -109,15 +111,15 @@ bool Date::operator<(const Date& other) const {
   }
 }
 
-bool Date::operator<=(const Date& other) const {
+bool MyNamespace::Date::operator<=(const Date& other) const {
   return (*this == other || *this < other);
 }
 
-bool Date::operator>=(const Date& other) const {
+bool MyNamespace::Date::operator>=(const Date& other) const {
   return (*this == other || *this > other);
 }
 
-int Date::DaysInYear() const {
+int MyNamespace::Date::DaysInYear() const {
   int daysInYear = 365;
   Date temp(29, 1, year_);
   if (temp.day_ == 29) {
@@ -126,7 +128,7 @@ int Date::DaysInYear() const {
   return daysInYear;
 }
 
-void Date::Add(int day, int month, int year) {
+void MyNamespace::Date::Add(int day, int month, int year) {
   Date temp_date(day_ + day, month_ + month, year_ + year);
   day_ = temp_date.day_;
   month_ = temp_date.month_;

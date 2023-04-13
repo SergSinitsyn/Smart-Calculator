@@ -10,8 +10,6 @@
 
 std::string FromDoubleToString(double value);
 
-using MultiMapDate = std::multimap<Date, std::pair<int, double>>;
-
 enum PeriodicityOfPayments {
   kDaily,
   kWeekly,
@@ -22,8 +20,10 @@ enum PeriodicityOfPayments {
   kEndOfTerm,
 };
 
+namespace MyNamespace {
 class Deposit {
  public:
+  using MultiMapDate = std::multimap<Date, std::pair<int, double>>;
   Deposit() = default;
   ~Deposit() = default;
   void CalculateDeposit(double deposit_amount, Date start_of_term,
@@ -78,5 +78,6 @@ class Deposit {
   double tax_amount_;
   double deposit_amount_by_the_end_of_the_term_;
 };
+};  // namespace MyNamespace
 
 #endif  // _MODEL_DEPOSIT_H_

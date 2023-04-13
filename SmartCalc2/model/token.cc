@@ -1,8 +1,9 @@
 #include "token.h"
 
-Token::Token(const std::string& name, Precedence precedence,
-             Associativity associativity, OperationType operation_type,
-             double value, fp_variant function)
+MyNamespace::Token::Token(const std::string& name, Precedence precedence,
+                          Associativity associativity,
+                          OperationType operation_type, double value,
+                          fp_variant function)
     : name_(name),
       precedence_(precedence),
       associativity_(associativity),
@@ -10,24 +11,34 @@ Token::Token(const std::string& name, Precedence precedence,
       value_(value),
       function_(function){};
 
-std::string Token::GetName() const { return name_; }
-Precedence Token::GetPrecedence() const { return precedence_; }
-Associativity Token::GetAssociativity() const { return associativity_; }
-OperationType Token::GetOperationType() const { return operation_type_; }
-double Token::GetValue() const { return value_; }
-fp_variant Token::GetFunction() const { return function_; }
+std::string MyNamespace::Token::GetName() const { return name_; }
 
-void Token::MakeNumber(std::string name, double value) {
+Precedence MyNamespace::Token::GetPrecedence() const { return precedence_; }
+
+Associativity MyNamespace::Token::GetAssociativity() const {
+  return associativity_;
+}
+
+OperationType MyNamespace::Token::GetOperationType() const {
+  return operation_type_;
+}
+
+double MyNamespace::Token::GetValue() const { return value_; }
+
+fp_variant MyNamespace::Token::GetFunction() const { return function_; }
+
+void MyNamespace::Token::MakeNumber(std::string name, double value) {
   Token result(name, kNumber, kNone, kOperand, value, nullptr);
   *this = result;
 }
 
-void Token::MakeUnaryNegation() {
+void MyNamespace::Token::MakeUnaryNegation() {
   Token result("-", kUnaryOperator, kRight, kUnary, 0, lamdas_f1arg(-));
   *this = result;
 }
 
-void CreateTokenMap(std::map<std::string, Token>& temp_map) {
+void CreateTokenMap(std::map<std::string, MyNamespace::Token>& temp_map) {
+  using namespace MyNamespace;
   using namespace std;
   initializer_list<pair<const string, Token>> list = {
       {" ", Token(" ", kNumber, kNone, kOperand, 0, nullptr)},

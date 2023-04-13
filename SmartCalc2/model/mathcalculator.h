@@ -19,6 +19,7 @@
 #include "check.h"
 #include "token.h"
 
+namespace MyNamespace {
 class MathCalculator {
  public:
   using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
@@ -87,5 +88,6 @@ class MathCalculator {
   static constexpr bool kFirstToken_[8] = {1, 0, 0, 0, 1, 1, 1, 0};
   static constexpr bool kLastToken_[8] = {1, 0, 0, 0, 0, 0, 0, 1};
 };
+};  // namespace MyNamespace
 
 #endif  // _MODEL_MATHCALCULATOR_H_

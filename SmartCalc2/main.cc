@@ -7,6 +7,7 @@
 #include "view/mainwindow.h"
 
 int main(int argc, char *argv[]) {
+  using namespace MyNamespace;
   QApplication a(argc, argv);
   MathCalculator model_math;
   Credit model_credit;

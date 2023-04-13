@@ -13,6 +13,9 @@ void CheckLength(std::string expression) {
 }
 
 void CheckNumberOfPoints(int number_of_points) {
+  if (!(std::isfinite(number_of_points) || std::isnan(number_of_points))) {
+    throw std::invalid_argument("Invalid number of points for plot");
+  }
   if (number_of_points < 2)
     throw std::invalid_argument("Invalid number of points for plot");
 }

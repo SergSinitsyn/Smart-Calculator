@@ -6,6 +6,7 @@
 #include "../model/mathcalculator.h"
 #include "../view/mainwindow.h"
 
+namespace MyNamespace {
 class Controller {
  public:
   Controller(MathCalculator* model_1, Credit* model_2, Deposit* model_3);
@@ -21,7 +22,8 @@ class Controller {
   Deposit* model_deposit_;
 
   Date ConvertDate(QDate old) const;
-  MultiMapDate ConvertDateMap(MultiMapQDate old) const;
+  Deposit::MultiMapDate ConvertDateMap(MultiMapQDate old) const;
 };
+};  // namespace MyNamespace
 
 #endif  // _CONTROLLER_CONTROLLER_H_

@@ -5,6 +5,7 @@
 
 #include "round.h"
 
+namespace MyNamespace {
 class Credit {
  public:
   Credit() = default;
@@ -29,5 +30,6 @@ class Credit {
   double overpayment_on_credit_;
   double total_payment_;
 };
+};  // namespace MyNamespace
 
 #endif  // _MODEL_CREDIT_H_

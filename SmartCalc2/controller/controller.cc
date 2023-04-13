@@ -2,25 +2,25 @@
 
 #include <string>
 
-Controller::Controller(MathCalculator *model_1, Credit *model_2,
-                       Deposit *model_3)
+MyNamespace::Controller::Controller(MathCalculator *model_1, Credit *model_2,
+                                    Deposit *model_3)
     : model_math_(model_1), model_credit_(model_2), model_deposit_(model_3){};
 
 Controller::~Controller(){};
 
-void Controller::CalculateValue(MainWindow *mw) {
+void MyNamespace::Controller::CalculateValue(MainWindow *mw) {
   model_math_->CalculateAnswer(mw->GetInputString(), mw->GetInputStringX());
   mw->SetAnswer(model_math_->GetAnswer());
 }
 
-void Controller::CalculateGraph(GraphWindow *gw) {
+void MyNamespace::Controller::CalculateGraph(GraphWindow *gw) {
   model_math_->CalculateGraph(gw->GetInputString(), gw->GetResolution(),
                               gw->GetMinX(), gw->GetMaxX(), gw->GetMinY(),
                               gw->GetMaxY());
   gw->SetGraph(model_math_->GetGraph());
 }
 
-void Controller::CalculateCredit(CreditWindow *cw) {
+void MyNamespace::Controller::CalculateCredit(CreditWindow *cw) {
   model_credit_->CalculateCredit(cw->GetCreditType(),
                                  cw->GetTotalCreditAmount(), cw->GetTerm(),
                                  cw->GetInterestRate());
@@ -29,7 +29,7 @@ void Controller::CalculateCredit(CreditWindow *cw) {
                 model_credit_->GetMonthlyPayment());
 }
 
-void Controller::CalculateDeposit(DepositWindow *dw) {
+void MyNamespace::Controller::CalculateDeposit(DepositWindow *dw) {
   model_deposit_->CalculateDeposit(
       dw->GetDepositAmount(), ConvertDate(dw->GetStartOfTerm()),
       dw->GetPlacementPeriod(), dw->GetPlacementPeriodType(),
@@ -43,13 +43,14 @@ void Controller::CalculateDeposit(DepositWindow *dw) {
                 model_deposit_->GetTaxAmount());
 }
 
-Date Controller::ConvertDate(QDate old) const {
+MyNamespace::Date MyNamespace::Controller::ConvertDate(QDate old) const {
   Date result(old.day(), old.month() - 1, old.year());
   return result;
 }
 
-MultiMapDate Controller::ConvertDateMap(MultiMapQDate old) const {
-  MultiMapDate result;
+MyNamespace::Deposit::MultiMapDate MyNamespace::Controller::ConvertDateMap(
+    MultiMapQDate old) const {
+  MyNamespace::Deposit::MultiMapDate result;
   for (auto it = old.begin(); it != old.end(); ++it) {
     result.insert(std::make_pair(ConvertDate(it->first), it->second));
   }

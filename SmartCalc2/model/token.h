@@ -80,6 +80,7 @@ enum Associativity {
   kRight,
 };
 
+namespace MyNamespace {
 class Token {
  public:
   Token() = default;
@@ -106,7 +107,8 @@ class Token {
   double value_;
   fp_variant function_;
 };
+};  // namespace MyNamespace
 
-void CreateTokenMap(std::map<std::string, Token>& temp_map);
+void CreateTokenMap(std::map<std::string, MyNamespace::Token>& temp_map);
 
 #endif  // _MODEL_TOKEN_H_

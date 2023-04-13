@@ -9,14 +9,12 @@ std::string FromDoubleToString(double value) {
   return str;
 }
 
-void Deposit::CalculateDeposit(double deposit_amount, Date start_of_term,
-                               int placement_period, int placement_period_type,
-                               double interest_rate, double tax_rate,
-                               int periodicity_of_payments,
-                               bool capitalization_of_interest,
-                               MultiMapDate replenishments_list,
-                               MultiMapDate partial_withdrawals_list,
-                               double minimum_balance) {
+void MyNamespace::Deposit::CalculateDeposit(
+    double deposit_amount, Date start_of_term, int placement_period,
+    int placement_period_type, double interest_rate, double tax_rate,
+    int periodicity_of_payments, bool capitalization_of_interest,
+    MultiMapDate replenishments_list, MultiMapDate partial_withdrawals_list,
+    double minimum_balance) {
   LoadDepositData(deposit_amount, start_of_term, placement_period,
                   placement_period_type, interest_rate, tax_rate,
                   periodicity_of_payments, capitalization_of_interest,
@@ -25,20 +23,22 @@ void Deposit::CalculateDeposit(double deposit_amount, Date start_of_term,
   Calculation();
 }
 
-long double Deposit::GetAccruedInterest() const { return accrued_interest_; }
-double Deposit::GetTaxAmount() const { return tax_amount_; }
-double Deposit::GetDepositAmountByTheEndOfTheTerm() const {
+long double MyNamespace::Deposit::GetAccruedInterest() const {
+  return accrued_interest_;
+}
+
+double MyNamespace::Deposit::GetTaxAmount() const { return tax_amount_; }
+
+double MyNamespace::Deposit::GetDepositAmountByTheEndOfTheTerm() const {
   return deposit_amount_by_the_end_of_the_term_;
 }
 
-void Deposit::LoadDepositData(double deposit_amount, Date start_of_term,
-                              int placement_period, int placement_period_type,
-                              double interest_rate, double tax_rate,
-                              int periodicity_of_payments,
-                              bool capitalization_of_interest,
-                              MultiMapDate replenishments_list,
-                              MultiMapDate partial_withdrawals_list,
-                              double minimum_balance) {
+void MyNamespace::Deposit::LoadDepositData(
+    double deposit_amount, Date start_of_term, int placement_period,
+    int placement_period_type, double interest_rate, double tax_rate,
+    int periodicity_of_payments, bool capitalization_of_interest,
+    MultiMapDate replenishments_list, MultiMapDate partial_withdrawals_list,
+    double minimum_balance) {
   deposit_amount_ = deposit_amount;
   start_deposit_ = deposit_amount_;
   start_of_term_ = start_of_term;
@@ -69,7 +69,7 @@ void Deposit::LoadDepositData(double deposit_amount, Date start_of_term,
   deposit_amount_by_the_end_of_the_term_ = 0.;
 }
 
-void Deposit::Calculation() {
+void MyNamespace::Deposit::Calculation() {
   CheckReplenishmentsList();
   CheckPartialWithdrawalsList();
   SetNextPaymentDate();
@@ -87,7 +87,7 @@ void Deposit::Calculation() {
   tax_amount_ = RoundToTwoDecimalPlaces((accrued_interest_)*tax_rate_ / 100.);
 }
 
-void Deposit::SetNextPaymentDate() {
+void MyNamespace::Deposit::SetNextPaymentDate() {
   switch (periodicity_of_payments_) {
     case kDaily:
       payment_date_.AddDays(1);
@@ -116,7 +116,7 @@ void Deposit::SetNextPaymentDate() {
   }
 }
 
-void Deposit::CheckPaymentDate() {
+void MyNamespace::Deposit::CheckPaymentDate() {
   if (current_date_ == payment_date_) {
     if (capitalization_of_interest_) {
       deposit_amount_ += RoundToTwoDecimalPlaces(accrued_interest_);
@@ -129,12 +129,12 @@ void Deposit::CheckPaymentDate() {
   }
 }
 
-void Deposit::AddAccruedInterest() {
+void MyNamespace::Deposit::AddAccruedInterest() {
   accrued_interest_ += deposit_amount_ * interest_rate_ / 100.0 /
                        (double)current_date_.DaysInYear();
 }
 
-void Deposit::CheckReplenishmentsList() {
+void MyNamespace::Deposit::CheckReplenishmentsList() {
   auto replenishment = replenishments_list_.find(current_date_);
   while (replenishment != replenishments_list_.end()) {
     Date date = replenishment->first;
@@ -152,7 +152,7 @@ void Deposit::CheckReplenishmentsList() {
   }
 }
 
-void Deposit::CheckPartialWithdrawalsList() {
+void MyNamespace::Deposit::CheckPartialWithdrawalsList() {
   auto partial_withdrawal = partial_withdrawals_list_.find(current_date_);
   while (partial_withdrawal != partial_withdrawals_list_.end()) {
     Date date = partial_withdrawal->first;
@@ -179,7 +179,7 @@ void Deposit::CheckPartialWithdrawalsList() {
   }
 }
 
-void Deposit::SetNextDate(int type, Date& date) {
+void MyNamespace::Deposit::SetNextDate(int type, Date& date) {
   switch (type) {
     case 0:  // one-time
       break;
