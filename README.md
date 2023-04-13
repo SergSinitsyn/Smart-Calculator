@@ -1,2 +1,2 @@
 # SmartCalc
-Engineer, credit and debit calculator. GUI implementation, based on any GUI library with Qt API for C++17
+Engineer calculator with graph plot. Credit and debit calculator. GUI implementation, based on any GUI library Qt for C++17 

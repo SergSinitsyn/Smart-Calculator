@@ -41,7 +41,6 @@ void Deposit::LoadDepositData(double deposit_amount, Date start_of_term,
                               double minimum_balance) {
   deposit_amount_ = deposit_amount;
   start_deposit_ = deposit_amount_;
-  //  total_withdrawal_ = 0;
   start_of_term_ = start_of_term;
   end_of_term_ = start_of_term;
   switch (placement_period_type) {
@@ -143,19 +142,7 @@ void Deposit::CheckReplenishmentsList() {
     double value = replenishment->second.second;
     deposit_amount_ += value;
     start_deposit_ += value;
-    switch (type) {
-      case 0:  // one-time
-        break;
-      case 1:  // weekly
-        date.AddDays(7);
-        break;
-      case 2:  // monthly
-        date.AddMonths(1);
-        break;
-      case 3:  // annually
-        date.AddYears(1);
-        break;
-    }
+    SetNextDate(type, date);
     replenishments_list_.erase(replenishment);
     if (type) {
       replenishments_list_.insert(
@@ -182,25 +169,28 @@ void Deposit::CheckPartialWithdrawalsList() {
           FromDoubleToString(minimum_balance_));
     }
     start_deposit_ -= value;
-    //    total_withdrawal_ += value;
-    switch (type) {
-      case 0:  // one-time
-        break;
-      case 1:  // weekly
-        date.AddDays(7);
-        break;
-      case 2:  // monthly
-        date.AddMonths(1);
-        break;
-      case 3:  // annually
-        date.AddYears(1);
-        break;
-    }
+    SetNextDate(type, date);
     partial_withdrawals_list_.erase(partial_withdrawal);
     if (type) {
       partial_withdrawals_list_.insert(
           std::make_pair(date, std::make_pair(type, value)));
     }
     partial_withdrawal = partial_withdrawals_list_.find(current_date_);
+  }
+}
+
+void Deposit::SetNextDate(int type, Date& date) {
+  switch (type) {
+    case 0:  // one-time
+      break;
+    case 1:  // weekly
+      date.AddDays(7);
+      break;
+    case 2:  // monthly
+      date.AddMonths(1);
+      break;
+    case 3:  // annually
+      date.AddYears(1);
+      break;
   }
 }

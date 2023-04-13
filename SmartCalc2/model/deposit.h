@@ -53,6 +53,7 @@ class Deposit {
   void AddAccruedInterest();
   void CheckReplenishmentsList();
   void CheckPartialWithdrawalsList();
+  void SetNextDate(int type, Date& date);
 
   // input data
   double deposit_amount_;
@@ -71,7 +72,6 @@ class Deposit {
   Date payment_date_;
   long double accrued_interest_receivable_;
   double start_deposit_;
-  //  double total_withdrawal_;
 
   // output data
   long double accrued_interest_;
