@@ -14,36 +14,77 @@
    <string>Deposit Calculator</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_TaxRate">
-     <property name="text">
-      <string>Tax Rate</string>
+   <item row="3" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_InterestRate">
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-    </widget>
-   </item>
-   <item row="13" column="0" colspan="3">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="16" column="0">
-    <widget class="QLabel" name="label_DepositAmountByTheEndOfTheTerm">
-     <property name="acceptDrops">
-      <bool>false</bool>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Deposit Amount by the End of the Term</string>
-     </property>
-     <property name="scaledContents">
-      <bool>false</bool>
-     </property>
-     <property name="wordWrap">
+     <property name="accelerated">
       <bool>true</bool>
+     </property>
+     <property name="minimum">
+      <double>0.010000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>99.989999999999995</double>
+     </property>
+     <property name="stepType">
+      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_MinimumBalance">
+     <property name="text">
+      <string>Minimum Balance</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_StartOfTerm">
+     <property name="text">
+      <string>Start of Term</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_TaxRate">
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="accelerated">
+      <bool>true</bool>
+     </property>
+     <property name="minimum">
+      <double>0.000000000000000</double>
+     </property>
+     <property name="stepType">
+      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+     </property>
+     <property name="value">
+      <double>0.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_DepositAmount">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="accelerated">
+      <bool>true</bool>
+     </property>
+     <property name="showGroupSeparator" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
+     </property>
+     <property name="stepType">
+      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
      </property>
     </widget>
    </item>
@@ -92,87 +133,31 @@
      </widget>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_StartOfTerm">
+   <item row="12" column="0" colspan="3">
+    <widget class="QPushButton" name="pushButton_Calculate">
      <property name="text">
-      <string>Start of Term</string>
+      <string>Calculate Deposit</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QComboBox" name="comboBox_PeriodicityOfPayments">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <item>
-      <property name="text">
-       <string>Daily</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Weekly</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Monthly</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Every three months</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Semiannually</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Annualy</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>At the end of the term</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QComboBox" name="comboBox_PlacementPeriod">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <item>
-      <property name="text">
-       <string>Days</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Months</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Years</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="9" column="1">
-    <widget class="QPushButton" name="pushButton_AddPartialWithdrawal">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_PeriodicityOfPayments">
      <property name="text">
-      <string>Add Partial Withdrawal</string>
+      <string>Periodicity of Payments</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_DepositAmount">
+     <property name="text">
+      <string>Deposit Amount</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QPushButton" name="pushButton_AddReplenishment">
+     <property name="text">
+      <string>Add Replenishment</string>
      </property>
     </widget>
    </item>
@@ -242,38 +227,70 @@
      </widget>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_InterestRate">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_TaxRate">
      <property name="text">
-      <string>Interest Rate</string>
+      <string>Tax Rate</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="2">
-    <widget class="QLabel" name="label_Percent">
+   <item row="2" column="2">
+    <widget class="QComboBox" name="comboBox_PlacementPeriod">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Days</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Months</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Years</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="16" column="0">
+    <widget class="QLabel" name="label_DepositAmountByTheEndOfTheTerm">
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
      <property name="text">
-      <string>%</string>
+      <string>Deposit Amount by the End of the Term</string>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="15" column="0">
-    <widget class="QLabel" name="label_TaxAmount">
-     <property name="text">
-      <string>Tax Amount</string>
+   <item row="1" column="1">
+    <widget class="QDateEdit" name="dateEdit_StartOfTerm">
+     <property name="accelerated">
+      <bool>true</bool>
      </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_Replenishments">
-     <property name="text">
-      <string>Replenishments</string>
+     <property name="displayFormat">
+      <string>dd/MM/yyyy</string>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_DepositAmount">
-     <property name="text">
-      <string>Deposit Amount</string>
+     <property name="calendarPopup">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -293,83 +310,89 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
-    <widget class="QLabel" name="label_PartialWithdrawals">
+   <item row="15" column="0">
+    <widget class="QLabel" name="label_TaxAmount">
      <property name="text">
-      <string>Partial Withdrawals</string>
+      <string>Tax Amount</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_InterestRate">
+   <item row="14" column="1" colspan="2">
+    <widget class="QLineEdit" name="lineEdit_AccruedInterest">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-     <property name="accelerated">
-      <bool>true</bool>
-     </property>
-     <property name="minimum">
-      <double>0.010000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>99.989999999999995</double>
-     </property>
-     <property name="stepType">
-      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-     </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_PeriodicityOfPayments">
-     <property name="text">
-      <string>Periodicity of Payments</string>
+   <item row="16" column="1" colspan="2">
+    <widget class="QLineEdit" name="lineEdit_DepositAmountByTheEndOfTheTerm">
+     <property name="locale">
+      <locale language="German" country="Germany"/>
      </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_TaxRate">
+     <property name="inputMethodHints">
+      <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+     </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-     <property name="accelerated">
+     <property name="readOnly">
       <bool>true</bool>
-     </property>
-     <property name="minimum">
-      <double>0.000000000000000</double>
-     </property>
-     <property name="stepType">
-      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-     </property>
-     <property name="value">
-      <double>0.000000000000000</double>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
-    <widget class="QPushButton" name="pushButton_AddReplenishment">
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_InterestRate">
      <property name="text">
-      <string>Add Replenishment</string>
+      <string>Interest Rate</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
-    <widget class="QLabel" name="label_Percent2">
-     <property name="text">
-      <string>%</string>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="comboBox_PeriodicityOfPayments">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QDateEdit" name="dateEdit_StartOfTerm">
-     <property name="accelerated">
-      <bool>true</bool>
+     <property name="currentIndex">
+      <number>2</number>
      </property>
-     <property name="displayFormat">
-      <string>dd/MM/yyyy</string>
-     </property>
-     <property name="calendarPopup">
-      <bool>true</bool>
-     </property>
+     <item>
+      <property name="text">
+       <string>Daily</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Weekly</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Monthly</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Every three months</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Semiannually</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Annualy</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>At the end of the term</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="14" column="0">
@@ -379,18 +402,15 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_PlacementPeriod">
-     <property name="text">
-      <string>Placement Period</string>
+   <item row="13" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_DepositAmount">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
+   <item row="11" column="1" colspan="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_MinimumBalance">
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
@@ -401,10 +421,34 @@
       <bool>true</bool>
      </property>
      <property name="maximum">
-      <double>1000000000000000.000000000000000</double>
+      <double>1000000000000.000000000000000</double>
      </property>
      <property name="stepType">
       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="1" colspan="2">
+    <widget class="QLineEdit" name="lineEdit_TaxAmount">
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_PartialWithdrawals">
+     <property name="text">
+      <string>Partial Withdrawals</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QPushButton" name="pushButton_AddPartialWithdrawal">
+     <property name="text">
+      <string>Add Partial Withdrawal</string>
      </property>
     </widget>
    </item>
@@ -420,100 +464,38 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>18250</number>
+      <number>600</number>
      </property>
      <property name="stepType">
       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="label_MinimumBalance">
+   <item row="4" column="2">
+    <widget class="QLabel" name="label_Percent2">
      <property name="text">
-      <string>Minimum Balance</string>
+      <string>%</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_MinimumBalance">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="accelerated">
-      <bool>true</bool>
-     </property>
-     <property name="showGroupSeparator" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="maximum">
-      <double>1000000000000000.000000000000000</double>
-     </property>
-     <property name="stepType">
-      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="0" colspan="3">
-    <widget class="QPushButton" name="pushButton_Calculate">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_PlacementPeriod">
      <property name="text">
-      <string>Calcilate Deposit</string>
+      <string>Placement Period</string>
      </property>
     </widget>
    </item>
-   <item row="14" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_AccruedInterest">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="showGroupSeparator" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="maximum">
-      <double>1000000000000000000.000000000000000</double>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_Replenishments">
+     <property name="text">
+      <string>Replenishments</string>
      </property>
     </widget>
    </item>
-   <item row="15" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_TaxAmount">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="showGroupSeparator" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="maximum">
-      <double>1000000000000000000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="16" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_DepositAmountByTheEndOfTheTerm">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="showGroupSeparator" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="maximum">
-      <double>1000000000000000000.000000000000000</double>
+   <item row="3" column="2">
+    <widget class="QLabel" name="label_Percent">
+     <property name="text">
+      <string>%</string>
      </property>
     </widget>
    </item>
@@ -534,9 +516,6 @@
   <tabstop>scrollArea_PartialWithdrawals</tabstop>
   <tabstop>doubleSpinBox_MinimumBalance</tabstop>
   <tabstop>pushButton_Calculate</tabstop>
-  <tabstop>doubleSpinBox_AccruedInterest</tabstop>
-  <tabstop>doubleSpinBox_TaxAmount</tabstop>
-  <tabstop>doubleSpinBox_DepositAmountByTheEndOfTheTerm</tabstop>
  </tabstops>
  <resources/>
  <connections/>

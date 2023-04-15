@@ -36,8 +36,8 @@ class Deposit {
                         MultiMapDate partial_withdrawals_list,
                         double minimum_balance);
   long double GetAccruedInterest() const;
-  double GetTaxAmount() const;
-  double GetDepositAmountByTheEndOfTheTerm() const;
+  long double GetTaxAmount() const;
+  long double GetDepositAmountByTheEndOfTheTerm() const;
 
  private:
   void LoadDepositData(double deposit_amount, Date start_date,
@@ -76,8 +76,8 @@ class Deposit {
 
   // output data
   long double accrued_interest_;
-  double tax_amount_;
-  double deposit_amount_by_the_end_of_the_term_;
+  long double tax_amount_;
+  long double deposit_amount_by_the_end_of_the_term_;
 };
 };  // namespace MyNamespace
 

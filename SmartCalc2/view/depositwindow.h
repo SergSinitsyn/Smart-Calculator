@@ -1,5 +1,6 @@
 #ifndef DEPOSITWINDOW_H
 #define DEPOSITWINDOW_H
+#include <QLineEdit>
 #include <QPushButton>
 #include <QString>
 #include <QVBoxLayout>
@@ -44,6 +45,7 @@ class DepositWindow : public QWidget {
 
   int cell_number_total_replenishment_;
   int cell_number_total_partial_withdrawal_;
+  static constexpr int kMaxCellNumber_ = 1024;
   QVector<Cell *> all_cell_replenishment_ptr_;
   QVector<Cell *> all_cell_partial_withdrawal_ptr_;
   MultiMapQDate replenishments_list_;
@@ -55,6 +57,8 @@ class DepositWindow : public QWidget {
                 std::multimap<QDate, std::pair<int, double>> &map);
   void FillReplenishmentsList();
   void FillPartialWithdrawalsList();
+  void SetGroupSeparators(QString &srt);
+  void SetValueToLine(double value, QLineEdit *line);
 
  private slots:
   void on_pushButton_Calculate_clicked();

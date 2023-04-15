@@ -150,6 +150,10 @@
      <property name="font">
       <font>
        <pointsize>16</pointsize>
+       <italic>false</italic>
+       <bold>true</bold>
+       <underline>false</underline>
+       <strikeout>false</strikeout>
       </font>
      </property>
      <property name="cursor">
@@ -157,6 +161,9 @@
      </property>
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
      </property>
      <property name="text">
       <string>X</string>

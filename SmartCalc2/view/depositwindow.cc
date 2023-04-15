@@ -62,10 +62,10 @@ MultiMapQDate DepositWindow::GetPartialWithdrawalsList() const {
 
 void DepositWindow::SetAnswer(double deposit_amount_by_the_end_of_the_term,
                               double accrued_interest, double tax_amount) {
-  ui->doubleSpinBox_DepositAmountByTheEndOfTheTerm->setValue(
-      deposit_amount_by_the_end_of_the_term);
-  ui->doubleSpinBox_AccruedInterest->setValue(accrued_interest);
-  ui->doubleSpinBox_TaxAmount->setValue(tax_amount);
+  SetValueToLine(deposit_amount_by_the_end_of_the_term,
+                 ui->lineEdit_DepositAmountByTheEndOfTheTerm);
+  SetValueToLine(tax_amount, ui->lineEdit_TaxAmount);
+  SetValueToLine(accrued_interest, ui->lineEdit_AccruedInterest);
 }
 
 void DepositWindow::AddNewCellReplenishment() {
@@ -117,6 +117,22 @@ void DepositWindow::FillPartialWithdrawalsList() {
   FillList(all_cell_partial_withdrawal_ptr_, partial_withdrawals_list_);
 }
 
+void DepositWindow::SetGroupSeparators(QString& srt) {
+  int i = 0;
+  int t = 3 * (2 + i) + i;
+  while (t < srt.size()) {
+    srt.insert(srt.size() - t, ",");
+    ++i;
+    t = 3 * (2 + i) + i;
+  }
+}
+
+void DepositWindow::SetValueToLine(double value, QLineEdit* line) {
+  QString word = QString::number(value, 'f', 2);
+  SetGroupSeparators(word);
+  line->setText(word);
+}
+
 void DepositWindow::on_pushButton_Calculate_clicked() {
   FillReplenishmentsList();
   FillPartialWithdrawalsList();
@@ -128,10 +144,22 @@ void DepositWindow::on_pushButton_Calculate_clicked() {
 }
 
 void DepositWindow::on_pushButton_AddReplenishment_clicked() {
+  if (cell_number_total_replenishment_ == kMaxCellNumber_) {
+    QMessageBox::warning(
+        this, "Warning",
+        "The maximum length of the replenishment list has been reached");
+    return;
+  }
   AddNewCellReplenishment();
 }
 
 void DepositWindow::on_pushButton_AddPartialWithdrawal_clicked() {
+  if (cell_number_total_partial_withdrawal_ == kMaxCellNumber_) {
+    QMessageBox::warning(
+        this, "Warning",
+        "The maximum length of the partial withdrawal list has been reached");
+    return;
+  }
   AddNewCellPartialWithdrawal();
 }
 

@@ -25,9 +25,9 @@ long double MyNamespace::Deposit::GetAccruedInterest() const {
   return accrued_interest_;
 }
 
-double MyNamespace::Deposit::GetTaxAmount() const { return tax_amount_; }
+long double MyNamespace::Deposit::GetTaxAmount() const { return tax_amount_; }
 
-double MyNamespace::Deposit::GetDepositAmountByTheEndOfTheTerm() const {
+long double MyNamespace::Deposit::GetDepositAmountByTheEndOfTheTerm() const {
   return deposit_amount_by_the_end_of_the_term_;
 }
 
@@ -157,7 +157,7 @@ void MyNamespace::Deposit::CheckPartialWithdrawalsList() {
     int type = partial_withdrawal->second.first;
     double value = partial_withdrawal->second.second;
     deposit_amount_ -= value;
-    if (deposit_amount_ <= minimum_balance_) {
+    if (deposit_amount_ < minimum_balance_) {
       throw std::logic_error(
           FromDoubleToString(date.GetDay()) + "/" +
           FromDoubleToString(date.GetMonth() + 1) + "/" +

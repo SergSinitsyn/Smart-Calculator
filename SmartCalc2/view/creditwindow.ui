@@ -85,11 +85,17 @@
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
+     <property name="accelerated">
+      <bool>true</bool>
+     </property>
      <property name="showGroupSeparator" stdset="0">
       <bool>true</bool>
      </property>
      <property name="maximum">
       <double>1000000000000000.000000000000000</double>
+     </property>
+     <property name="stepType">
+      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
      </property>
     </widget>
    </item>
@@ -157,11 +163,17 @@
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
+     <property name="accelerated">
+      <bool>true</bool>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>
      <property name="maximum">
       <number>600</number>
+     </property>
+     <property name="stepType">
+      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
      </property>
     </widget>
    </item>
