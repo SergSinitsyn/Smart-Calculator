@@ -954,20 +954,32 @@
    <property name="text">
     <string>Engineer Calculator</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
   </action>
   <action name="actionCredit_Calculator">
    <property name="text">
     <string>Credit Calculator</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
    </property>
   </action>
   <action name="actionDeposit_Calculator">
    <property name="text">
     <string>Deposit Calculator</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
+   </property>
   </action>
   <action name="actionGraph_View">
    <property name="text">
     <string>Graph Plot</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
  </widget>

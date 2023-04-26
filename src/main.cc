@@ -1,20 +1,20 @@
 #include <QApplication>
 
 #include "controller/controller.h"
-#include "model/credit.h"
-#include "model/deposit.h"
-#include "model/mathcalculator.h"
+#include "model/bank/creditcalculator.h"
+#include "model/bank/depositcalculator.h"
+#include "model/math/mathcalculator.h"
 #include "view/mainwindow.h"
 
 int main(int argc, char *argv[]) {
   using namespace MyNamespace;
-  QApplication a(argc, argv);
+  QApplication application(argc, argv);
   MathCalculator model_math;
-  Credit model_credit;
-  Deposit model_deposit;
+  CreditCalculator model_credit;
+  DepositCalculator model_deposit;
   Controller ctrl(&model_math, &model_credit, &model_deposit);
   MainWindow main_window;
   main_window.SetController(&ctrl);
   main_window.show();
-  return a.exec();
+  return application.exec();
 }

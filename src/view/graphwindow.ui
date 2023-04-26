@@ -74,7 +74,7 @@
            <item>
             <widget class="QComboBox" name="comboBox_resolution">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <item>
               <property name="text">

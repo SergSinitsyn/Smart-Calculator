@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "../model/credit.h"
-#include "../model/deposit.h"
-#include "../model/mathcalculator.h"
+#include "../model/bank/creditcalculator.h"
+#include "../model/bank/depositcalculator.h"
+#include "../model/math/mathcalculator.h"
 
 #define kAcc 1e-6
 
@@ -300,7 +300,7 @@ TEST(calculation_graph, expression) {
 }
 
 TEST(credit, ann) {
-  MyNamespace::Credit calc;
+  MyNamespace::CreditCalculator calc;
   calc.CalculateCredit(0, 123456, 120, 4.56);
   ASSERT_NEAR(calc.GetTotalPayment(), 153966.00, kAcc);
   ASSERT_NEAR(calc.GetOverpaymentOnCredit(), 30510.00, kAcc);
@@ -308,7 +308,7 @@ TEST(credit, ann) {
 }
 
 TEST(credit, diff) {
-  MyNamespace::Credit calc;
+  MyNamespace::CreditCalculator calc;
   calc.CalculateCredit(1, 100000, 6, 12.5);
   ASSERT_NEAR(calc.GetTotalPayment(), 103645.83, kAcc);
   ASSERT_NEAR(calc.GetOverpaymentOnCredit(), 3645.83, kAcc);
@@ -321,13 +321,13 @@ TEST(credit, diff) {
 
 TEST(deposit, test1) {
   using namespace MyNamespace;
-  Deposit calc;
-  Deposit::MultiMapDate ReplenishmentsList;
+  DepositCalculator calc;
+  DepositCalculator::MultiMapDate ReplenishmentsList;
   ReplenishmentsList.insert(
       std::make_pair(Date(30, 03, 2023), std::make_pair(2, 20000.00)));
   ReplenishmentsList.insert(
       std::make_pair(Date(04, 05, 2023), std::make_pair(3, 60000.00)));
-  Deposit::MultiMapDate PartialWithdrawalsList;
+  DepositCalculator::MultiMapDate PartialWithdrawalsList;
   PartialWithdrawalsList.insert(
       std::make_pair(Date(29, 10, 2025), std::make_pair(0, 300000.00)));
   PartialWithdrawalsList.insert(
@@ -343,11 +343,11 @@ TEST(deposit, test1) {
 
 TEST(deposit, test2) {
   using namespace MyNamespace;
-  Deposit calc;
-  Deposit::MultiMapDate ReplenishmentsList;
+  DepositCalculator calc;
+  DepositCalculator::MultiMapDate ReplenishmentsList;
   ReplenishmentsList.insert(
       std::make_pair(Date(28, 01, 2024), std::make_pair(2, 7777.77)));
-  Deposit::MultiMapDate PartialWithdrawalsList;
+  DepositCalculator::MultiMapDate PartialWithdrawalsList;
   calc.CalculateDeposit(1000000, Date(13, 3, 2023), 20, 2, 8.13, 0.0, 1, 0,
                         ReplenishmentsList, PartialWithdrawalsList, 0);
   ASSERT_NEAR(calc.GetDepositAmountByTheEndOfTheTerm(), 2788887.10, kAcc);
@@ -357,11 +357,11 @@ TEST(deposit, test2) {
 
 TEST(deposit, test3) {
   using namespace MyNamespace;
-  Deposit calc;
-  Deposit::MultiMapDate ReplenishmentsList;
+  DepositCalculator calc;
+  DepositCalculator::MultiMapDate ReplenishmentsList;
   ReplenishmentsList.insert(
       std::make_pair(Date(28, 01, 2024), std::make_pair(1, 7777.77)));
-  Deposit::MultiMapDate PartialWithdrawalsList;
+  DepositCalculator::MultiMapDate PartialWithdrawalsList;
   calc.CalculateDeposit(1000000, Date(13, 3, 2023), 2000, 0, 8.13, 0.0, 0, 0,
                         ReplenishmentsList, PartialWithdrawalsList, 0);
   ASSERT_NEAR(calc.GetDepositAmountByTheEndOfTheTerm(), 2866664.80, kAcc);
@@ -502,9 +502,9 @@ TEST(logic_error, fail_21) {
 
 TEST(logic_error, deposit_fail) {
   using namespace MyNamespace;
-  Deposit calc;
-  Deposit::MultiMapDate ReplenishmentsList;
-  Deposit::MultiMapDate PartialWithdrawalsList;
+  DepositCalculator calc;
+  DepositCalculator::MultiMapDate ReplenishmentsList;
+  DepositCalculator::MultiMapDate PartialWithdrawalsList;
   PartialWithdrawalsList.insert(
       std::make_pair(Date(28, 01, 2024), std::make_pair(1, 100000000)));
   ASSERT_ANY_THROW(calc.CalculateDeposit(1000000, Date(13, 3, 2023), 2000, 0,

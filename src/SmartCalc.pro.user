@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.0.0, 2023-04-26T22:19:47. -->
+<!-- Written by QtCreator 7.0.0, 2023-04-27T01:55:43. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -241,14 +241,14 @@
      <value type="QString">DYLD_FRAMEWORK_PATH</value>
      <value type="QString">DYLD_LIBRARY_PATH</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/bernarda/Projects_s21/cpp/SmartCalc/src/SmartCalc2.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/bernarda/Projects_s21/cpp/SmartCalc/src/SmartCalc2.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/bernarda/Projects_s21/cpp/SmartCalc/src/SmartCalc.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/bernarda/Projects_s21/cpp/SmartCalc/src/SmartCalc.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/Users/bernarda/Projects_s21/cpp/SmartCalc/build-SmartCalc2-Desktop_x86_darwin_generic_mach_o_64bit-Debug/SmartCalc2.app/Contents/MacOS</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/Users/bernarda/Projects_s21/cpp/SmartCalc/build-SmartCalc2-Desktop_x86_darwin_generic_mach_o_64bit-Debug/SmartCalc.app/Contents/MacOS</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

@@ -37,11 +37,11 @@ enum Periodicity {
 };  // namespace MyNamespace
 
 namespace MyNamespace {
-class Deposit {
+class DepositCalculator {
  public:
   using MultiMapDate = std::multimap<Date, std::pair<int, double>>;
-  Deposit() = default;
-  ~Deposit() = default;
+  DepositCalculator() = default;
+  ~DepositCalculator() = default;
   void CalculateDeposit(double deposit_amount, const Date &start_of_term,
                         int placement_period, int placement_period_type,
                         double interest_rate, double tax_rate,

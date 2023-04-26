@@ -7,10 +7,10 @@
 #include "round.h"
 
 namespace MyNamespace {
-class Credit {
+class CreditCalculator {
  public:
-  Credit() = default;
-  ~Credit() = default;
+  CreditCalculator() = default;
+  ~CreditCalculator() = default;
   void CalculateCredit(int type, double total_credit_amount, int term,
                        double interest_rate);
   std::vector<double> GetMonthlyPayment() const;

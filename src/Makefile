@@ -19,9 +19,8 @@ endif
 
 NAME					= SmartCalc
 
-SRC_DIR					= ./model
+SRC_DIR					= ./model/*
 SOURCE_FILES			= *.cc
-# HEADERS 			= $(SRC_DIR)/$(NAME).h $(SRC_DIR)/$(NAME_PLUS).h */*.h
 
 TEST_FILE				= $(NAME)_test
 TEST_FILE_COV			= $(TEST_FILE)_cov

@@ -3,8 +3,8 @@
 #include <string>
 
 namespace MyNamespace {
-Controller::Controller(MathCalculator *model_1, Credit *model_2,
-                       Deposit *model_3)
+Controller::Controller(MathCalculator *model_1, CreditCalculator *model_2,
+                       DepositCalculator *model_3)
     : model_math_(model_1), model_credit_(model_2), model_deposit_(model_3){};
 
 Controller::~Controller(){};
@@ -49,8 +49,8 @@ Date Controller::ConvertDate(QDate old) const {
   return result;
 }
 
-Deposit::MultiMapDate Controller::ConvertDateMap(MultiMapQDate old) const {
-  Deposit::MultiMapDate result;
+DepositCalculator::MultiMapDate Controller::ConvertDateMap(MultiMapQDate old) const {
+  DepositCalculator::MultiMapDate result;
   for (auto it = old.begin(); it != old.end(); ++it) {
     result.insert(std::make_pair(ConvertDate(it->first), it->second));
   }

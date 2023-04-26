@@ -1,15 +1,16 @@
 #ifndef _CONTROLLER_CONTROLLER_H_
 #define _CONTROLLER_CONTROLLER_H_
 
-#include "../model/credit.h"
-#include "../model/deposit.h"
-#include "../model/mathcalculator.h"
+#include "../model/bank/creditcalculator.h"
+#include "../model/bank/depositcalculator.h"
+#include "../model/math/mathcalculator.h"
 #include "../view/mainwindow.h"
 
 namespace MyNamespace {
 class Controller {
  public:
-  Controller(MathCalculator* model_1, Credit* model_2, Deposit* model_3);
+  Controller(MathCalculator* model_1, CreditCalculator* model_2,
+             DepositCalculator* model_3);
   ~Controller();
   void CalculateValue(MainWindow* mw);
   void CalculateGraph(GraphWindow* gw);
@@ -18,11 +19,11 @@ class Controller {
 
  private:
   MathCalculator* model_math_;
-  Credit* model_credit_;
-  Deposit* model_deposit_;
+  CreditCalculator* model_credit_;
+  DepositCalculator* model_deposit_;
 
   Date ConvertDate(QDate old) const;
-  Deposit::MultiMapDate ConvertDateMap(MultiMapQDate old) const;
+  DepositCalculator::MultiMapDate ConvertDateMap(MultiMapQDate old) const;
 };
 };  // namespace MyNamespace
 
