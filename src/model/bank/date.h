@@ -1,5 +1,5 @@
-#ifndef _MODEL_DATE_H_
-#define _MODEL_DATE_H_
+#ifndef SMARTCALC_MODEL_BANK_DATE_H_
+#define SMARTCALC_MODEL_BANK_DATE_H_
 
 namespace MyNamespace {
 class Date {
@@ -39,4 +39,4 @@ class Date {
 };
 };  // namespace MyNamespace
 
-#endif  // _MODEL_DATE_H_
+#endif  // SMARTCALC_MODEL_BANK_DATE_H_

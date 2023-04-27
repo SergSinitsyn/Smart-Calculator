@@ -1,19 +1,8 @@
-#ifndef _MODEL_MATHCALCULATOR_H_
-#define _MODEL_MATHCALCULATOR_H_
+#ifndef SMARTCALC_MODEL_MATH_MATHCALCULATOR_H_
+#define SMARTCALC_MODEL_MATH_MATHCALCULATOR_H_
 
-#include <algorithm>
-#include <cmath>
-#include <cstring>
-#include <exception>
-#include <functional>
-#include <iostream>
-#include <map>
 #include <queue>
-#include <regex>
-#include <sstream>
 #include <stack>
-#include <string>
-#include <variant>
 
 #include "check.h"
 #include "token.h"
@@ -25,8 +14,8 @@ class MathCalculator {
   MathCalculator();
   ~MathCalculator() = default;
 
-  void CalculateAnswer(const std::string& str);
   void CalculateAnswer(const std::string& str, const std::string& str_x);
+  void CalculateAnswer(const std::string& str);
   void CalculateGraph(const std::string& str, int number_of_points,
                       double x_start, double x_end, double y_min, double y_max);
   double GetAnswer() const;
@@ -35,7 +24,6 @@ class MathCalculator {
  private:
   void LoadExpression(const std::string& input_string);
   void LoadX(const std::string& input_x);
-
   std::string ConvertToLowercase(std::string str);
   void Parsing();
   std::pair<double, std::string> ReadNumber(std::string& str,
@@ -48,13 +36,11 @@ class MathCalculator {
   void FromInputToOutput();
   void FromInputToStack();
   void FromStackToOutput();
-
   void ReadX(std::string str);
-  double PostfixNotationCalculation(double x);
+  double PostfixNotationCalculation(double x_value);
   void PushToResult();
-  void PushToResult(double x);
+  void PushToResult(double x_value);
   double PopFromResult();
-
   void CalculateXY(int number_of_points, double x_start, double x_end,
                    double y_min, double y_max);
 
@@ -89,4 +75,4 @@ class MathCalculator {
 };
 };  // namespace MyNamespace
 
-#endif  // _MODEL_MATHCALCULATOR_H_
+#endif  // SMARTCALC_MODEL_MATH_MATHCALCULATOR_H_

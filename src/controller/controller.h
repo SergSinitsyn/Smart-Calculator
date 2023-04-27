@@ -1,5 +1,5 @@
-#ifndef _CONTROLLER_CONTROLLER_H_
-#define _CONTROLLER_CONTROLLER_H_
+#ifndef SMARTCALC_CONTROLLER_CONTROLLER_H_
+#define SMARTCALC_CONTROLLER_CONTROLLER_H_
 
 #include "../model/bank/creditcalculator.h"
 #include "../model/bank/depositcalculator.h"
@@ -27,4 +27,4 @@ class Controller {
 };
 };  // namespace MyNamespace
 
-#endif  // _CONTROLLER_CONTROLLER_H_
+#endif  // SMARTCALC_CONTROLLER_CONTROLLER_H_

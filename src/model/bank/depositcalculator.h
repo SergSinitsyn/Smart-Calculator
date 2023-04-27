@@ -1,5 +1,5 @@
-#ifndef _MODEL_DEPOSIT_H_
-#define _MODEL_DEPOSIT_H_
+#ifndef SMARTCALC_MODEL_BANK_DEPOSITCALCULATOR_H_
+#define SMARTCALC_MODEL_BANK_DEPOSITCALCULATOR_H_
 
 #include <map>
 #include <string>
@@ -91,4 +91,4 @@ class DepositCalculator {
 };
 };  // namespace MyNamespace
 
-#endif  // _MODEL_DEPOSIT_H_
+#endif  // SMARTCALC_MODEL_BANK_DEPOSITCALCULATOR_H_

@@ -1,38 +1,52 @@
 #include "mathcalculator.h"
 
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <exception>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <regex>
+#include <sstream>
+#include <stack>
+#include <stdexcept>
+#include <string>
+#include <variant>
+
 MyNamespace::MathCalculator::MathCalculator() { CreateTokenMap(token_map_); }
 
-void MyNamespace::MathCalculator::CalculateAnswer(const std::string& str) {
-  if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
-  if ("" != input_x_ || !correct_load_x_) LoadX("");
-  if (correct_load_ && correct_load_x_)
-    answer_ = PostfixNotationCalculation(x_value_);
-}
-
 void MyNamespace::MathCalculator::CalculateAnswer(const std::string& str,
-                                          const std::string& str_x) {
-  if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
+                                                  const std::string& str_x) {
+  if (str != raw_input_expression_ || !correct_load_) LoadExpression(str);
   if (str_x != input_x_ || !correct_load_x_) LoadX(str_x);
   if (correct_load_ && correct_load_x_)
     answer_ = PostfixNotationCalculation(x_value_);
 }
 
+void MyNamespace::MathCalculator::CalculateAnswer(const std::string& str) {
+  CalculateAnswer(str, "");
+}
+
 void MyNamespace::MathCalculator::CalculateGraph(const std::string& str,
-                                         int number_of_points, double x_start,
-                                         double x_end, double y_min,
-                                         double y_max) {
-  if (raw_input_expression_ != str || !correct_load_) LoadExpression(str);
+                                                 int number_of_points,
+                                                 double x_start, double x_end,
+                                                 double y_min, double y_max) {
+  if (str != raw_input_expression_ || !correct_load_) LoadExpression(str);
   if (correct_load_)
     CalculateXY(number_of_points, x_start, x_end, y_min, y_max);
 }
 
 double MyNamespace::MathCalculator::GetAnswer() const { return answer_; }
 
-MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::GetGraph() const {
+MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::GetGraph()
+    const {
   return answer_graph_;
 }
 
-void MyNamespace::MathCalculator::LoadExpression(const std::string& input_string) {
+void MyNamespace::MathCalculator::LoadExpression(
+    const std::string& input_string) {
   correct_load_ = false;
   input_ = {};
   stack_ = {};
@@ -96,7 +110,7 @@ std::pair<double, std::string> MyNamespace::MathCalculator::ReadNumber(
 }
 
 std::string MyNamespace::MathCalculator::ReadWord(std::string& str,
-                                          size_t& start) const {
+                                                  size_t& start) const {
   std::regex r("([a-z]+)");
   std::sregex_iterator i =
       std::sregex_iterator(str.begin() + start, str.end(), r);
@@ -250,20 +264,22 @@ void MyNamespace::MathCalculator::ReadX(std::string str) {
   }
 }
 
-double MyNamespace::MathCalculator::PostfixNotationCalculation(double x) {
+double MyNamespace::MathCalculator::PostfixNotationCalculation(double x_value) {
   using namespace MyNamespace;
   input_ = output_;
   while (!input_.empty()) {
     std::visit(
-        overloaded{[&](fp_1arg fn) { PushToResult(fn(PopFromResult())); },
-                   [&](fp_2arg fn) {
-                     double arg2 = PopFromResult();
-                     double arg1 = PopFromResult();
-                     PushToResult(fn(arg1, arg2));
+        overloaded{[&](unary_function_pointer function) {
+                     PushToResult(function(PopFromResult()));
+                   },
+                   [&](binary_function_pointer function) {
+                     double right_argument = PopFromResult();
+                     double left_argument = PopFromResult();
+                     PushToResult(function(left_argument, right_argument));
                    },
                    [&](auto) {
                      if (input_.front().GetName() == "x") {
-                       PushToResult(x);
+                       PushToResult(x_value);
                      } else {
                        PushToResult();
                      }
@@ -278,8 +294,8 @@ void MyNamespace::MathCalculator::PushToResult() {
   input_.pop();
 }
 
-void MyNamespace::MathCalculator::PushToResult(double x) {
-  result_.push(x);
+void MyNamespace::MathCalculator::PushToResult(double x_value) {
+  result_.push(x_value);
   input_.pop();
 }
 
@@ -289,12 +305,11 @@ double MyNamespace::MathCalculator::PopFromResult() {
   return value;
 }
 
-void MyNamespace::MathCalculator::CalculateXY(int number_of_points, double x_start,
-                                      double x_end, double y_min,
-                                      double y_max) {
+void MyNamespace::MathCalculator::CalculateXY(int number_of_points,
+                                              double x_start, double x_end,
+                                              double y_min, double y_max) {
   CheckNumberOfPoints(number_of_points);
   CheckRange(x_start, x_end);
-
   if (y_min > y_max) {
     std::swap(y_min, y_max);
   }

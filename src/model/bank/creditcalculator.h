@@ -1,5 +1,5 @@
-#ifndef _MODEL_CREDIT_H_
-#define _MODEL_CREDIT_H_
+#ifndef SMARTCALC_MODEL_BANK_CREDTCALCULATOR_H_
+#define SMARTCALC_MODEL_BANK_CREDTCALCULATOR_H_
 
 #include <vector>
 
@@ -37,4 +37,4 @@ class CreditCalculator {
 };
 };  // namespace MyNamespace
 
-#endif  // _MODEL_CREDIT_H_
+#endif  // SMARTCALC_MODEL_BANK_CREDTCALCULATOR_H_
