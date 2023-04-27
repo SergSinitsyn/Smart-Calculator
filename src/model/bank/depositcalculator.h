@@ -1,13 +1,10 @@
 #ifndef _MODEL_DEPOSIT_H_
 #define _MODEL_DEPOSIT_H_
 
-#include <cmath>
 #include <map>
-#include <sstream>
 #include <string>
 
 #include "date.h"
-#include "round.h"
 
 namespace MyNamespace {
 std::string FromDoubleToString(double value);
@@ -34,35 +31,33 @@ enum Periodicity {
   kPerMonth,
   kPerYear,
 };
-};  // namespace MyNamespace
 
-namespace MyNamespace {
 class DepositCalculator {
  public:
   using MultiMapDate = std::multimap<Date, std::pair<int, double>>;
+  struct DepositInputData {
+    double deposit_amount;
+    const Date &start_of_term;
+    int placement_period;
+    int placement_period_type;
+    double interest_rate;
+    double tax_rate;
+    int periodicity_of_payments;
+    bool capitalization_of_interest;
+    const MultiMapDate &replenishments_list;
+    const MultiMapDate &partial_withdrawals_list;
+    double minimum_balance;
+  };
+
   DepositCalculator() = default;
   ~DepositCalculator() = default;
-  void CalculateDeposit(double deposit_amount, const Date &start_of_term,
-                        int placement_period, int placement_period_type,
-                        double interest_rate, double tax_rate,
-                        int periodicity_of_payments,
-                        bool capitalization_of_interest,
-                        const MultiMapDate &replenishments_list,
-                        const MultiMapDate &partial_withdrawals_list,
-                        double minimum_balance);
+  void CalculateDeposit(DepositInputData InputData);
   long double GetAccruedInterest() const;
   long double GetTaxAmount() const;
   long double GetDepositAmountByTheEndOfTheTerm() const;
 
  private:
-  void LoadDepositData(double deposit_amount, const Date &start_date,
-                       int placement_period, int placement_period_type,
-                       double interest_rate, double tax_rate,
-                       int periodicity_of_payments,
-                       bool capitalization_of_interest,
-                       const MultiMapDate &replenishments_list,
-                       const MultiMapDate &partial_withdrawals_list,
-                       double minimum_balance);
+  void LoadDepositData(DepositInputData InputData);
   void Calculation();
   void SetNextPaymentDate();
   void CheckPaymentDate();

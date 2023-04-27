@@ -53,3 +53,4 @@ dkms.conf
 
 build-SmartCalc2-Desktop_x86_darwin_generic_mach_o_64bit-Debug
 build
+.DS_Store

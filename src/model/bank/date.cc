@@ -1,14 +1,17 @@
 #include "date.h"
 
+#include <algorithm>
+#include <ctime>
+
 MyNamespace::Date::Date(int day, int month, int year) {
-  std::tm tm{};
-  tm.tm_year = year;
-  tm.tm_mon = month;
-  tm.tm_mday = day;
-  std::mktime(&tm);
-  year_ = tm.tm_year;
-  month_ = tm.tm_mon;
-  day_ = tm.tm_mday;
+  std::tm temp_date{};
+  temp_date.tm_year = year;
+  temp_date.tm_mon = month;
+  temp_date.tm_mday = day;
+  std::mktime(&temp_date);
+  year_ = temp_date.tm_year;
+  month_ = temp_date.tm_mon;
+  day_ = temp_date.tm_mday;
   start_year_ = year_;
   start_month_ = month_;
   start_day_ = day_;

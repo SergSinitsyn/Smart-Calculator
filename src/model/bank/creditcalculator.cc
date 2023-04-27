@@ -1,8 +1,12 @@
 #include "creditcalculator.h"
 
-void MyNamespace::CreditCalculator::LoadData(int type, double total_credit_amount, int term,
-                           double interest_rate) {
-  type_ = type;
+#include <cmath>
+#include <vector>
+
+void MyNamespace::CreditCalculator::LoadData(int type_of_monthly_payments,
+                                             double total_credit_amount,
+                                             int term, double interest_rate) {
+  type_of_monthly_payments_ = type_of_monthly_payments;
   total_credit_amount_ = total_credit_amount;
   term_ = term;
   interest_rate_ = interest_rate;
@@ -34,13 +38,15 @@ void MyNamespace::CreditCalculator::CalculateDifferentiatedCredit() {
   overpayment_on_credit_ = total_payment_ - total_credit_amount_;
 }
 
-void MyNamespace::CreditCalculator::CalculateCredit(int type, double total_credit_amount,
-                                  int term, double interest_rate) {
-  LoadData(type, total_credit_amount, term, interest_rate);
-  if (type_) {
-    CalculateDifferentiatedCredit();
-  } else {
+void MyNamespace::CreditCalculator::CalculateCredit(
+    int type_of_monthly_payments, double total_credit_amount, int term,
+    double interest_rate) {
+  LoadData(type_of_monthly_payments, total_credit_amount, term, interest_rate);
+  if (type_of_monthly_payments_ ==
+      MyNamespace::TypeOfMonthlyPayments::kAnnuity) {
     CalculateAnnuityCredit();
+  } else {
+    CalculateDifferentiatedCredit();
   }
 }
 
@@ -48,7 +54,9 @@ std::vector<double> MyNamespace::CreditCalculator::GetMonthlyPayment() const {
   return monthly_payment_;
 }
 
-double MyNamespace::CreditCalculator::GetTotalPayment() const { return total_payment_; }
+double MyNamespace::CreditCalculator::GetTotalPayment() const {
+  return total_payment_;
+}
 
 double MyNamespace::CreditCalculator::GetOverpaymentOnCredit() const {
   return overpayment_on_credit_;

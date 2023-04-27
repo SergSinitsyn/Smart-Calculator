@@ -31,14 +31,14 @@ void Controller::CalculateCredit(CreditWindow *cw) {
 }
 
 void Controller::CalculateDeposit(DepositWindow *dw) {
-  model_deposit_->CalculateDeposit(
+  model_deposit_->CalculateDeposit(DepositCalculator::DepositInputData{
       dw->GetDepositAmount(), ConvertDate(dw->GetStartOfTerm()),
       dw->GetPlacementPeriod(), dw->GetPlacementPeriodType(),
       dw->GetInterestRate(), dw->GetTaxRate(), dw->GetPeriodicityOfPayments(),
       dw->GetCapitalisationOfInterest(),
       ConvertDateMap(dw->GetReplenishmentsList()),
-      ConvertDateMap(dw->GetPartialWithdrawalsList()), dw->GetMinimumBalance());
-
+      ConvertDateMap(dw->GetPartialWithdrawalsList()),
+      dw->GetMinimumBalance()});
   dw->SetAnswer(model_deposit_->GetDepositAmountByTheEndOfTheTerm(),
                 model_deposit_->GetAccruedInterest(),
                 model_deposit_->GetTaxAmount());
@@ -49,7 +49,8 @@ Date Controller::ConvertDate(QDate old) const {
   return result;
 }
 
-DepositCalculator::MultiMapDate Controller::ConvertDateMap(MultiMapQDate old) const {
+DepositCalculator::MultiMapDate Controller::ConvertDateMap(
+    MultiMapQDate old) const {
   DepositCalculator::MultiMapDate result;
   for (auto it = old.begin(); it != old.end(); ++it) {
     result.insert(std::make_pair(ConvertDate(it->first), it->second));

@@ -257,9 +257,9 @@ double MyNamespace::MathCalculator::PostfixNotationCalculation(double x) {
     std::visit(
         overloaded{[&](fp_1arg fn) { PushToResult(fn(PopFromResult())); },
                    [&](fp_2arg fn) {
-                     double rhs = PopFromResult();
-                     double lhs = PopFromResult();
-                     PushToResult(fn(lhs, rhs));
+                     double arg2 = PopFromResult();
+                     double arg1 = PopFromResult();
+                     PushToResult(fn(arg1, arg2));
                    },
                    [&](auto) {
                      if (input_.front().GetName() == "x") {

@@ -332,10 +332,18 @@ TEST(deposit, test1) {
       std::make_pair(Date(29, 10, 2025), std::make_pair(0, 300000.00)));
   PartialWithdrawalsList.insert(
       std::make_pair(Date(30, 03, 2028), std::make_pair(2, 30000.00)));
-
-  calc.CalculateDeposit(1000000, Date(13, 3, 2023), 100, 1, 7.3, 0.0, 2, 1,
-                        ReplenishmentsList, PartialWithdrawalsList, 0);
-
+  DepositCalculator::DepositInputData InputData{1000000,
+                                                Date(13, 3, 2023),
+                                                100,
+                                                1,
+                                                7.3,
+                                                0.0,
+                                                2,
+                                                1,
+                                                ReplenishmentsList,
+                                                PartialWithdrawalsList,
+                                                0};
+  calc.CalculateDeposit(InputData);
   ASSERT_NEAR(calc.GetDepositAmountByTheEndOfTheTerm(), 3516943.69, kAcc);
   ASSERT_NEAR(calc.GetAccruedInterest(), 1476943.69, kAcc);
   ASSERT_NEAR(calc.GetTaxAmount(), 0.0, kAcc);
@@ -348,8 +356,18 @@ TEST(deposit, test2) {
   ReplenishmentsList.insert(
       std::make_pair(Date(28, 01, 2024), std::make_pair(2, 7777.77)));
   DepositCalculator::MultiMapDate PartialWithdrawalsList;
-  calc.CalculateDeposit(1000000, Date(13, 3, 2023), 20, 2, 8.13, 0.0, 1, 0,
-                        ReplenishmentsList, PartialWithdrawalsList, 0);
+  DepositCalculator::DepositInputData InputData{1000000,
+                                                Date(13, 3, 2023),
+                                                20,
+                                                2,
+                                                8.13,
+                                                0.0,
+                                                1,
+                                                0,
+                                                ReplenishmentsList,
+                                                PartialWithdrawalsList,
+                                                0};
+  calc.CalculateDeposit(InputData);
   ASSERT_NEAR(calc.GetDepositAmountByTheEndOfTheTerm(), 2788887.10, kAcc);
   ASSERT_NEAR(calc.GetAccruedInterest(), 3019635.29, kAcc);
   ASSERT_NEAR(calc.GetTaxAmount(), 0.0, kAcc);
@@ -362,8 +380,18 @@ TEST(deposit, test3) {
   ReplenishmentsList.insert(
       std::make_pair(Date(28, 01, 2024), std::make_pair(1, 7777.77)));
   DepositCalculator::MultiMapDate PartialWithdrawalsList;
-  calc.CalculateDeposit(1000000, Date(13, 3, 2023), 2000, 0, 8.13, 0.0, 0, 0,
-                        ReplenishmentsList, PartialWithdrawalsList, 0);
+  DepositCalculator::DepositInputData InputData{1000000,
+                                                Date(13, 3, 2023),
+                                                2000,
+                                                0,
+                                                8.13,
+                                                0.0,
+                                                0,
+                                                0,
+                                                ReplenishmentsList,
+                                                PartialWithdrawalsList,
+                                                0};
+  calc.CalculateDeposit(InputData);
   ASSERT_NEAR(calc.GetDepositAmountByTheEndOfTheTerm(), 2866664.80, kAcc);
   ASSERT_NEAR(calc.GetAccruedInterest(), 795061.21, kAcc);
   ASSERT_NEAR(calc.GetTaxAmount(), 0.0, kAcc);
@@ -507,9 +535,18 @@ TEST(logic_error, deposit_fail) {
   DepositCalculator::MultiMapDate PartialWithdrawalsList;
   PartialWithdrawalsList.insert(
       std::make_pair(Date(28, 01, 2024), std::make_pair(1, 100000000)));
-  ASSERT_ANY_THROW(calc.CalculateDeposit(1000000, Date(13, 3, 2023), 2000, 0,
-                                         8.13, 0.0, 4, 0, ReplenishmentsList,
-                                         PartialWithdrawalsList, 0));
+  DepositCalculator::DepositInputData InputData{1000000,
+                                                Date(13, 3, 2023),
+                                                2000,
+                                                0,
+                                                8.13,
+                                                0.0,
+                                                4,
+                                                0,
+                                                ReplenishmentsList,
+                                                PartialWithdrawalsList,
+                                                0};
+  ASSERT_ANY_THROW(calc.CalculateDeposit(InputData));
 }
 
 int main(int argc, char* argv[]) {

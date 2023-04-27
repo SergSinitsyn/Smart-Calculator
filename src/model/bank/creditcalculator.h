@@ -1,29 +1,33 @@
 #ifndef _MODEL_CREDIT_H_
 #define _MODEL_CREDIT_H_
 
-#include <cmath>
 #include <vector>
 
 #include "round.h"
-
 namespace MyNamespace {
+
+enum TypeOfMonthlyPayments {
+  kAnnuity = 0,
+  kDifferentiated,
+};
+
 class CreditCalculator {
  public:
   CreditCalculator() = default;
   ~CreditCalculator() = default;
-  void CalculateCredit(int type, double total_credit_amount, int term,
-                       double interest_rate);
+  void CalculateCredit(int type_of_monthly_payments, double total_credit_amount,
+                       int term, double interest_rate);
   std::vector<double> GetMonthlyPayment() const;
   double GetTotalPayment() const;
   double GetOverpaymentOnCredit() const;
 
  private:
-  void LoadData(int type, double total_credit_amount, int term,
-                double interest_rate);
+  void LoadData(int type_of_monthly_payments, double total_credit_amount,
+                int term, double interest_rate);
   void CalculateAnnuityCredit();
   void CalculateDifferentiatedCredit();
 
-  int type_;
+  int type_of_monthly_payments_;
   double total_credit_amount_;
   double term_;
   double interest_rate_;

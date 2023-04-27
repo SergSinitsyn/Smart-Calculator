@@ -1,9 +1,6 @@
 #ifndef _MODEL_DATE_H_
 #define _MODEL_DATE_H_
 
-#include <algorithm>
-#include <ctime>
-
 namespace MyNamespace {
 class Date {
  public:
@@ -29,7 +26,6 @@ class Date {
   bool operator>=(const Date& other) const;
 
  private:
-  void Add(int day, int month, int year);
   int day_;
   int month_;
   int year_;
@@ -38,6 +34,8 @@ class Date {
   int start_day_;
   int start_month_;
   int start_year_;
+
+  void Add(int day, int month, int year);
 };
 };  // namespace MyNamespace
 
