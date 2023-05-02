@@ -6,7 +6,7 @@
 MyNamespace::Token::Token(const std::string& name, Precedence precedence,
                           Associativity associativity,
                           OperationType operation_type, double value,
-                          function_pointer_variant function)
+                          function_variant function)
     : name_(name),
       precedence_(precedence),
       associativity_(associativity),
@@ -30,7 +30,7 @@ MyNamespace::OperationType MyNamespace::Token::GetOperationType() const {
 
 double MyNamespace::Token::GetValue() const { return value_; }
 
-MyNamespace::function_pointer_variant MyNamespace::Token::GetFunction() const {
+MyNamespace::function_variant MyNamespace::Token::GetFunction() const {
   return function_;
 }
 
@@ -40,12 +40,14 @@ void MyNamespace::Token::MakeNumber(std::string name, double value) {
 }
 
 void MyNamespace::Token::MakeUnaryNegation() {
-  Token result("-", kUnaryOperator, kRight, kUnary, 0, lamdas_f1arg(-));
+  Token result("-", kUnaryOperator, kRight, kUnary, 0, std::negate<double>());
   *this = result;
 }
 
 void MyNamespace::CreateTokenMap(
     std::map<std::string, MyNamespace::Token>& token_map) {
+  using unary_fun = double (*)(double);
+  using binary_fun = double (*)(double, double);
   using std::initializer_list;
   using std::pair;
   using std::string;
@@ -55,26 +57,27 @@ void MyNamespace::CreateTokenMap(
       {"x", Token("x", kNumber, kNone, kOperand, 0, nullptr)},
       {"(", Token("(", kOpenBracket, kNone, kOperand, 0, nullptr)},
       {")", Token(")", kCloseBracket, kNone, kOperand, 0, nullptr)},
-      {"+", Token("+", kLow, kLeft, kBinary, 0, lamdas_f2arg(+))},
-      {"-", Token("-", kLow, kLeft, kBinary, 0, lamdas_f2arg(-))},
-      {"*", Token("*", kMedium, kLeft, kBinary, 0, lamdas_f2arg(*))},
-      {"/", Token("/", kMedium, kLeft, kBinary, 0, lamdas_f2arg(/))},
-      {"^", Token("^", kHigh, kRight, kBinary, 0, (binary_func)&pow)},
-      {"mod", Token("mod", kMedium, kLeft, kBinary, 0, (binary_func)&fmod)},
-      {"cos", Token("cos", kFunction, kRight, kUnary, 0, (unary_func)&cos)},
-      {"sin", Token("sin", kFunction, kRight, kUnary, 0, (unary_func)&sin)},
-      {"tan", Token("tan", kFunction, kRight, kUnary, 0, (unary_func)&tan)},
-      {"acos", Token("acos", kFunction, kRight, kUnary, 0, (unary_func)&acos)},
-      {"asin", Token("asin", kFunction, kRight, kUnary, 0, (unary_func)&asin)},
-      {"atan", Token("atan", kFunction, kRight, kUnary, 0, (unary_func)&atan)},
-      {"sqrt", Token("sqrt", kFunction, kRight, kUnary, 0, (unary_func)&sqrt)},
-      {"ln", Token("ln", kFunction, kRight, kUnary, 0, (unary_func)&log)},
-      {"log", Token("log", kFunction, kRight, kUnary, 0, (unary_func)&log10)},
-      {"cbrt", Token("cbrt", kFunction, kRight, kUnary, 0, (unary_func)&cbrt)},
-      {"exp", Token("exp", kFunction, kRight, kUnary, 0, (unary_func)&exp)},
-      {"abs", Token("abs", kFunction, kRight, kUnary, 0, (unary_func)&fabs)},
+      {"+", Token("+", kLow, kLeft, kBinary, 0, std::plus<double>())},
+      {"-", Token("-", kLow, kLeft, kBinary, 0, std::minus<double>())},
+      {"*", Token("*", kMedium, kLeft, kBinary, 0, std::multiplies<double>())},
+      {"/", Token("/", kMedium, kLeft, kBinary, 0, std::divides<double>())},
+      {"^", Token("^", kHigh, kRight, kBinary, 0, (binary_fun)&pow)},
+      {"mod", Token("mod", kMedium, kLeft, kBinary, 0, (binary_fun)&fmod)},
+      {"cos", Token("cos", kFunction, kRight, kUnary, 0, (unary_fun)&cos)},
+      {"sin", Token("sin", kFunction, kRight, kUnary, 0, (unary_fun)&sin)},
+      {"tan", Token("tan", kFunction, kRight, kUnary, 0, (unary_fun)&tan)},
+      {"acos", Token("acos", kFunction, kRight, kUnary, 0, (unary_fun)&acos)},
+      {"asin", Token("asin", kFunction, kRight, kUnary, 0, (unary_fun)&asin)},
+      {"atan", Token("atan", kFunction, kRight, kUnary, 0, (unary_fun)&atan)},
+      {"sqrt", Token("sqrt", kFunction, kRight, kUnary, 0, (unary_fun)&sqrt)},
+      {"ln", Token("ln", kFunction, kRight, kUnary, 0, (unary_fun)&log)},
+      {"log", Token("log", kFunction, kRight, kUnary, 0, (unary_fun)&log10)},
+      {"cbrt", Token("cbrt", kFunction, kRight, kUnary, 0, (unary_fun)&cbrt)},
+      {"exp", Token("exp", kFunction, kRight, kUnary, 0, (unary_fun)&exp)},
+      {"abs", Token("abs", kFunction, kRight, kUnary, 0, (unary_fun)&fabs)},
       {"e", Token("e", kNumber, kNone, kOperand, M_E, nullptr)},
       {"pi", Token("pi", kNumber, kNone, kOperand, M_PI, nullptr)},
-      {"inf", Token("inf", kNumber, kNone, kOperand, INFINITY, nullptr)}};
+      {"inf", Token("inf", kNumber, kNone, kOperand, INFINITY, nullptr)},
+  };
   token_map.insert(list);
 }

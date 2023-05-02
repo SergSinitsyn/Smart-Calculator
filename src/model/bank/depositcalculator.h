@@ -51,13 +51,13 @@ class DepositCalculator {
 
   DepositCalculator() = default;
   ~DepositCalculator() = default;
-  void CalculateDeposit(DepositInputData InputData);
+  void CalculateDeposit(const DepositInputData &InputData);
   long double GetAccruedInterest() const;
   long double GetTaxAmount() const;
   long double GetDepositAmountByTheEndOfTheTerm() const;
 
  private:
-  void LoadDepositData(DepositInputData InputData);
+  void LoadDepositData(const DepositInputData &InputData);
   void Calculation();
   void SetNextPaymentDate();
   void CheckPaymentDate();

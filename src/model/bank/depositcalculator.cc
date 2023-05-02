@@ -15,7 +15,7 @@ std::string MyNamespace::FromDoubleToString(double value) {
 }
 
 void MyNamespace::DepositCalculator::CalculateDeposit(
-    DepositInputData InputData) {
+    const DepositInputData &InputData) {
   LoadDepositData(InputData);
   Calculation();
 }
@@ -34,7 +34,7 @@ long double MyNamespace::DepositCalculator::GetDepositAmountByTheEndOfTheTerm()
 }
 
 void MyNamespace::DepositCalculator::LoadDepositData(
-    DepositInputData InputData) {
+    const DepositInputData &InputData) {
   deposit_amount_ = InputData.deposit_amount;
   start_deposit_ = deposit_amount_;
   start_of_term_ = InputData.start_of_term;

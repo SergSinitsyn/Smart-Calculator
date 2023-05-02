@@ -8,6 +8,21 @@
 #include "token.h"
 
 namespace MyNamespace {
+/// @brief template class for redefining lambda expressions in std::visit
+/// @tparam ...Ts - accepted type of lambda expression
+template <class... Ts>
+struct overloaded : Ts... {
+  using Ts::operator()...;
+};
+
+/// @brief method of redefining the list of arguments of the overloaded method
+/// into classes
+/// @tparam ...Ts - accepted type of lambda expression
+template <class... Ts>
+overloaded(Ts...) -> overloaded<Ts...>;
+};  // namespace MyNamespace
+
+namespace MyNamespace {
 class MathCalculator {
  public:
   using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
@@ -29,7 +44,7 @@ class MathCalculator {
   std::pair<double, std::string> ReadNumber(std::string& str,
                                             size_t& start) const;
   std::string ReadWord(std::string& str, size_t& start) const;
-  void PushToken(std::string temp);
+  void TryToPushToken(std::string temp);
   void FindSpacesAndUnarySigns();
   void CheckSequenceOfTokens();
   void ShuntingYardAlgorithm();

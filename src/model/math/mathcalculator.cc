@@ -87,10 +87,10 @@ void MyNamespace::MathCalculator::Parsing() {
       number.MakeNumber(new_number.second, new_number.first);
       input_.push(number);
     } else if (isalpha(input_expression_[i])) {
-      PushToken(ReadWord(input_expression_, i));
+      TryToPushToken(ReadWord(input_expression_, i));
     } else {
       std::string temp{input_expression_[i++]};
-      PushToken(temp);
+      TryToPushToken(temp);
     }
   }
   if (input_.empty()) throw std::logic_error("Empty expression");
@@ -119,7 +119,7 @@ std::string MyNamespace::MathCalculator::ReadWord(std::string& str,
   return match.str();
 }
 
-void MyNamespace::MathCalculator::PushToken(std::string temp) {
+void MyNamespace::MathCalculator::TryToPushToken(std::string temp) {
   if (auto it = token_map_.find(temp); it != token_map_.end()) {
     input_.push(it->second);
   } else {
@@ -269,10 +269,10 @@ double MyNamespace::MathCalculator::PostfixNotationCalculation(double x_value) {
   input_ = output_;
   while (!input_.empty()) {
     std::visit(
-        overloaded{[&](unary_function_pointer function) {
+        overloaded{[&](unary_function function) {
                      PushToResult(function(PopFromResult()));
                    },
-                   [&](binary_function_pointer function) {
+                   [&](binary_function function) {
                      double right_argument = PopFromResult();
                      double left_argument = PopFromResult();
                      PushToResult(function(left_argument, right_argument));

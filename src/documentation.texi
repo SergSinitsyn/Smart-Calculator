@@ -7,7 +7,7 @@
 @copying
 Engineer calculator with graph plot. @*
 Credit and debit calculator. @*
-GUI implementation, based on any GUI library Qt for C++17  @*
+GUI implementation, based on library Qt for C++17  @*
 
 @itemize @bullet
 @item Программа разработана на языке C++ стандарта C++17.
