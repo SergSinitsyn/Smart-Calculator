@@ -21,14 +21,14 @@ GUI implementation, based on library Qt for C++17  @*
 @item Программа реализована с использованием паттерна MVC.
 @end itemize
 
-Copyright © 2023 bernarda @*
+Copyright © 2023 SergSinitsyn @*
 @end copying
 
 
 @titlepage
 @title Smart Calc v2.0
 @subtitle «Good calculator»
-@author Bernarda
+@author SergSinitsyn
 
 @vskip 0pt plus 1filll
 @insertcopying

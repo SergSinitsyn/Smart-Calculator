@@ -4,7 +4,7 @@
 #include "model/bank/creditcalculator.h"
 #include "model/bank/depositcalculator.h"
 #include "model/math/mathcalculator.h"
-#include "view/mainwindow.h"
+#include "view/math/mainwindow.h"
 
 int main(int argc, char *argv[]) {
   using namespace MyNamespace;

@@ -8,7 +8,7 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += ./view
+INCLUDEPATH += ./view/math
 
 SOURCES += \
     controller/controller.cc \
@@ -20,12 +20,12 @@ SOURCES += \
     model/math/mathcalculator.cc \
     model/bank/round.cc \
     model/math/token.cc \
-    view/cell.cc \
-    view/creditwindow.cc \
-    view/depositwindow.cc \
-    view/graphwindow.cc \
-    view/mainwindow.cc \
-    view/qcustomplot.cc
+    view/bank/cell.cc \
+    view/bank/creditwindow.cc \
+    view/bank/depositwindow.cc \
+    view/math/graphwindow.cc \
+    view/math/mainwindow.cc \
+    view/math/qcustomplot.cc
 
 HEADERS += \
     controller/controller.h \
@@ -36,19 +36,19 @@ HEADERS += \
     model/math/mathcalculator.h \
     model/bank/round.h \
     model/math/token.h \
-    view/cell.h \
-    view/creditwindow.h \
-    view/depositwindow.h \
-    view/graphwindow.h \
-    view/mainwindow.h \
-    view/qcustomplot.h
+    view/bank/cell.h \
+    view/bank/creditwindow.h \
+    view/bank/depositwindow.h \
+    view/math/graphwindow.h \
+    view/math/mainwindow.h \
+    view/math/qcustomplot.h
 
 FORMS += \
-    view/cell.ui \
-    view/creditwindow.ui \
-    view/depositwindow.ui \
-    view/graphwindow.ui \
-    view/mainwindow.ui
+    view/bank/cell.ui \
+    view/bank/creditwindow.ui \
+    view/bank/depositwindow.ui \
+    view/math/graphwindow.ui \
+    view/math/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

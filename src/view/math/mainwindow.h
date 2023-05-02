@@ -6,8 +6,8 @@
 #include <QMessageBox>
 #include <QVector>
 
-#include "creditwindow.h"
-#include "depositwindow.h"
+#include "../bank/creditwindow.h"
+#include "../bank/depositwindow.h"
 #include "graphwindow.h"
 
 QT_BEGIN_NAMESPACE

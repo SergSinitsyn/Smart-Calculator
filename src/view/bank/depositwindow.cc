@@ -1,6 +1,6 @@
 #include "depositwindow.h"
 
-#include "../controller/controller.h"
+#include "../../controller/controller.h"
 #include "ui_depositwindow.h"
 
 namespace MyNamespace {

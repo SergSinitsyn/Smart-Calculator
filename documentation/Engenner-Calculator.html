@@ -1,0 +1,127 @@
+<html lang="en">
+<head>
+<title>Engenner Calculator - Smart Calc v2.0</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="Smart Calc v2.0">
+<meta name="generator" content="makeinfo 4.8">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="prev" href="index.html#Top" title="Top">
+<link rel="next" href="Graph-Plot.html#Graph-Plot" title="Graph Plot">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+Engineer calculator with graph plot.
+
+Credit and debit calculator.
+
+GUI implementation, based on library Qt for C++17
+
+
+   * Программа разработана на языке C++
+     стандарта C++17.
+
+   * Классы реализованы внутри
+     пространства имен MyNamespace.
+
+   * Код программы написан
+     придерживаясь Google Style.
+
+   * Подготовлено полное покрытие
+     unit-тестами модулей, связанных с
+     вычислением выражений, c помощью
+     библиотеки GTest.
+
+   * Сборка программы настроена с
+     помощью Makefile со стандартным набором
+     целей для GNU-программ: all, install, uninstall,
+     clean, dvi, dist, tests, gcov_report.
+
+   * Установка программы ведется в
+     каталог build.
+
+   * Реальзация графического интерфейса
+     на базе библиотеки Qt.
+
+   * Код программы находится в папке src.
+
+   * Программа реализована с
+     использованием паттерна MVC.
+
+Copyright © 2023 bernarda
+-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<p>
+<a name="Engenner-Calculator"></a>
+Next:&nbsp;<a rel="next" accesskey="n" href="Graph-Plot.html#Graph-Plot">Graph Plot</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="index.html#Top">Top</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr>
+</div>
+
+<h2 class="chapter">1 Engenner Calculator</h2>
+
+<p><a name="index-intro-1"></a>Инженерный калькулятор
+
+     <ul>
+<li>На вход программы могут подаваться как целые числа, так и вещественные числа, записанные и через точку, и в экспоненциальной форме записи. <br>
+<li>Ввод данных производится в помощью клавиатуры и кнопкок в приложении.  <br>
+<li>У пользователя есть возможность ввода до 255 символов. <br>
+<li>Допускается некорректный ввод. 
+<li>При некорректном вводе будет отображена ошибка после нажатия на символ =. <br>
+<li>Вычисление производится после полного ввода вычисляемого выражения и нажатия на символ =. <br>
+<li>Поддерижвается вычисление произвольных скобочных арифметических выражений в инфиксной нотации. <br>
+<li>Поддерижвается вычисление произвольных скобочных арифметических выражений в инфиксной нотации с подстановкой значения переменной x в виде числа. <br>
+
+     <li>Скобочные арифметические выражения в инфиксной нотации поддерживают следующие арифметические операции: <br>
+          <ul>
+<li>Скобки: (a + b) <br>
+<li>Сложение: a + b <br>
+<li>Вычитание: a - b <br>
+<li>Умножение: a * b <br>
+<li>Деление: a / b  <br>
+<li>Возведение в степень: a ^ b  <br>
+<li>Остаток от деления: a mod b  <br>
+<li>Унарный плюс: +a  <br>
+<li>Унарный минус: -a  <br>
+</ul>
+
+     <li>Скобочные арифметические выражения в инфиксной нотации поддерживают следующие математические функции (скобки обязательны): <br>
+          <ul>
+<li>Вычисляет косинус: cos(x)  <br>
+<li>Вычисляет синус: sin(x)  <br>
+<li>Вычисляет тангенс: tan(x)  <br>
+<li>Вычисляет арккосинус: acos(x)  <br>
+<li>Вычисляет арксинус: asin(x) <br>
+<li>Вычисляет арктангенс: atan(x) <br>
+<li>Вычисляет квадратный корень: sqrt(x) <br>
+<li>Вычисляет кубический корень корень: qbrt(x) <br>
+<li>Вычисляет натуральный логарифм: ln(x) <br>
+<li>Вычисляет десятичный логарифм: log(x) <br>
+<li>Возвращает число «e», возведенное в указанную степень: exp(x) <br>
+<li>Вычисляет абсолютное значение числа: abs(x) <br>
+</ul>
+
+     <li>Поддерижвается ввод математических значений:
+          <ul>
+<li>Число пи: pi, PI
+<li>Число e: e, E
+<li>Бесконечность: inf, INF
+</ul>
+
+   </ul>
+
+   </body></html>
+

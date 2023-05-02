@@ -1,6 +1,6 @@
 #include "graphwindow.h"
 
-#include "../controller/controller.h"
+#include "../../controller/controller.h"
 #include "ui_graphwindow.h"
 
 namespace MyNamespace {

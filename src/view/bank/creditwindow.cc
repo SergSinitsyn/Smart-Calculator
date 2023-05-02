@@ -1,6 +1,6 @@
 #include "creditwindow.h"
 
-#include "../controller/controller.h"
+#include "../../controller/controller.h"
 #include "ui_creditwindow.h"
 
 namespace MyNamespace {

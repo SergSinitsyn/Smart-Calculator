@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-#include "../controller/controller.h"
+#include "../../controller/controller.h"
 #include "ui_mainwindow.h"
 
 namespace MyNamespace {
