@@ -14,7 +14,7 @@ TEST(calculation, kek_add) {
 
 TEST(calculation, add) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("5.53234+1032.42342");
+  calc.CalculateAnswer("5.53234 + 1032.42342");
   ASSERT_NEAR(calc.GetAnswer(), 1037.95576, kAcc);
 }
 
@@ -432,7 +432,7 @@ TEST(logic_error, fail_2) {
 
 TEST(logic_error, fail_3) {
   MyNamespace::MathCalculator calc;
-  ASSERT_ANY_THROW(calc.CalculateAnswer(""));
+  ASSERT_ANY_THROW(calc.CalculateAnswer("()"));
 }
 
 TEST(logic_error, fail_4) {

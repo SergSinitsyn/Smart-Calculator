@@ -74,58 +74,62 @@ void MyNamespace::MathCalculator::LoadX(const std::string& input_x) {
 
 std::string MyNamespace::MathCalculator::ConvertToLowercase(std::string str) {
   std::string result;
-  for (size_t i = 0; i < str.size(); ++i) {
-    result.push_back(tolower(str[i]));
+  for (auto c : str) {
+    result.push_back(std::tolower(c));
   }
   return result;
 }
 
 void MyNamespace::MathCalculator::Parsing() {
-  size_t i = 0;
-  while (i < input_expression_.size()) {
-    if (isdigit(input_expression_[i])) {
+  size_t index = 0;
+  while (index < input_expression_.size()) {
+    if (isdigit(input_expression_[index])) {
       Token number;
-      auto new_number = ReadNumber(input_expression_, i);
+      auto new_number = ReadNumber(input_expression_, index);
       number.MakeNumber(new_number.second, new_number.first);
       input_.push(number);
-    } else if (isalpha(input_expression_[i])) {
-      TryToPushToken(ReadWord(input_expression_, i));
+    } else if (isalpha(input_expression_[index])) {
+      TryToPushToken(ReadWord(input_expression_, index));
     } else {
-      std::string temp{input_expression_[i++]};
+      std::string temp{input_expression_[index++]};
       TryToPushToken(temp);
     }
   }
-  if (input_.empty()) throw std::logic_error("Empty expression");
+  if (input_.empty()) {
+    throw std::logic_error("Empty expression");
+  }
 }
 
 std::pair<double, std::string> MyNamespace::MathCalculator::ReadNumber(
-    std::string& str, size_t& start) const {
-  std::regex r("\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
-  std::sregex_iterator i =
-      std::sregex_iterator(str.begin() + start, str.end(), r);
-  std::smatch match = *i;
-  start += match.length();
-  std::stringstream ss(match.str());
-  double d = 0;
-  ss >> d;
-  return make_pair(d, match.str());
+    std::string& input, size_t& start_index) const {
+  std::regex double_regex("\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
+  std::sregex_iterator regex_iterator = std::sregex_iterator(
+      input.begin() + start_index, input.end(), double_regex);
+  std::smatch match = *regex_iterator;
+  start_index += match.length();
+
+  std::stringstream string_stream(match.str());
+  double double_value = 0;
+  string_stream >> double_value;
+  return std::make_pair(double_value, match.str());
 }
 
-std::string MyNamespace::MathCalculator::ReadWord(std::string& str,
-                                                  size_t& start) const {
-  std::regex r("([a-z]+)");
-  std::sregex_iterator i =
-      std::sregex_iterator(str.begin() + start, str.end(), r);
-  std::smatch match = *i;
-  start += match.length();
+std::string MyNamespace::MathCalculator::ReadWord(std::string& input,
+                                                  size_t& start_index) const {
+  std::regex word_regex("([a-z]+)");
+  std::sregex_iterator regex_iterator = std::sregex_iterator(
+      input.begin() + start_index, input.end(), word_regex);
+  std::smatch match = *regex_iterator;
+  start_index += match.length();
   return match.str();
 }
 
-void MyNamespace::MathCalculator::TryToPushToken(std::string temp) {
-  if (auto it = token_map_.find(temp); it != token_map_.end()) {
-    input_.push(it->second);
+void MyNamespace::MathCalculator::TryToPushToken(std::string token) {
+  auto token_map_it = token_map_.find(token);
+  if (token_map_it != token_map_.end()) {
+    input_.push(token_map_it->second);
   } else {
-    throw std::logic_error("Incorrect symbol: " + temp);
+    throw std::logic_error("Incorrect symbol: " + token);
   }
 }
 
@@ -133,7 +137,7 @@ void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
   using namespace MyNamespace;
   while (!input_.empty()) {
     std::string name = input_.front().GetName();
-    if (name == " ") {
+    if (name == "space") {
       input_.pop();
     } else if ((name == "+" || name == "-") &&
                (output_.empty() ||
@@ -145,7 +149,7 @@ void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
       }
       input_.pop();
     } else {
-      FromInputToOutput();
+      MoveFromInputToOutput();
     }
   }
   input_.swap(output_);
@@ -158,20 +162,18 @@ void MyNamespace::MathCalculator::CheckSequenceOfTokens() {
     throw std::logic_error("Wrong sequence: expression starts with " +
                            input_.front().GetName());
   }
-  FromInputToOutput();
+  MoveFromInputToOutput();
   while (!output_.empty() && !input_.empty()) {
     if (!kAdjacencyMatrix_[output_.back().GetPrecedence()]
                           [input_.front().GetPrecedence()]) {
       throw std::logic_error("Wrong sequence: " + output_.back().GetName() +
                              " " + input_.front().GetName());
     }
-    FromInputToOutput();
+    MoveFromInputToOutput();
   }
-  if (!output_.empty()) {
-    if (!kLastToken_[output_.back().GetPrecedence()]) {
-      throw std::logic_error("Wrong sequence: expression ends with " +
-                             output_.back().GetName());
-    }
+  if (!kLastToken_[output_.back().GetPrecedence()]) {
+    throw std::logic_error("Wrong sequence: expression ends with " +
+                           output_.back().GetName());
   }
   input_.swap(output_);
 }
@@ -180,9 +182,9 @@ void MyNamespace::MathCalculator::ShuntingYardAlgorithm() {
   using namespace MyNamespace;
   while (!input_.empty()) {
     if (input_.front().GetPrecedence() == Precedence::kNumber) {
-      FromInputToOutput();
+      MoveFromInputToOutput();
     } else if (input_.front().GetOperationType() == OperationType::kUnary) {
-      FromInputToStack();
+      MoveFromInputToStack();
     } else if (input_.front().GetOperationType() == OperationType::kBinary) {
       while (!stack_.empty() &&
              (stack_.top().GetOperationType() == OperationType::kBinary ||
@@ -190,14 +192,14 @@ void MyNamespace::MathCalculator::ShuntingYardAlgorithm() {
              (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
               (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
                input_.front().GetAssociativity() == Associativity::kLeft))) {
-        FromStackToOutput();
+        MoveFromStackToOutput();
       }
-      FromInputToStack();
+      MoveFromInputToStack();
     } else if (input_.front().GetName() == "(") {
-      FromInputToStack();
+      MoveFromInputToStack();
     } else if (input_.front().GetName() == ")") {
       while (!stack_.empty() && stack_.top().GetName() != "(") {
-        FromStackToOutput();
+        MoveFromStackToOutput();
       }
       if (!stack_.empty() && stack_.top().GetName() == "(") {
         stack_.pop();
@@ -206,7 +208,7 @@ void MyNamespace::MathCalculator::ShuntingYardAlgorithm() {
       }
       if (!stack_.empty() &&
           stack_.top().GetPrecedence() == Precedence::kFunction) {
-        FromStackToOutput();
+        MoveFromStackToOutput();
       }
       input_.pop();
     }
@@ -214,21 +216,21 @@ void MyNamespace::MathCalculator::ShuntingYardAlgorithm() {
   while (!stack_.empty()) {
     if (stack_.top().GetName() == "(")
       throw std::logic_error("Close bracket missing");
-    FromStackToOutput();
+    MoveFromStackToOutput();
   }
 }
 
-void MyNamespace::MathCalculator::FromInputToOutput() {
+void MyNamespace::MathCalculator::MoveFromInputToOutput() {
   output_.push(input_.front());
   input_.pop();
 }
 
-void MyNamespace::MathCalculator::FromInputToStack() {
+void MyNamespace::MathCalculator::MoveFromInputToStack() {
   stack_.push(input_.front());
   input_.pop();
 }
 
-void MyNamespace::MathCalculator::FromStackToOutput() {
+void MyNamespace::MathCalculator::MoveFromStackToOutput() {
   output_.push(stack_.top());
   stack_.pop();
 }
@@ -241,21 +243,24 @@ void MyNamespace::MathCalculator::ReadX(std::string str) {
     return;
   }
   int sign = 1;
-  if (str[0] == '-') {
+  if (str.front() == '-') {
     sign = -1;
-    str.erase(str.begin(), str.begin() + 1);
+    str.erase(0, 1);
   }
-  if (isdigit(str[0])) {
-    std::regex r("([-])?\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
+  if (isdigit(str.front())) {
+    static const std::regex double_regex(
+        "([-])?\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
     std::smatch match;
-    std::regex_match(str, match, r);
+    std::regex_match(str, match, double_regex);
     if (match.empty()) throw std::logic_error("Incorrect x: " + origin_str);
     std::stringstream ss(match.str());
     ss >> x_value_;
     x_value_ *= sign;
-  } else if (isalpha(str[0])) {
-    auto it = token_map_.find(str);
-    if (it != token_map_.end() && it->second.GetValue()) {
+  } else if (isalpha(str.front())) {
+    const auto it = token_map_.find(str);
+    if (it != token_map_.end() &&
+        it->second.GetPrecedence() == Precedence::kNumber &&
+        it->second.GetName() != "x") {
       x_value_ = it->second.GetValue();
       x_value_ *= sign;
     } else {
@@ -296,8 +301,8 @@ void MyNamespace::MathCalculator::PushToResult() {
   input_.pop();
 }
 
-void MyNamespace::MathCalculator::PushToResult(double x_value) {
-  result_.push(x_value);
+void MyNamespace::MathCalculator::PushToResult(double value) {
+  result_.push(value);
   input_.pop();
 }
 

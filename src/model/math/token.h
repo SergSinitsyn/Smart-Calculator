@@ -24,6 +24,7 @@ enum Precedence {
   kFunction,
   kOpenBracket,
   kCloseBracket,
+  kNumTokenTypes,
 };
 
 enum OperationType {

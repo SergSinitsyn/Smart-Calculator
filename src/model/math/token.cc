@@ -40,7 +40,8 @@ void MyNamespace::Token::MakeNumber(std::string name, double value) {
 }
 
 void MyNamespace::Token::MakeUnaryNegation() {
-  Token result("-", kUnaryOperator, kRight, kUnary, 0, std::negate<double>());
+  Token result("negate", kUnaryOperator, kRight, kUnary, 0,
+               std::negate<double>());
   *this = result;
 }
 
@@ -51,7 +52,7 @@ void MyNamespace::CreateTokenMap(
   using std::string;
   using namespace MyNamespace;
   initializer_list<pair<const string, Token>> list = {
-      {" ", Token(" ", kNumber, kNone, kOperand, 0, nullptr)},
+      {" ", Token("space", kNumber, kNone, kOperand, 0, nullptr)},
       {"x", Token("x", kNumber, kNone, kOperand, 0, nullptr)},
       {"(", Token("(", kOpenBracket, kNone, kOperand, 0, nullptr)},
       {")", Token(")", kCloseBracket, kNone, kOperand, 0, nullptr)},

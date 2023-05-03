@@ -42,16 +42,16 @@ class MathCalculator {
   void LoadX(const std::string& input_x);
   std::string ConvertToLowercase(std::string str);
   void Parsing();
-  std::pair<double, std::string> ReadNumber(std::string& str,
-                                            size_t& start) const;
-  std::string ReadWord(std::string& str, size_t& start) const;
+  std::pair<double, std::string> ReadNumber(std::string& input,
+                                            size_t& start_index) const;
+  std::string ReadWord(std::string& input, size_t& start_index) const;
   void TryToPushToken(std::string temp);
   void FindSpacesAndUnarySigns();
   void CheckSequenceOfTokens();
   void ShuntingYardAlgorithm();
-  void FromInputToOutput();
-  void FromInputToStack();
-  void FromStackToOutput();
+  void MoveFromInputToOutput();
+  void MoveFromInputToStack();
+  void MoveFromStackToOutput();
   void ReadX(std::string str);
   double PostfixNotationCalculation(double x_value);
   void PushToResult();
@@ -76,8 +76,9 @@ class MathCalculator {
   std::queue<Token> output_;
   std::stack<double> result_;
 
-  // kAdjacencyMatrix_[i][j]: i - token, j - next token
-  static constexpr bool kAdjacencyMatrix_[8][8] = {
+  // kAdjacencyMatrix_[i][j]: i - token in expression, j - next token in
+  // expression
+  static constexpr bool kAdjacencyMatrix_[kNumTokenTypes][kNumTokenTypes] = {
       {0, 1, 1, 1, 0, 0, 0, 1},  // kNumber
       {1, 0, 0, 0, 1, 1, 1, 0},  // kLow
       {1, 0, 0, 0, 1, 1, 1, 0},  // kMedium
@@ -87,8 +88,8 @@ class MathCalculator {
       {1, 0, 0, 0, 1, 1, 1, 0},  // kOpenBracket
       {0, 1, 1, 1, 0, 0, 0, 1},  // kCloseBracket
   };
-  static constexpr bool kFirstToken_[8] = {1, 0, 0, 0, 1, 1, 1, 0};
-  static constexpr bool kLastToken_[8] = {1, 0, 0, 0, 0, 0, 0, 1};
+  static constexpr bool kFirstToken_[kNumTokenTypes] = {1, 0, 0, 0, 1, 1, 1, 0};
+  static constexpr bool kLastToken_[kNumTokenTypes] = {1, 0, 0, 0, 0, 0, 0, 1};
 };
 };  // namespace MyNamespace
 
