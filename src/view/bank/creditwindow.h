@@ -1,5 +1,5 @@
-#ifndef CREDITWINDOW_H
-#define CREDITWINDOW_H
+#ifndef SMARTCALC_VIEW_BANK_CREDITWINDOW_H_
+#define SMARTCALC_VIEW_BANK_CREDITWINDOW_H_
 
 #include <QDoubleSpinBox>
 #include <QWidget>
@@ -40,4 +40,4 @@ class CreditWindow : public QWidget {
 };
 };  // namespace MyNamespace
 
-#endif  // CREDITWINDOW_H
+#endif  // SMARTCALC_VIEW_BANK_CREDITWINDOW_H_

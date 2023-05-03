@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SMARTCALC_VIEW_MATH_MAINWINDOW_H_
+#define SMARTCALC_VIEW_MATH_MAINWINDOW_H_
 
 #include <QKeyEvent>
 #include <QMainWindow>
@@ -62,4 +62,4 @@ class MainWindow : public QMainWindow {
   void SendExpressionToGraph(QString);
 };
 };      // namespace MyNamespace
-#endif  // MAINWINDOW_H
+#endif  // SMARTCALC_VIEW_MATH_MAINWINDOW_H_

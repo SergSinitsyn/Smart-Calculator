@@ -1,5 +1,5 @@
-#ifndef DEPOSITWINDOW_H
-#define DEPOSITWINDOW_H
+#ifndef SMARTCALC_VIEW_BANK_DEPOSITWINDOW_H_
+#define SMARTCALC_VIEW_BANK_DEPOSITWINDOW_H_
 #include <QLineEdit>
 #include <QPushButton>
 #include <QString>
@@ -70,4 +70,4 @@ class DepositWindow : public QWidget {
 };
 };  // namespace MyNamespace
 
-#endif  // DEPOSITWINDOW_H
+#endif  // SMARTCALC_VIEW_BANK_DEPOSITWINDOW_H_

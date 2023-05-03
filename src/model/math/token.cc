@@ -46,8 +46,6 @@ void MyNamespace::Token::MakeUnaryNegation() {
 
 void MyNamespace::CreateTokenMap(
     std::map<std::string, MyNamespace::Token>& token_map) {
-  using unary_fun = double (*)(double);
-  using binary_fun = double (*)(double, double);
   using std::initializer_list;
   using std::pair;
   using std::string;
@@ -61,20 +59,21 @@ void MyNamespace::CreateTokenMap(
       {"-", Token("-", kLow, kLeft, kBinary, 0, std::minus<double>())},
       {"*", Token("*", kMedium, kLeft, kBinary, 0, std::multiplies<double>())},
       {"/", Token("/", kMedium, kLeft, kBinary, 0, std::divides<double>())},
-      {"^", Token("^", kHigh, kRight, kBinary, 0, (binary_fun)&pow)},
-      {"mod", Token("mod", kMedium, kLeft, kBinary, 0, (binary_fun)&fmod)},
-      {"cos", Token("cos", kFunction, kRight, kUnary, 0, (unary_fun)&cos)},
-      {"sin", Token("sin", kFunction, kRight, kUnary, 0, (unary_fun)&sin)},
-      {"tan", Token("tan", kFunction, kRight, kUnary, 0, (unary_fun)&tan)},
-      {"acos", Token("acos", kFunction, kRight, kUnary, 0, (unary_fun)&acos)},
-      {"asin", Token("asin", kFunction, kRight, kUnary, 0, (unary_fun)&asin)},
-      {"atan", Token("atan", kFunction, kRight, kUnary, 0, (unary_fun)&atan)},
-      {"sqrt", Token("sqrt", kFunction, kRight, kUnary, 0, (unary_fun)&sqrt)},
-      {"ln", Token("ln", kFunction, kRight, kUnary, 0, (unary_fun)&log)},
-      {"log", Token("log", kFunction, kRight, kUnary, 0, (unary_fun)&log10)},
-      {"cbrt", Token("cbrt", kFunction, kRight, kUnary, 0, (unary_fun)&cbrt)},
-      {"exp", Token("exp", kFunction, kRight, kUnary, 0, (unary_fun)&exp)},
-      {"abs", Token("abs", kFunction, kRight, kUnary, 0, (unary_fun)&fabs)},
+      {"^", Token("^", kHigh, kRight, kBinary, 0, powl)},
+      {"mod", Token("mod", kMedium, kLeft, kBinary, 0, fmodl)},
+      {"cos", Token("cos", kFunction, kRight, kUnary, 0, cosl)},
+      {"sin", Token("sin", kFunction, kRight, kUnary, 0, sinl)},
+      {"tan", Token("tan", kFunction, kRight, kUnary, 0, tanl)},
+      {"acos", Token("acos", kFunction, kRight, kUnary, 0, acosl)},
+      {"asin", Token("asin", kFunction, kRight, kUnary, 0, asinl)},
+      {"atan", Token("atan", kFunction, kRight, kUnary, 0, atanl)},
+      {"sqrt", Token("sqrt", kFunction, kRight, kUnary, 0, sqrtl)},
+      {"ln", Token("ln", kFunction, kRight, kUnary, 0, logl)},
+      {"log", Token("log", kFunction, kRight, kUnary, 0, log10l)},
+      {"cbrt", Token("cbrt", kFunction, kRight, kUnary, 0, cbrtl)},
+      {"exp", Token("exp", kFunction, kRight, kUnary, 0, expl)},
+      {"abs", Token("abs", kFunction, kRight, kUnary, 0, fabsl)},
+      {"round", Token("round", kFunction, kRight, kUnary, 0, roundl)},
       {"e", Token("e", kNumber, kNone, kOperand, M_E, nullptr)},
       {"pi", Token("pi", kNumber, kNone, kOperand, M_PI, nullptr)},
       {"inf", Token("inf", kNumber, kNone, kOperand, INFINITY, nullptr)},

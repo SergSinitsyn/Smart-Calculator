@@ -1,5 +1,5 @@
-#ifndef GRAPHWINDOW_H
-#define GRAPHWINDOW_H
+#ifndef SMARTCALC_VIEW_MATH_GRAPHWINDOW_H_
+#define SMARTCALC_VIEW_MATH_GRAPHWINDOW_H_
 
 #include <QLineEdit>
 #include <QMessageBox>
@@ -74,4 +74,4 @@ class GraphWindow : public QWidget {
 };
 };  // namespace MyNamespace
 
-#endif  // GRAPHWINDOW_H
+#endif  // SMARTCALC_VIEW_MATH_GRAPHWINDOW_H_

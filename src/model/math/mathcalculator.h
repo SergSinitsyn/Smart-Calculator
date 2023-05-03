@@ -29,15 +29,16 @@ class MathCalculator {
   MathCalculator();
   ~MathCalculator() = default;
 
-  void CalculateAnswer(const std::string& str, const std::string& str_x);
-  void CalculateAnswer(const std::string& str);
-  void CalculateGraph(const std::string& str, int number_of_points,
+  void CalculateAnswer(const std::string& input_expression,
+                       const std::string& input_x);
+  void CalculateAnswer(const std::string& input_expression);
+  void CalculateGraph(const std::string& input_expression, int number_of_points,
                       double x_start, double x_end, double y_min, double y_max);
   double GetAnswer() const;
   XYGraph GetGraph() const;
 
  private:
-  void LoadExpression(const std::string& input_string);
+  void LoadExpression(const std::string& input_expression);
   void LoadX(const std::string& input_x);
   std::string ConvertToLowercase(std::string str);
   void Parsing();
@@ -63,6 +64,7 @@ class MathCalculator {
   XYGraph answer_graph_;
 
   std::string raw_input_expression_;
+  std::string raw_input_x_;
   std::string input_expression_;
   std::string input_x_;
   double x_value_{NAN};

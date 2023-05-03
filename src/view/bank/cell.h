@@ -1,5 +1,5 @@
-#ifndef CELL_H
-#define CELL_H
+#ifndef SMARTCALC_VIEW_BANK_CELL_H_
+#define SMARTCALC_VIEW_BANK_CELL_H_
 
 #include <QWidget>
 
@@ -35,4 +35,4 @@ class Cell : public QWidget {
 };
 };  // namespace MyNamespace
 
-#endif  // CELL_H
+#endif  // SMARTCALC_VIEW_BANK_CELL_H_

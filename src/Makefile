@@ -96,16 +96,18 @@ check: leaks cppcheck linter
 
 linter:
 	@cp ../linters/.clang-format ./
-	@clang-format -n $(TEST) $(SOURCE)
-	@clang-format -n view/*.cc view/*.h
+	@clang-format -n $(TEST)
+	@clang-format -n $(SOURCE)
+	@clang-format -n view/*/*.cc view/*/*.h
 	@clang-format -n controller/*.cc controller/*.h
 	@clang-format -n main.cc
 	@rm -f .clang-format
 
 run_linter:
 	@cp ../linters/.clang-format ./
-	@clang-format -i $(TEST) $(SOURCE)
-	@clang-format -i view/*.cc view/*.h
+	@clang-format -i $(TEST)
+	@clang-format -i $(SOURCE)
+	@clang-format -i view/*/*.cc view/*/*.h
 	@clang-format -i controller/*.cc controller/*.h
 	@clang-format -i main.cc
 	@rm -f .clang-format

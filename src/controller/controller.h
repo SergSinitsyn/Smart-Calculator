@@ -12,10 +12,10 @@ class Controller {
   Controller(MathCalculator* model_1, CreditCalculator* model_2,
              DepositCalculator* model_3);
   ~Controller();
-  void CalculateValue(MainWindow* mw);
-  void CalculateGraph(GraphWindow* gw);
-  void CalculateCredit(CreditWindow* cw);
-  void CalculateDeposit(DepositWindow* dw);
+  void CalculateValue(MainWindow* main_window);
+  void CalculateGraph(GraphWindow* graph_window);
+  void CalculateCredit(CreditWindow* credit_window);
+  void CalculateDeposit(DepositWindow* deposit_window);
 
  private:
   MathCalculator* model_math_;

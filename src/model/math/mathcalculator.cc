@@ -17,23 +17,25 @@
 
 MyNamespace::MathCalculator::MathCalculator() { CreateTokenMap(token_map_); }
 
-void MyNamespace::MathCalculator::CalculateAnswer(const std::string& str,
-                                                  const std::string& str_x) {
-  if (str != raw_input_expression_ || !correct_load_) LoadExpression(str);
-  if (str_x != input_x_ || !correct_load_x_) LoadX(str_x);
+void MyNamespace::MathCalculator::CalculateAnswer(
+    const std::string& input_expression, const std::string& input_x) {
+  if (input_expression != raw_input_expression_ || !correct_load_)
+    LoadExpression(input_expression);
+  if (input_x != raw_input_x_ || !correct_load_x_) LoadX(input_x);
   if (correct_load_ && correct_load_x_)
     answer_ = PostfixNotationCalculation(x_value_);
 }
 
-void MyNamespace::MathCalculator::CalculateAnswer(const std::string& str) {
-  CalculateAnswer(str, "");
+void MyNamespace::MathCalculator::CalculateAnswer(
+    const std::string& input_expression) {
+  CalculateAnswer(input_expression, "");
 }
 
-void MyNamespace::MathCalculator::CalculateGraph(const std::string& str,
-                                                 int number_of_points,
-                                                 double x_start, double x_end,
-                                                 double y_min, double y_max) {
-  if (str != raw_input_expression_ || !correct_load_) LoadExpression(str);
+void MyNamespace::MathCalculator::CalculateGraph(
+    const std::string& input_expression, int number_of_points, double x_start,
+    double x_end, double y_min, double y_max) {
+  if (input_expression != raw_input_expression_ || !correct_load_)
+    LoadExpression(input_expression);
   if (correct_load_)
     CalculateXY(number_of_points, x_start, x_end, y_min, y_max);
 }
@@ -46,13 +48,13 @@ MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::GetGraph()
 }
 
 void MyNamespace::MathCalculator::LoadExpression(
-    const std::string& input_string) {
+    const std::string& input_expression) {
   correct_load_ = false;
   input_ = {};
   stack_ = {};
   output_ = {};
   result_ = {};
-  raw_input_expression_ = input_string;
+  raw_input_expression_ = input_expression;
   CheckLength(raw_input_expression_);
   input_expression_ = ConvertToLowercase(raw_input_expression_);
   Parsing();
@@ -64,8 +66,8 @@ void MyNamespace::MathCalculator::LoadExpression(
 
 void MyNamespace::MathCalculator::LoadX(const std::string& input_x) {
   correct_load_x_ = false;
-  input_x_ = input_x;
-  input_x_ = ConvertToLowercase(input_x_);
+  raw_input_x_ = input_x;
+  input_x_ = ConvertToLowercase(raw_input_x_);
   ReadX(input_x_);
   correct_load_x_ = true;
 }
