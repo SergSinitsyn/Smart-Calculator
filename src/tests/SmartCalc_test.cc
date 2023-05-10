@@ -6,10 +6,16 @@
 
 #define kAcc 1e-6
 
-TEST(calculation, kek_add) {
+TEST(calculation, number) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("8+3");
-  ASSERT_NEAR(calc.GetAnswer(), 11, kAcc);
+  calc.CalculateAnswer("1.2e3");
+  ASSERT_NEAR(calc.GetAnswer(), 1200, kAcc);
+  calc.CalculateAnswer("1.2e+3");
+  ASSERT_NEAR(calc.GetAnswer(), 1200, kAcc);
+  calc.CalculateAnswer("1.2e-3");
+  ASSERT_NEAR(calc.GetAnswer(), 0.0012, kAcc);
+    calc.CalculateAnswer("1.2e3+x", "-1.2e3");
+  ASSERT_NEAR(calc.GetAnswer(), 0, kAcc);
 }
 
 TEST(calculation, add) {

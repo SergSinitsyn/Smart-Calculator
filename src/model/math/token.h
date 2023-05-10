@@ -9,28 +9,28 @@
 namespace MyNamespace {
 
 using unary_function = std::function<double(double)>;
-
 using binary_function = std::function<double(double, double)>;
-
 using function_variant =
     std::variant<unary_function, binary_function, nullptr_t>;
 
 enum Precedence {
-  kNumber,
+  kDefault,
   kLow,
   kMedium,
   kHigh,
   kUnaryOperator,
   kFunction,
+};
+
+enum Type {
+  kNumber,
+  kBinaryOperator,
+  kUnaryPrefixOperator,
+  kUnaryPostfixOperator,
+  kUnaryFunction,
   kOpenBracket,
   kCloseBracket,
   kNumTokenTypes,
-};
-
-enum OperationType {
-  kOperand,
-  kUnary,
-  kBinary,
 };
 
 enum Associativity {
@@ -46,14 +46,14 @@ class Token {
  public:
   Token() = default;
   Token(const std::string& name, Precedence precedence,
-        Associativity associativity, OperationType operation_type, double value,
+        Associativity associativity, Type type, double value,
         function_variant function);
   ~Token() = default;
 
   std::string GetName() const;
   Precedence GetPrecedence() const;
   Associativity GetAssociativity() const;
-  OperationType GetOperationType() const;
+  Type GetType() const;
   double GetValue() const;
   function_variant GetFunction() const;
 
@@ -64,7 +64,7 @@ class Token {
   std::string name_;
   Precedence precedence_;
   Associativity associativity_;
-  OperationType operation_type_;
+  Type type_;
   double value_;
   function_variant function_;
 };
@@ -72,5 +72,7 @@ class Token {
 void CreateTokenMap(std::map<std::string, MyNamespace::Token>& temp_map);
 
 };  // namespace MyNamespace
+
+long double factorial(long double n);
 
 #endif  // SMARTCALC_MODEL_MATH_TOKEN_H_

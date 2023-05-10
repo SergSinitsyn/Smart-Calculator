@@ -60,7 +60,7 @@ void MyNamespace::MathCalculator::LoadExpression(
   Parsing();
   FindSpacesAndUnarySigns();
   CheckSequenceOfTokens();
-  ShuntingYardAlgorithm();
+  ConvertInfixToPostfix();
   correct_load_ = true;
 }
 
@@ -102,7 +102,7 @@ void MyNamespace::MathCalculator::Parsing() {
 
 std::pair<double, std::string> MyNamespace::MathCalculator::ReadNumber(
     std::string& input, size_t& start_index) const {
-  std::regex double_regex("\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
+  std::regex double_regex("\\d+([.]\\d+)?(e([-+])?\\d+)?");
   std::sregex_iterator regex_iterator = std::sregex_iterator(
       input.begin() + start_index, input.end(), double_regex);
   std::smatch match = *regex_iterator;
@@ -140,8 +140,7 @@ void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
     if (name == "space") {
       input_.pop();
     } else if ((name == "+" || name == "-") &&
-               (output_.empty() ||
-                !kLastToken_[output_.back().GetPrecedence()])) {
+               (output_.empty() || !kLastToken_[output_.back().GetType()])) {
       if (name == "-") {
         Token temp;
         temp.MakeUnaryNegation();
@@ -149,7 +148,7 @@ void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
       }
       input_.pop();
     } else {
-      MoveFromInputToOutput();
+      MoveTokenFromInputToOutput();
     }
   }
   input_.swap(output_);
@@ -158,79 +157,90 @@ void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
 
 void MyNamespace::MathCalculator::CheckSequenceOfTokens() {
   using namespace MyNamespace;
-  if (!kFirstToken_[input_.front().GetPrecedence()]) {
+  if (!kFirstToken_[input_.front().GetType()]) {
     throw std::logic_error("Wrong sequence: expression starts with " +
                            input_.front().GetName());
   }
-  MoveFromInputToOutput();
+  MoveTokenFromInputToOutput();
   while (!output_.empty() && !input_.empty()) {
-    if (!kAdjacencyMatrix_[output_.back().GetPrecedence()]
-                          [input_.front().GetPrecedence()]) {
+    if (!kAdjacencyMatrix_[output_.back().GetType()]
+                          [input_.front().GetType()]) {
       throw std::logic_error("Wrong sequence: " + output_.back().GetName() +
                              " " + input_.front().GetName());
     }
-    MoveFromInputToOutput();
+    MoveTokenFromInputToOutput();
   }
-  if (!kLastToken_[output_.back().GetPrecedence()]) {
+  if (!kLastToken_[output_.back().GetType()]) {
     throw std::logic_error("Wrong sequence: expression ends with " +
                            output_.back().GetName());
   }
   input_.swap(output_);
 }
 
-void MyNamespace::MathCalculator::ShuntingYardAlgorithm() {
+void MyNamespace::MathCalculator::ConvertInfixToPostfix() {
   using namespace MyNamespace;
   while (!input_.empty()) {
-    if (input_.front().GetPrecedence() == Precedence::kNumber) {
-      MoveFromInputToOutput();
-    } else if (input_.front().GetOperationType() == OperationType::kUnary) {
-      MoveFromInputToStack();
-    } else if (input_.front().GetOperationType() == OperationType::kBinary) {
-      while (!stack_.empty() &&
-             (stack_.top().GetOperationType() == OperationType::kBinary ||
-              stack_.top().GetPrecedence() == Precedence::kUnaryOperator) &&
-             (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
-              (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
-               input_.front().GetAssociativity() == Associativity::kLeft))) {
-        MoveFromStackToOutput();
-      }
-      MoveFromInputToStack();
-    } else if (input_.front().GetName() == "(") {
-      MoveFromInputToStack();
-    } else if (input_.front().GetName() == ")") {
-      while (!stack_.empty() && stack_.top().GetName() != "(") {
-        MoveFromStackToOutput();
-      }
-      if (!stack_.empty() && stack_.top().GetName() == "(") {
-        stack_.pop();
-      } else {
-        throw std::logic_error("Open bracket missing");
-      }
-      if (!stack_.empty() &&
-          stack_.top().GetPrecedence() == Precedence::kFunction) {
-        MoveFromStackToOutput();
-      }
-      input_.pop();
+    switch (input_.front().GetType()) {
+      case Type::kNumber:
+      case Type::kUnaryPostfixOperator:
+        MoveTokenFromInputToOutput();
+        break;
+      case Type::kUnaryFunction:
+      case Type::kUnaryPrefixOperator:
+      case Type::kOpenBracket:
+        MoveTokenFromInputToStack();
+        break;
+      case Type::kBinaryOperator:
+        while (
+            !stack_.empty() &&
+            (stack_.top().GetType() == Type::kBinaryOperator ||
+             stack_.top().GetType() == Type::kUnaryPrefixOperator) &&
+            (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
+             (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
+              input_.front().GetAssociativity() == Associativity::kLeft))) {
+          MoveTokenFromStackToOutput();
+        }
+        MoveTokenFromInputToStack();
+        break;
+      case Type::kCloseBracket:
+        while (!stack_.empty() &&
+               stack_.top().GetType() != Type::kOpenBracket) {
+          MoveTokenFromStackToOutput();
+        }
+        if (!stack_.empty() && stack_.top().GetType() == Type::kOpenBracket) {
+          stack_.pop();
+        } else {
+          throw std::logic_error("Open bracket missing");
+        }
+        if (!stack_.empty() &&
+            stack_.top().GetPrecedence() == Precedence::kFunction) {
+          MoveTokenFromStackToOutput();
+        }
+        input_.pop();
+        break;
+      default:
+        break;
     }
   }
   while (!stack_.empty()) {
-    if (stack_.top().GetName() == "(")
+    if (stack_.top().GetType() == Type::kOpenBracket) {
       throw std::logic_error("Close bracket missing");
-    MoveFromStackToOutput();
+    }
+    MoveTokenFromStackToOutput();
   }
 }
 
-void MyNamespace::MathCalculator::MoveFromInputToOutput() {
+void MyNamespace::MathCalculator::MoveTokenFromInputToOutput() {
   output_.push(input_.front());
   input_.pop();
 }
 
-void MyNamespace::MathCalculator::MoveFromInputToStack() {
+void MyNamespace::MathCalculator::MoveTokenFromInputToStack() {
   stack_.push(input_.front());
   input_.pop();
 }
 
-void MyNamespace::MathCalculator::MoveFromStackToOutput() {
+void MyNamespace::MathCalculator::MoveTokenFromStackToOutput() {
   output_.push(stack_.top());
   stack_.pop();
 }
@@ -248,8 +258,7 @@ void MyNamespace::MathCalculator::ReadX(std::string str) {
     str.erase(0, 1);
   }
   if (isdigit(str.front())) {
-    static const std::regex double_regex(
-        "([-])?\\d+(([.]\\d+)?(e([+-])?\\d+)?)?");
+    static const std::regex double_regex("([-])?\\d+([.]\\d+)?(e([-+])?\\d+)?");
     std::smatch match;
     std::regex_match(str, match, double_regex);
     if (match.empty()) throw std::logic_error("Incorrect x: " + origin_str);
@@ -258,8 +267,7 @@ void MyNamespace::MathCalculator::ReadX(std::string str) {
     x_value_ *= sign;
   } else if (isalpha(str.front())) {
     const auto it = token_map_.find(str);
-    if (it != token_map_.end() &&
-        it->second.GetPrecedence() == Precedence::kNumber &&
+    if (it != token_map_.end() && it->second.GetType() == Type::kNumber &&
         it->second.GetName() != "x") {
       x_value_ = it->second.GetValue();
       x_value_ *= sign;

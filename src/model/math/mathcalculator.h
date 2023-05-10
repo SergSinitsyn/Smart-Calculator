@@ -48,10 +48,10 @@ class MathCalculator {
   void TryToPushToken(std::string temp);
   void FindSpacesAndUnarySigns();
   void CheckSequenceOfTokens();
-  void ShuntingYardAlgorithm();
-  void MoveFromInputToOutput();
-  void MoveFromInputToStack();
-  void MoveFromStackToOutput();
+  void ConvertInfixToPostfix();
+  void MoveTokenFromInputToOutput();
+  void MoveTokenFromInputToStack();
+  void MoveTokenFromStackToOutput();
   void ReadX(std::string str);
   double PostfixNotationCalculation(double x_value);
   void PushToResult();
@@ -79,17 +79,16 @@ class MathCalculator {
   // kAdjacencyMatrix_[i][j]: i - token in expression, j - next token in
   // expression
   static constexpr bool kAdjacencyMatrix_[kNumTokenTypes][kNumTokenTypes] = {
-      {0, 1, 1, 1, 0, 0, 0, 1},  // kNumber
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kLow
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kMedium
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kHigh
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kUnaryOperator
-      {0, 0, 0, 0, 0, 0, 1, 0},  // kFunction
-      {1, 0, 0, 0, 1, 1, 1, 0},  // kOpenBracket
-      {0, 1, 1, 1, 0, 0, 0, 1},  // kCloseBracket
+      {0, 1, 0, 1, 0, 0, 1},  // kNumber
+      {1, 0, 1, 0, 1, 1, 0},  // kBinaryOperator
+      {1, 0, 1, 0, 1, 1, 0},  // kUnaryPrefixOperator
+      {0, 1, 0, 1, 0, 0, 1},  // kUnaryPostfixOperator
+      {0, 0, 0, 0, 0, 1, 0},  // kUnaryFunction
+      {1, 0, 1, 0, 1, 1, 0},  // kOpenBracket
+      {0, 1, 0, 1, 0, 0, 1},  // kCloseBracket
   };
-  static constexpr bool kFirstToken_[kNumTokenTypes] = {1, 0, 0, 0, 1, 1, 1, 0};
-  static constexpr bool kLastToken_[kNumTokenTypes] = {1, 0, 0, 0, 0, 0, 0, 1};
+  static constexpr bool kFirstToken_[kNumTokenTypes] = {1, 0, 1, 0, 1, 1, 0};
+  static constexpr bool kLastToken_[kNumTokenTypes] = {1, 0, 0, 1, 0, 0, 1};
 };
 };  // namespace MyNamespace
 
