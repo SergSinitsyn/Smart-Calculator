@@ -72,9 +72,9 @@ class MathCalculator {
   bool correct_load_x_{false};
   std::map<std::string, Token> token_map_;
   std::queue<Token> input_;
-  std::stack<Token> stack_;
+  std::vector<Token> stack_;
   std::queue<Token> output_;
-  std::stack<double> result_;
+  std::vector<double> result_;
 
   // kAdjacencyMatrix_[i][j]: i - token in expression, j - next token in
   // expression

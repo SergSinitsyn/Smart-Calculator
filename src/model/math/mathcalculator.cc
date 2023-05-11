@@ -19,11 +19,19 @@ MyNamespace::MathCalculator::MathCalculator() { CreateTokenMap(token_map_); }
 
 void MyNamespace::MathCalculator::CalculateAnswer(
     const std::string& input_expression, const std::string& input_x) {
-  if (input_expression != raw_input_expression_ || !correct_load_)
+  const bool is_different_expression =
+      input_expression != raw_input_expression_ || !correct_load_;
+  if (is_different_expression) {
     LoadExpression(input_expression);
-  if (input_x != raw_input_x_ || !correct_load_x_) LoadX(input_x);
-  if (correct_load_ && correct_load_x_)
+  }
+
+  const bool is_different_x = input_x != raw_input_x_ || !correct_load_x_;
+  if (is_different_x) {
+    LoadX(input_x);
+  }
+  if (correct_load_ && correct_load_x_) {
     answer_ = PostfixNotationCalculation(x_value_);
+  }
 }
 
 void MyNamespace::MathCalculator::CalculateAnswer(
@@ -34,8 +42,11 @@ void MyNamespace::MathCalculator::CalculateAnswer(
 void MyNamespace::MathCalculator::CalculateGraph(
     const std::string& input_expression, int number_of_points, double x_start,
     double x_end, double y_min, double y_max) {
-  if (input_expression != raw_input_expression_ || !correct_load_)
+  const bool is_different_expression =
+      input_expression != raw_input_expression_ || !correct_load_;
+  if (is_different_expression) {
     LoadExpression(input_expression);
+  }
   if (correct_load_)
     CalculateXY(number_of_points, x_start, x_end, y_min, y_max);
 }
@@ -73,11 +84,8 @@ void MyNamespace::MathCalculator::LoadX(const std::string& input_x) {
 }
 
 std::string MyNamespace::MathCalculator::ConvertToLowercase(std::string str) {
-  std::string result;
-  for (auto c : str) {
-    result.push_back(std::tolower(c));
-  }
-  return result;
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+  return str;
 }
 
 void MyNamespace::MathCalculator::Parsing() {
@@ -141,12 +149,12 @@ void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
       input_.pop();
     } else if ((name == "+" || name == "-") &&
                (output_.empty() || !kLastToken_[output_.back().GetType()])) {
+      input_.pop();
       if (name == "-") {
         Token temp;
         temp.MakeUnaryNegation();
         output_.push(temp);
       }
-      input_.pop();
     } else {
       MoveTokenFromInputToOutput();
     }
@@ -193,10 +201,10 @@ void MyNamespace::MathCalculator::ConvertInfixToPostfix() {
       case Type::kBinaryOperator:
         while (
             !stack_.empty() &&
-            (stack_.top().GetType() == Type::kBinaryOperator ||
-             stack_.top().GetType() == Type::kUnaryPrefixOperator) &&
-            (stack_.top().GetPrecedence() > input_.front().GetPrecedence() ||
-             (stack_.top().GetPrecedence() == input_.front().GetPrecedence() &&
+            (stack_.back().GetType() == Type::kBinaryOperator ||
+             stack_.back().GetType() == Type::kUnaryPrefixOperator) &&
+            (stack_.back().GetPrecedence() > input_.front().GetPrecedence() ||
+             (stack_.back().GetPrecedence() == input_.front().GetPrecedence() &&
               input_.front().GetAssociativity() == Associativity::kLeft))) {
           MoveTokenFromStackToOutput();
         }
@@ -204,16 +212,16 @@ void MyNamespace::MathCalculator::ConvertInfixToPostfix() {
         break;
       case Type::kCloseBracket:
         while (!stack_.empty() &&
-               stack_.top().GetType() != Type::kOpenBracket) {
+               stack_.back().GetType() != Type::kOpenBracket) {
           MoveTokenFromStackToOutput();
         }
-        if (!stack_.empty() && stack_.top().GetType() == Type::kOpenBracket) {
-          stack_.pop();
+        if (!stack_.empty() && stack_.back().GetType() == Type::kOpenBracket) {
+          stack_.pop_back();
         } else {
           throw std::logic_error("Open bracket missing");
         }
         if (!stack_.empty() &&
-            stack_.top().GetPrecedence() == Precedence::kFunction) {
+            stack_.back().GetPrecedence() == Precedence::kFunction) {
           MoveTokenFromStackToOutput();
         }
         input_.pop();
@@ -223,7 +231,7 @@ void MyNamespace::MathCalculator::ConvertInfixToPostfix() {
     }
   }
   while (!stack_.empty()) {
-    if (stack_.top().GetType() == Type::kOpenBracket) {
+    if (stack_.back().GetType() == Type::kOpenBracket) {
       throw std::logic_error("Close bracket missing");
     }
     MoveTokenFromStackToOutput();
@@ -236,13 +244,13 @@ void MyNamespace::MathCalculator::MoveTokenFromInputToOutput() {
 }
 
 void MyNamespace::MathCalculator::MoveTokenFromInputToStack() {
-  stack_.push(input_.front());
+  stack_.push_back(input_.front());
   input_.pop();
 }
 
 void MyNamespace::MathCalculator::MoveTokenFromStackToOutput() {
-  output_.push(stack_.top());
-  stack_.pop();
+  output_.push(stack_.back());
+  stack_.pop_back();
 }
 
 void MyNamespace::MathCalculator::ReadX(std::string str) {
@@ -305,18 +313,18 @@ double MyNamespace::MathCalculator::PostfixNotationCalculation(double x_value) {
 }
 
 void MyNamespace::MathCalculator::PushToResult() {
-  result_.push(input_.front().GetValue());
+  result_.push_back(input_.front().GetValue());
   input_.pop();
 }
 
 void MyNamespace::MathCalculator::PushToResult(double value) {
-  result_.push(value);
+  result_.push_back(value);
   input_.pop();
 }
 
 double MyNamespace::MathCalculator::PopFromResult() {
-  double value = result_.top();
-  result_.pop();
+  double value = result_.back();
+  result_.pop_back();
   return value;
 }
 
@@ -328,27 +336,33 @@ void MyNamespace::MathCalculator::CalculateXY(int number_of_points,
   if (y_min > y_max) {
     std::swap(y_min, y_max);
   }
-  y_min *= 1.2;
-  y_max *= 1.2;
 
-  std::vector<double> x, y;
+  std::vector<double> x_values, y_values;
   double step = (x_end - x_start) / (number_of_points - 1);
   long double threshold = fabs(step * 1000.0);
+  bool in_range = true;
 
   for (int i = 0; i < number_of_points; ++i) {
-    x.push_back(x_start + step * i);
-    double y_value = PostfixNotationCalculation(x.back());
+    x_values.push_back(x_start + step * i);
+    double y_value = PostfixNotationCalculation(x_values.back());
     long double delta = 0;
-    if (i && !std::isnan(y.back())) {
-      delta = fabs((y_value - y.back()) / step);
+    if (i && !std::isnan(y_values.back())) {
+      delta = fabs((y_value - y_values.back()) / step);
     }
-    if (y_value > y_max || y_value < y_min) {
-      y.push_back(std::numeric_limits<double>::quiet_NaN());
-    } else if (delta > threshold && (y_value * y.back()) < 0) {
-      y.push_back(std::numeric_limits<double>::quiet_NaN());
+
+    if (delta > threshold && (y_value * y_values.back()) < 0) {
+      in_range = false;
+    } else if (y_value > y_max || y_value < y_min) {
+      if (in_range) {
+        y_values.push_back(y_value);
+      } else {
+        y_values.push_back(std::numeric_limits<double>::quiet_NaN());
+      }
+      in_range = false;
     } else {
-      y.push_back(y_value);
+      y_values.push_back(y_value);
+      in_range = true;
     }
   }
-  answer_graph_ = std::make_pair(x, y);
+  answer_graph_ = std::make_pair(x_values, y_values);
 }
