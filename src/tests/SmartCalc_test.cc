@@ -14,7 +14,7 @@ TEST(calculation, number) {
   ASSERT_NEAR(calc.GetAnswer(), 1200, kAcc);
   calc.CalculateAnswer("1.2e-3");
   ASSERT_NEAR(calc.GetAnswer(), 0.0012, kAcc);
-    calc.CalculateAnswer("1.2e3+x", "-1.2e3");
+  calc.CalculateAnswer("1.2e3+x", "-1.2e3");
   ASSERT_NEAR(calc.GetAnswer(), 0, kAcc);
 }
 
@@ -293,6 +293,12 @@ TEST(calculation, expression_26) {
   MyNamespace::MathCalculator calc;
   calc.CalculateAnswer("-1/0");
   ASSERT_TRUE(std::isinf(calc.GetAnswer()));
+}
+
+TEST(calculation, expression_27) {
+  MyNamespace::MathCalculator calc;
+  calc.CalculateAnswer("x", "-e");
+  ASSERT_NEAR(calc.GetAnswer(), -2.718281828459, kAcc);
 }
 
 TEST(calculation_graph, expression) {

@@ -11,7 +11,7 @@ namespace MyNamespace {
 using unary_function = std::function<double(double)>;
 using binary_function = std::function<double(double, double)>;
 using function_variant =
-    std::variant<unary_function, binary_function, nullptr_t>;
+    std::variant<double, unary_function, binary_function, nullptr_t>;
 
 enum Precedence {
   kDefault,
@@ -46,15 +46,13 @@ class Token {
  public:
   Token() = default;
   Token(const std::string& name, Precedence precedence,
-        Associativity associativity, Type type, double value,
-        function_variant function);
+        Associativity associativity, Type type, function_variant function);
   ~Token() = default;
 
   std::string GetName() const;
   Precedence GetPrecedence() const;
   Associativity GetAssociativity() const;
   Type GetType() const;
-  double GetValue() const;
   function_variant GetFunction() const;
 
   void MakeNumber(std::string name, double value);
@@ -65,7 +63,6 @@ class Token {
   Precedence precedence_;
   Associativity associativity_;
   Type type_;
-  double value_;
   function_variant function_;
 };
 

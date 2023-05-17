@@ -54,8 +54,7 @@ class MathCalculator {
   void MoveTokenFromStackToOutput();
   void ReadX(std::string str);
   double PostfixNotationCalculation(double x_value);
-  void PushToResult();
-  void PushToResult(double x_value);
+  void PushToResult(double value);
   double PopFromResult();
   void CalculateXY(int number_of_points, double x_start, double x_end,
                    double y_min, double y_max);

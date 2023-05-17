@@ -134,11 +134,10 @@ std::string MyNamespace::MathCalculator::ReadWord(std::string& input,
 
 void MyNamespace::MathCalculator::TryToPushToken(std::string token) {
   auto token_map_it = token_map_.find(token);
-  if (token_map_it != token_map_.end()) {
-    input_.push(token_map_it->second);
-  } else {
+  if (token_map_it == token_map_.end()) {
     throw std::logic_error("Incorrect symbol: " + token);
   }
+  input_.push(token_map_it->second);
 }
 
 void MyNamespace::MathCalculator::FindSpacesAndUnarySigns() {
@@ -170,13 +169,12 @@ void MyNamespace::MathCalculator::CheckSequenceOfTokens() {
                            input_.front().GetName());
   }
   MoveTokenFromInputToOutput();
-  while (!output_.empty() && !input_.empty()) {
+  for (; !output_.empty() && !input_.empty(); MoveTokenFromInputToOutput()) {
     if (!kAdjacencyMatrix_[output_.back().GetType()]
                           [input_.front().GetType()]) {
       throw std::logic_error("Wrong sequence: " + output_.back().GetName() +
                              " " + input_.front().GetName());
     }
-    MoveTokenFromInputToOutput();
   }
   if (!kLastToken_[output_.back().GetType()]) {
     throw std::logic_error("Wrong sequence: expression ends with " +
@@ -277,7 +275,7 @@ void MyNamespace::MathCalculator::ReadX(std::string str) {
     const auto it = token_map_.find(str);
     if (it != token_map_.end() && it->second.GetType() == Type::kNumber &&
         it->second.GetName() != "x") {
-      x_value_ = it->second.GetValue();
+      x_value_ = std::get<double>(it->second.GetFunction());
       x_value_ *= sign;
     } else {
       throw std::logic_error("Incorrect x: " + origin_str);
@@ -292,7 +290,8 @@ double MyNamespace::MathCalculator::PostfixNotationCalculation(double x_value) {
   input_ = output_;
   while (!input_.empty()) {
     std::visit(
-        overloaded{[&](unary_function function) {
+        overloaded{[&](double function) { PushToResult(function); },
+                   [&](unary_function function) {
                      PushToResult(function(PopFromResult()));
                    },
                    [&](binary_function function) {
@@ -300,21 +299,10 @@ double MyNamespace::MathCalculator::PostfixNotationCalculation(double x_value) {
                      double left_argument = PopFromResult();
                      PushToResult(function(left_argument, right_argument));
                    },
-                   [&](auto) {
-                     if (input_.front().GetName() == "x") {
-                       PushToResult(x_value);
-                     } else {
-                       PushToResult();
-                     }
-                   }},
+                   [&](auto) { PushToResult(x_value); }},
         input_.front().GetFunction());
   }
   return PopFromResult();
-}
-
-void MyNamespace::MathCalculator::PushToResult() {
-  result_.push_back(input_.front().GetValue());
-  input_.pop();
 }
 
 void MyNamespace::MathCalculator::PushToResult(double value) {
