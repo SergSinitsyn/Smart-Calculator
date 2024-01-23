@@ -66,21 +66,9 @@ To build and install this project, please follow the instructions below:
 3. Run: `make install`.
 4. This command will compile the source code and create an executable file named "SmartCalc" in the build directory.
 
-### Usage
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
 
 
 ## Authors
-
-
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie) -->
 
 ## License
 
