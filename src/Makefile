@@ -62,7 +62,7 @@ report/index.html: $(SOURCE) $(TEST)
 gcov_report: report/index.html
 	open report/index.html
 
-install: uninstall dvi 
+install: uninstall 
 	qmake CONFIG+=release -o $(BUILD_DIR)/Makefile $(NAME).pro
 	-cd $(BUILD_DIR); make
 	-cd $(BUILD_DIR); make clean
