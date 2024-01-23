@@ -68,19 +68,19 @@ To build and install this project, please follow the instructions below:
 
 ### Usage
 
-* How to run the program
+<!-- * How to run the program
 * Step-by-step bullets
 ```
 code blocks for commands
-```
+``` -->
 
 
 ## Authors
-
+<!-- 
 
 
 ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie) -->
+ex. [@DomPizzie](https://twitter.com/dompizzie) --> 
 
 ## License
 
