@@ -7,7 +7,6 @@ Engineer, credit and debit calculator. GUI implementation based on Qt API for C+
     - [Graph Plotting](#graph-plotting)
     - [Credit Calculator](#credit-calculator)
     - [Deposit Calculator](#deposit-calculator)
-    - [Dependencies](#dependencies)
 - [Getting Started](#getting-started)
     - [Dependenses](#dependencies)
     - [Installing](#installing)
