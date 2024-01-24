@@ -1,5 +1,5 @@
 # SmartCalc
-Engineer calculator with graph plot. Credit and debit calculator. GUI implementation, based on Qt library  for C++17.
+Engineer, credit and debit calculator. GUI implementation based on Qt API for C++17.
 
 ## Table of Contents
 - [Description](#description)
@@ -11,7 +11,7 @@ Engineer calculator with graph plot. Credit and debit calculator. GUI implementa
 - [Getting Started](#getting-started)
     - [Dependenses](#dependencies)
     - [Installing](#installing)
-    - [Usage](#usage)
+    <!-- - [Usage](#usage) -->
 - [Authors](#authors)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
@@ -55,8 +55,10 @@ Engineer calculator with graph plot. Credit and debit calculator. GUI implementa
 
 ### Dependencies
 
-- MacOS, Linux
+- MacOS or Linux
 - C++17 compiler
+- QT5 or QT6 (Widgets)
+
 
 ### Installing
 
@@ -66,7 +68,7 @@ To build and install this project, please follow the instructions below:
 3. Run: `make install`.
 4. This command will compile the source code and create an executable file named "SmartCalc" in the build directory.
 
-### Usage
+<!-- ### Usage -->
 
 <!-- * How to run the program
 * Step-by-step bullets
@@ -74,13 +76,9 @@ To build and install this project, please follow the instructions below:
 code blocks for commands
 ``` -->
 
-
 ## Authors
-<!-- 
 
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie) --> 
+Sergey Sinitsyn (aka Bernarda Verla)
 
 ## License
 
@@ -88,11 +86,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) 
 
 ## Acknowledgments
 
-Inspiration, code snippets, etc.
-<!-- * [1-readme]()
-* [2]
-* [3]
-* [4]
-* [5] -->
+- Set of predefined tokens and their attributes: [Astrodynamic](https://github.com/Astrodynamic/SmartCalculator)
+- Widget for plotting and data visualization: [QtCustomPlot](https://www.qcustomplot.com/)
+
 
 © 2023 SergSinitsyn
