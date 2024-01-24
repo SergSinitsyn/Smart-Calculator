@@ -1,4 +1,4 @@
-# SmartCalc
+# Smart Calculator
 Engineer, credit and debit calculator. GUI implementation based on Qt API for C++17.
 
 ## Table of Contents
