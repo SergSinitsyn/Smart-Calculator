@@ -1,8 +1,10 @@
 #include <gtest/gtest.h>
 
+#include <cmath>
+
 #include "../model/bank/creditcalculator.h"
 #include "../model/bank/depositcalculator.h"
-#include "../model/math/mathcalculator.h"
+#include "../model/math/math_calculator.h"
 
 #define kAcc 1e-6
 

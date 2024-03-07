@@ -40,47 +40,6 @@ void MyNamespace::Token::MakeUnaryNegation() {
   *this = result;
 }
 
-void MyNamespace::CreateTokenMap(
-    std::map<std::string, MyNamespace::Token>& token_map) {
-  using std::initializer_list;
-  using std::pair;
-  using std::string;
-  using namespace MyNamespace;
-  initializer_list<pair<const string, Token>> list = {
-      {" ", Token("space", kDefault, kNone, kNumber, nullptr)},
-      {"x", Token("x", kDefault, kNone, kNumber, nullptr)},
-      {"(", Token("(", kDefault, kNone, kOpenBracket, nullptr)},
-      {")", Token(")", kDefault, kNone, kCloseBracket, nullptr)},
-      {"+", Token("+", kLow, kLeft, kBinaryOperator, std::plus<double>())},
-      {"-", Token("-", kLow, kLeft, kBinaryOperator, std::minus<double>())},
-      {"*",
-       Token("*", kMedium, kLeft, kBinaryOperator, std::multiplies<double>())},
-      {"/",
-       Token("/", kMedium, kLeft, kBinaryOperator, std::divides<double>())},
-      {"^", Token("^", kHigh, kRight, kBinaryOperator, powl)},
-      {"mod", Token("mod", kMedium, kLeft, kBinaryOperator, fmodl)},
-      {"cos", Token("cos", kFunction, kRight, kUnaryFunction, cosl)},
-      {"sin", Token("sin", kFunction, kRight, kUnaryFunction, sinl)},
-      {"tan", Token("tan", kFunction, kRight, kUnaryFunction, tanl)},
-      {"acos", Token("acos", kFunction, kRight, kUnaryFunction, acosl)},
-      {"asin", Token("asin", kFunction, kRight, kUnaryFunction, asinl)},
-      {"atan", Token("atan", kFunction, kRight, kUnaryFunction, atanl)},
-      {"sqrt", Token("sqrt", kFunction, kRight, kUnaryFunction, sqrtl)},
-      {"ln", Token("ln", kFunction, kRight, kUnaryFunction, logl)},
-      {"log", Token("log", kFunction, kRight, kUnaryFunction, log10l)},
-      {"cbrt", Token("cbrt", kFunction, kRight, kUnaryFunction, cbrtl)},
-      {"exp", Token("exp", kFunction, kRight, kUnaryFunction, expl)},
-      {"abs", Token("abs", kFunction, kRight, kUnaryFunction, fabsl)},
-      {"round", Token("round", kFunction, kRight, kUnaryFunction, roundl)},
-      {"e", Token("e", kDefault, kNone, kNumber, M_E)},
-      {"pi", Token("pi", kDefault, kNone, kNumber, M_PI)},
-      {"inf", Token("inf", kDefault, kNone, kNumber, INFINITY)},
-      {"!",
-       Token("!", kUnaryOperator, kLeft, kUnaryPostfixOperator, factorial)},
-  };
-  token_map.insert(list);
-}
-
 long double factorial(long double n) {
   if (std::floor(n) != n) {
     throw std::logic_error("Not integer number for factorial");

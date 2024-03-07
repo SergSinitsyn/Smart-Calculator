@@ -2,7 +2,6 @@
 #define SMARTCALC_MODEL_MATH_TOKEN_H_
 
 #include <functional>
-#include <map>
 #include <string>
 #include <variant>
 
@@ -65,8 +64,6 @@ class Token {
   Type type_;
   function_variant function_;
 };
-
-void CreateTokenMap(std::map<std::string, MyNamespace::Token>& temp_map);
 
 };  // namespace MyNamespace
 

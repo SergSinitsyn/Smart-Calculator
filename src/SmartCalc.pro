@@ -13,12 +13,15 @@ INCLUDEPATH += ./view/math
 SOURCES += \
     controller/controller.cc \
     main.cc \
-    model/math/check.cc \
     model/bank/creditcalculator.cc \
     model/bank/date.cc \
     model/bank/depositcalculator.cc \
-    model/math/mathcalculator.cc \
     model/bank/round.cc \
+    model/math/math_calculator.cc \
+    model/math/parser.cc \
+    model/math/postfix_calculator.cc \
+    model/math/validator.cc \
+    model/math/parameter_checker.cc \
     model/math/token.cc \
     view/bank/cell.cc \
     view/bank/creditwindow.cc \
@@ -29,12 +32,15 @@ SOURCES += \
 
 HEADERS += \
     controller/controller.h \
-    model/math/check.h \
     model/bank/creditcalculator.h \
     model/bank/date.h \
     model/bank/depositcalculator.h \
-    model/math/mathcalculator.h \
     model/bank/round.h \
+    model/math/math_calculator.h \
+    model/math/parser.h \
+    model/math/postfix_calculator.h \
+    model/math/validator.h \
+    model/math/parameter_checker.h \
     model/math/token.h \
     view/bank/cell.h \
     view/bank/creditwindow.h \

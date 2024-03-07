@@ -3,7 +3,7 @@
 #include "controller/controller.h"
 #include "model/bank/creditcalculator.h"
 #include "model/bank/depositcalculator.h"
-#include "model/math/mathcalculator.h"
+#include "model/math/math_calculator.h"
 #include "view/math/mainwindow.h"
 
 int main(int argc, char *argv[]) {
