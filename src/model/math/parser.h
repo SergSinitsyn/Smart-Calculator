@@ -29,7 +29,7 @@ class Parser {
                                             size_t& start_index) const;
   std::string ReadWord(std::string& input, size_t& start_index) const;
   void PushToken(std::string temp);
-  void DeleteUnaryPlus();
+  void CheckUnaryPlus();
   void CheckUnaryNegation();
   void DeleteSpaces();
 };

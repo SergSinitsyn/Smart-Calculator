@@ -68,21 +68,18 @@ MyNamespace::PostfixCalculator::ConvertInfixToPostfix(std::list<Token>& input) {
 }
 
 void MyNamespace::PostfixCalculator::MoveTokenFromInputToOutput() {
-  postfix_.push_back(input_.front());
+  postfix_.emplace_back(std::move(input_.front()));
   input_.pop_front();
-  // !splice!
 }
 
 void MyNamespace::PostfixCalculator::MoveTokenFromInputToStack() {
-  operator_stack_.push(input_.front());
+  operator_stack_.emplace(std::move(input_.front()));
   input_.pop_front();
-  // !splice!
 }
 
 void MyNamespace::PostfixCalculator::MoveTokenFromStackToOutput() {
-  postfix_.push_back(operator_stack_.top());
+  postfix_.emplace_back(std::move(operator_stack_.top()));
   operator_stack_.pop();
-  // !splice!
 }
 
 double MyNamespace::PostfixCalculator::PostfixNotationCalculation(
@@ -92,16 +89,16 @@ double MyNamespace::PostfixCalculator::PostfixNotationCalculation(
 
   for (auto& token : postfix_) {
     std::visit(
-        overloaded{[&](double function) { PushToResult(function); },
+        overloaded{[&](double function) { result_.push(function); },
                    [&](unary_function function) {
-                     PushToResult(function(PopFromResult()));
+                     result_.push(function(PopFromResult()));
                    },
                    [&](binary_function function) {
                      double right_argument = PopFromResult();
                      double left_argument = PopFromResult();
-                     PushToResult(function(left_argument, right_argument));
+                     result_.push(function(left_argument, right_argument));
                    },
-                   [&](auto) { PushToResult(x_value); }},
+                   [&](auto) { result_.push(x_value); }},
         token.function());
   }
 
@@ -117,12 +114,7 @@ double MyNamespace::PostfixCalculator::PostfixNotationCalculation(
     double x_value) {
   return PostfixNotationCalculation(postfix_, x_value);
 }
-void MyNamespace::PostfixCalculator::PushToResult(double value) {
-  result_.push(value);
-}
-
 double MyNamespace::PostfixCalculator::PopFromResult() {
-  // !splice! ??
   double value = result_.top();
   result_.pop();
   return value;

@@ -61,7 +61,7 @@ std::list<Token> Parser::Parsing(std::string expression) {
     }
   }
   DeleteSpaces();
-  DeleteUnaryPlus();
+  CheckUnaryPlus();
   CheckUnaryNegation();
   return tokens_;
 }
@@ -105,7 +105,7 @@ void Parser::DeleteSpaces() {
   tokens_.remove_if([](const Token& token) { return token.name() == "space"; });
 }
 
-void MyNamespace::Parser::DeleteUnaryPlus() {
+void MyNamespace::Parser::CheckUnaryPlus() {
   for (auto current = tokens_.begin(), previous = tokens_.begin();
        current != tokens_.end(); previous = current, ++current) {
     if (current->name() == "+" && !kLastToken_[previous->type()]) {
