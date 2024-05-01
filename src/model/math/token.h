@@ -48,14 +48,14 @@ class Token {
         Associativity associativity, Type type, function_variant function);
   ~Token() = default;
 
-  std::string GetName() const;
-  Precedence GetPrecedence() const;
-  Associativity GetAssociativity() const;
-  Type GetType() const;
-  function_variant GetFunction() const;
+  std::string name() const;
+  Precedence precedence() const;
+  Associativity associativity() const;
+  Type type() const;
+  function_variant function() const;
 
   void MakeNumber(std::string name, double value);
-  void MakeUnaryNegation();
+  void TransformToUnaryNegation();
 
  private:
   std::string name_;

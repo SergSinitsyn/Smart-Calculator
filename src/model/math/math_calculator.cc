@@ -5,7 +5,6 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
-#include <variant>
 
 #include "parameter_checker.h"
 #include "parser.h"
@@ -13,25 +12,30 @@
 #include "token.h"
 #include "validator.h"
 
-MyNamespace::MathCalculator::MathCalculator(){};
-
 void MyNamespace::MathCalculator::CalculateAnswer(
     const std::string& input_expression, const std::string& input_x) {
   parameter_checker_.CheckLength(input_expression);
 
-  std::queue<Token> expression = parser_.Parsing(input_expression);
+  std::list<Token> x_expression = parser_.Parsing(input_x);
+  std::list<Token> expression = parser_.Parsing(input_expression);
 
+  validator_.CheckX(x_expression);
+  validator_.CheckSequenceOfTokens(x_expression);
   validator_.CheckSequenceOfTokens(expression);
 
-  postfix_calculator_.LoadExpression(expression);
-  postfix_calculator_.ConvertInfixToPostfix();
-  answer_ =
-      postfix_calculator_.PostfixNotationCalculation(parser_.ReadX(input_x));
+  std::list<Token> x_postfix =
+      postfix_calculator_.ConvertInfixToPostfix(x_expression);
+  double x_value = postfix_calculator_.PostfixNotationCalculation(x_postfix);
+
+  std::list<Token> postfix =
+      postfix_calculator_.ConvertInfixToPostfix(expression);
+
+  answer_ = postfix_calculator_.PostfixNotationCalculation(postfix, x_value);
 }
 
 void MyNamespace::MathCalculator::CalculateAnswer(
     const std::string& input_expression) {
-  CalculateAnswer(input_expression, "");
+  CalculateAnswer(input_expression, "0");
 }
 
 void MyNamespace::MathCalculator::CalculateGraph(
@@ -41,12 +45,11 @@ void MyNamespace::MathCalculator::CalculateGraph(
   parameter_checker_.CheckNumberOfPoints(number_of_points);
   parameter_checker_.CheckRange(x_start, x_end);
 
-  std::queue<Token> expression = parser_.Parsing(input_expression);
+  std::list<Token> expression = parser_.Parsing(input_expression);
 
   validator_.CheckSequenceOfTokens(expression);
 
-  postfix_calculator_.LoadExpression(expression);
-  postfix_calculator_.ConvertInfixToPostfix();
+  postfix_calculator_.ConvertInfixToPostfix(expression);
   CalculateXY(number_of_points, x_start, x_end, y_min, y_max);
 }
 

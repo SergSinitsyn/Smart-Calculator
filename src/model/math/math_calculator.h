@@ -13,7 +13,7 @@ namespace MyNamespace {
 class MathCalculator {
  public:
   using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
-  MathCalculator();
+  MathCalculator(){};
   ~MathCalculator() = default;
 
   void CalculateAnswer(const std::string& input_expression,

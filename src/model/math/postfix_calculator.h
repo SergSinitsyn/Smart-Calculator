@@ -1,8 +1,8 @@
 #ifndef SMARTCALC_MODEL_MATH_POSTFIX_CALCULATOR_H_
 #define SMARTCALC_MODEL_MATH_POSTFIX_CALCULATOR_H_
 
-#include <queue>
-#include <vector>
+#include <list>
+#include <stack>
 
 #include "token.h"
 
@@ -23,18 +23,20 @@ overloaded(Ts...) -> overloaded<Ts...>;
 
 class PostfixCalculator {
  public:
-  PostfixCalculator();
+  PostfixCalculator(){};
   ~PostfixCalculator() = default;
 
-  void LoadExpression(std::queue<Token> input);
-  void ConvertInfixToPostfix();
+  std::list<MyNamespace::Token> ConvertInfixToPostfix(std::list<Token>&);
+  double PostfixNotationCalculation(std::list<Token>&, double);
+  double PostfixNotationCalculation(std::list<Token>&);
   double PostfixNotationCalculation(double x_value);
 
  private:
-  std::queue<Token> input_;
-  std::vector<Token> stack_;
-  std::queue<Token> output_;
-  std::vector<double> result_;
+  std::list<Token> input_;
+  std::stack<Token> operator_stack_;
+  std::list<Token> postfix_;
+
+  std::stack<double> result_;
   void MoveTokenFromInputToOutput();
   void MoveTokenFromInputToStack();
   void MoveTokenFromStackToOutput();

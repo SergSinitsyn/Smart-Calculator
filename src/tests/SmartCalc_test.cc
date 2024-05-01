@@ -8,6 +8,12 @@
 
 #define kAcc 1e-6
 
+TEST(calculation, smart_variable) {
+  MyNamespace::MathCalculator calc;
+  calc.CalculateAnswer("x * x", "1 + 2");
+  ASSERT_NEAR(calc.GetAnswer(), 9, kAcc);
+}
+
 TEST(calculation, number) {
   MyNamespace::MathCalculator calc;
   calc.CalculateAnswer("1.2e3");
@@ -22,7 +28,7 @@ TEST(calculation, number) {
 
 TEST(calculation, add) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("5.53234 + 1032.42342");
+  calc.CalculateAnswer("5.53234 + +--+1032.42342");
   ASSERT_NEAR(calc.GetAnswer(), 1037.95576, kAcc);
 }
 
@@ -540,6 +546,11 @@ TEST(logic_error, fail_21) {
   ASSERT_ANY_THROW(calc.CalculateGraph("x*x", 1, 0, 10, -10, 100));
   ASSERT_ANY_THROW(calc.CalculateGraph("x*x", 5, 0, 0, -10, 100));
   ASSERT_ANY_THROW(calc.CalculateGraph("x*x", 5, NAN, 0, -10, 100));
+}
+
+TEST(calculation, fail_22) {
+  MyNamespace::MathCalculator calc;
+  ASSERT_ANY_THROW(calc.CalculateAnswer("1 + x", "1+x"));
 }
 
 TEST(logic_error, deposit_fail) {

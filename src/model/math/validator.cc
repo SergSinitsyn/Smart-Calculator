@@ -1,6 +1,7 @@
 #include "validator.h"
 
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <stdexcept>
 #include <string>
@@ -9,44 +10,49 @@
 
 namespace MyNamespace {
 
-void MyNamespace::Validator::CheckSequenceOfTokens(std::queue<Token> input) {
-  input_ = input;
-  output_ = {};
-
-  CheckFirstToken();
-  MoveAllTokensFromInputToOutput();
-  CheckLastToken();
+void MyNamespace::Validator::CheckSequenceOfTokens(std::list<Token>& tokens) {
+  if (tokens.empty()) {
+    throw std::logic_error("Incorrect expression!");
+  }
+  CheckFirstToken(tokens);
+  CheckTokens(tokens);
+  CheckLastToken(tokens);
 }
 
-void MyNamespace::Validator::CheckFirstToken() {
-  if (!kFirstToken_[input_.front().GetType()]) {
+void MyNamespace::Validator::CheckX(std::list<Token>& tokens) {
+  if (std::any_of(tokens.begin(), tokens.end(),
+                  [](const Token& token) { return token.name() == "x"; })) {
+    throw std::logic_error("Incorrect variable! Use 'x' only in expression.");
+  }
+}
+
+void MyNamespace::Validator::CheckFirstToken(std::list<Token>& tokens) {
+  if (!kAdjacencyMatrix_[kOpenBracket][tokens.front().type()]) {
     throw std::logic_error("Wrong sequence: expression starts with " +
-                           input_.front().GetName());
+                           tokens.front().name());
   }
 }
 
-void MyNamespace::Validator::MoveAllTokensFromInputToOutput() {
-  MoveTokenFromInputToOutput();
-  while (!input_.empty()) {
-    if (!kAdjacencyMatrix_[output_.back().GetType()]
-                          [input_.front().GetType()]) {
-      throw std::logic_error("Wrong sequence: " + output_.back().GetName() +
-                             " " + input_.front().GetName());
+void MyNamespace::Validator::CheckTokens(std::list<Token>& tokens) {
+  if (tokens.size() < 2) {
+    return;
+  }
+  auto current = tokens.begin();
+  auto next = tokens.begin();
+  ++next;
+  for (; next != tokens.end(); ++current, ++next) {
+    if (!kAdjacencyMatrix_[current->type()][next->type()]) {
+      throw std::logic_error("Wrong sequence: " + current->name() + " " +
+                             next->name());
     }
-    MoveTokenFromInputToOutput();
   }
 }
 
-void MyNamespace::Validator::CheckLastToken() {
-  if (!kLastToken_[output_.back().GetType()]) {
+void MyNamespace::Validator::CheckLastToken(std::list<Token>& tokens) {
+  if (!kAdjacencyMatrix_[tokens.back().type()][kCloseBracket]) {
     throw std::logic_error("Wrong sequence: expression ends with " +
-                           output_.back().GetName());
+                           tokens.back().name());
   }
-}
-
-void MyNamespace::Validator::MoveTokenFromInputToOutput() {
-  output_.push(input_.front());
-  input_.pop();
 }
 
 }  // namespace MyNamespace

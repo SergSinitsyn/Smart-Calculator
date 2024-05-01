@@ -5,7 +5,6 @@
 #include <exception>
 #include <functional>
 #include <map>
-#include <queue>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -13,101 +12,62 @@
 #include "token.h"
 
 namespace MyNamespace {
-Parser::Parser()
-    : token_map_(
-          {{" ", Token("space", kDefault, kNone, kNumber, nullptr)},
-           {"x", Token("x", kDefault, kNone, kNumber, nullptr)},
-           {"(", Token("(", kDefault, kNone, kOpenBracket, nullptr)},
-           {")", Token(")", kDefault, kNone, kCloseBracket, nullptr)},
-           {"+", Token("+", kLow, kLeft, kBinaryOperator, std::plus<double>())},
-           {"-",
-            Token("-", kLow, kLeft, kBinaryOperator, std::minus<double>())},
-           {"*", Token("*", kMedium, kLeft, kBinaryOperator,
-                       std::multiplies<double>())},
-           {"/", Token("/", kMedium, kLeft, kBinaryOperator,
-                       std::divides<double>())},
-           {"^", Token("^", kHigh, kRight, kBinaryOperator, powl)},
-           {"mod", Token("mod", kMedium, kLeft, kBinaryOperator, fmodl)},
-           {"cos", Token("cos", kFunction, kRight, kUnaryFunction, cosl)},
-           {"sin", Token("sin", kFunction, kRight, kUnaryFunction, sinl)},
-           {"tan", Token("tan", kFunction, kRight, kUnaryFunction, tanl)},
-           {"acos", Token("acos", kFunction, kRight, kUnaryFunction, acosl)},
-           {"asin", Token("asin", kFunction, kRight, kUnaryFunction, asinl)},
-           {"atan", Token("atan", kFunction, kRight, kUnaryFunction, atanl)},
-           {"sqrt", Token("sqrt", kFunction, kRight, kUnaryFunction, sqrtl)},
-           {"ln", Token("ln", kFunction, kRight, kUnaryFunction, logl)},
-           {"log", Token("log", kFunction, kRight, kUnaryFunction, log10l)},
-           {"cbrt", Token("cbrt", kFunction, kRight, kUnaryFunction, cbrtl)},
-           {"exp", Token("exp", kFunction, kRight, kUnaryFunction, expl)},
-           {"abs", Token("abs", kFunction, kRight, kUnaryFunction, fabsl)},
-           {"round", Token("round", kFunction, kRight, kUnaryFunction, roundl)},
-           {"e", Token("e", kDefault, kNone, kNumber, M_E)},
-           {"pi", Token("pi", kDefault, kNone, kNumber, M_PI)},
-           {"inf", Token("inf", kDefault, kNone, kNumber, INFINITY)},
-           {"!", Token("!", kUnaryOperator, kLeft, kUnaryPostfixOperator,
-                       factorial)}}){};
 
-std::queue<Token> Parser::Parsing(std::string input_expression) {
-  input_expression = ConvertToLowercase(input_expression);
-  input_ = {};
-  output_ = {};
+std::map<std::string, Token> Parser::token_map_ = {
+    {" ", Token("space", kDefault, kNone, kNumber, nullptr)},
+    {"x", Token("x", kDefault, kNone, kNumber, nullptr)},
+    {"(", Token("(", kDefault, kNone, kOpenBracket, nullptr)},
+    {")", Token(")", kDefault, kNone, kCloseBracket, nullptr)},
+    {"+", Token("+", kLow, kLeft, kBinaryOperator, std::plus<double>())},
+    {"-", Token("-", kLow, kLeft, kBinaryOperator, std::minus<double>())},
+    {"*",
+     Token("*", kMedium, kLeft, kBinaryOperator, std::multiplies<double>())},
+    {"/", Token("/", kMedium, kLeft, kBinaryOperator, std::divides<double>())},
+    {"^", Token("^", kHigh, kRight, kBinaryOperator, powl)},
+    {"mod", Token("mod", kMedium, kLeft, kBinaryOperator, fmodl)},
+    {"cos", Token("cos", kFunction, kRight, kUnaryFunction, cosl)},
+    {"sin", Token("sin", kFunction, kRight, kUnaryFunction, sinl)},
+    {"tan", Token("tan", kFunction, kRight, kUnaryFunction, tanl)},
+    {"acos", Token("acos", kFunction, kRight, kUnaryFunction, acosl)},
+    {"asin", Token("asin", kFunction, kRight, kUnaryFunction, asinl)},
+    {"atan", Token("atan", kFunction, kRight, kUnaryFunction, atanl)},
+    {"sqrt", Token("sqrt", kFunction, kRight, kUnaryFunction, sqrtl)},
+    {"ln", Token("ln", kFunction, kRight, kUnaryFunction, logl)},
+    {"log", Token("log", kFunction, kRight, kUnaryFunction, log10l)},
+    {"cbrt", Token("cbrt", kFunction, kRight, kUnaryFunction, cbrtl)},
+    {"exp", Token("exp", kFunction, kRight, kUnaryFunction, expl)},
+    {"abs", Token("abs", kFunction, kRight, kUnaryFunction, fabsl)},
+    {"round", Token("round", kFunction, kRight, kUnaryFunction, roundl)},
+    {"e", Token("e", kDefault, kNone, kNumber, M_E)},
+    {"pi", Token("pi", kDefault, kNone, kNumber, M_PI)},
+    {"inf", Token("inf", kDefault, kNone, kNumber, INFINITY)},
+    {"!", Token("!", kUnaryOperator, kLeft, kUnaryPostfixOperator, factorial)}};
+
+std::list<Token> Parser::Parsing(std::string expression) {
+  ConvertToLowercase(expression);
+  tokens_.clear();
   size_t index = 0;
-  while (index < input_expression.size()) {
-    if (isdigit(input_expression[index])) {
+  while (index < expression.size()) {
+    if (isdigit(expression[index])) {
       Token number;
-      auto new_number = ReadNumber(input_expression, index);
+      auto new_number = ReadNumber(expression, index);
       number.MakeNumber(new_number.second, new_number.first);
-      input_.push(number);
-    } else if (isalpha(input_expression[index])) {
-      PushToken(ReadWord(input_expression, index));
+      tokens_.push_back(number);
+    } else if (isalpha(expression[index])) {
+      PushToken(ReadWord(expression, index));
     } else {
-      std::string temp{input_expression[index++]};
-      PushToken(temp);
+      std::string token{expression[index++]};
+      PushToken(token);
     }
   }
   DeleteSpaces();
-  FindUnarySigns();
-  return input_;
+  DeleteUnaryPlus();
+  CheckUnaryNegation();
+  return tokens_;
 }
 
-double Parser::ReadX(std::string str) {
-  str = ConvertToLowercase(str);
-  double x_value = 0;
-  std::string origin_str = str;
-  if (!str.size()) {
-    return NAN;
-  }
-  int sign = 1;
-  if (str.front() == '-') {
-    sign = -1;
-    str.erase(0, 1);
-  }
-  if (isdigit(str.front())) {
-    static const std::regex double_regex("([-])?\\d+([.]\\d+)?(e([-+])?\\d+)?");
-    std::smatch match;
-    std::regex_match(str, match, double_regex);
-    if (match.empty()) throw std::logic_error("Incorrect x: " + origin_str);
-    std::stringstream ss(match.str());
-    ss >> x_value;
-    x_value *= sign;
-  } else if (isalpha(str.front())) {
-    const auto it = token_map_.find(str);
-    if (it != token_map_.end() && it->second.GetType() == Type::kNumber &&
-        it->second.GetName() != "x") {
-      x_value = std::get<double>(it->second.GetFunction());
-      x_value *= sign;
-    } else {
-      throw std::logic_error("Incorrect x: " + origin_str);
-    }
-  } else {
-    throw std::logic_error("Incorrect x: " + origin_str);
-  }
-  return x_value;
-}
-
-std::string Parser::ConvertToLowercase(std::string str) {
-  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-  return str;
+void Parser::ConvertToLowercase(std::string& str) {
+  std::transform(str.begin(), str.end(), str.begin(), tolower);
 }
 
 std::pair<double, std::string> Parser::ReadNumber(std::string& input,
@@ -134,46 +94,34 @@ std::string Parser::ReadWord(std::string& input, size_t& start_index) const {
 }
 
 void Parser::PushToken(std::string token) {
-  auto token_map_it = token_map_.find(token);
+  const auto token_map_it = token_map_.find(token);
   if (token_map_it == token_map_.end()) {
     throw std::logic_error("Incorrect symbol: " + token);
   }
-  input_.push(token_map_it->second);
+  tokens_.emplace_back(token_map_it->second);
 }
 
 void Parser::DeleteSpaces() {
-  while (!input_.empty()) {
-    std::string name = input_.front().GetName();
-    if (name == "space") {
-      input_.pop();
-    } else {
-      MoveTokenFromInputToOutput();
-    }
-  }
-  std::swap(input_, output_);
+  tokens_.remove_if([](const Token& token) { return token.name() == "space"; });
 }
 
-void MyNamespace::Parser::FindUnarySigns() {
-  while (!input_.empty()) {
-    std::string name = input_.front().GetName();
-    if ((name == "+" || name == "-") &&
-        (output_.empty() || !kLastToken_[output_.back().GetType()])) {
-      input_.pop();
-      if (name == "-") {
-        Token temp;
-        temp.MakeUnaryNegation();
-        output_.push(temp);
-      }
-    } else {
-      MoveTokenFromInputToOutput();
+void MyNamespace::Parser::DeleteUnaryPlus() {
+  for (auto current = tokens_.begin(), previous = tokens_.begin();
+       current != tokens_.end(); previous = current, ++current) {
+    if (current->name() == "+" && !kLastToken_[previous->type()]) {
+      auto to_delete = current;
+      tokens_.erase(to_delete);
     }
   }
-  std::swap(input_, output_);
 }
 
-void Parser::MoveTokenFromInputToOutput() {
-  output_.push(input_.front());
-  input_.pop();
+void MyNamespace::Parser::CheckUnaryNegation() {
+  for (auto current = tokens_.begin(), previous = tokens_.begin();
+       current != tokens_.end(); previous = current, ++current) {
+    if (current->name() == "-" && !kLastToken_[previous->type()]) {
+      current->TransformToUnaryNegation();
+    }
+  }
 }
 
 };  // namespace MyNamespace

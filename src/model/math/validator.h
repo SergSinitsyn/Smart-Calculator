@@ -1,7 +1,7 @@
 #ifndef SMARTCALC_MODEL_MATH_VALIDATOR_H_
 #define SMARTCALC_MODEL_MATH_VALIDATOR_H_
 
-#include <queue>
+#include <list>
 
 #include "token.h"
 
@@ -9,11 +9,10 @@ namespace MyNamespace {
 
 class Validator {
  public:
-  void CheckSequenceOfTokens(std::queue<Token> input);
+  void CheckSequenceOfTokens(std::list<Token>&);
+  void CheckX(std::list<Token>&);
 
  private:
-  std::queue<Token> input_;
-  std::queue<Token> output_;
   // kAdjacencyMatrix_[i][j]: i - token in expression, j - next token in
   // expression
   static constexpr bool kAdjacencyMatrix_[kNumTokenTypes][kNumTokenTypes] = {
@@ -25,13 +24,10 @@ class Validator {
       {1, 0, 1, 0, 1, 1, 0},  // kOpenBracket
       {0, 1, 0, 1, 0, 0, 1},  // kCloseBracket
   };
-  static constexpr bool kFirstToken_[kNumTokenTypes] = {1, 0, 1, 0, 1, 1, 0};
-  static constexpr bool kLastToken_[kNumTokenTypes] = {1, 0, 0, 1, 0, 0, 1};
 
-  void MoveTokenFromInputToOutput();
-  void CheckFirstToken();
-  void MoveAllTokensFromInputToOutput();
-  void CheckLastToken();
+  void CheckFirstToken(std::list<Token>&);
+  void CheckTokens(std::list<Token>&);
+  void CheckLastToken(std::list<Token>&);
 };
 
 }  // namespace MyNamespace

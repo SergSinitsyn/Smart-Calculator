@@ -1,21 +1,16 @@
 #include "postfix_calculator.h"
 
-#include <queue>
+#include <list>
 #include <stdexcept>
-#include <vector>
 
 #include "token.h"
 
-MyNamespace::PostfixCalculator::PostfixCalculator(){};
-
-void MyNamespace::PostfixCalculator::LoadExpression(std::queue<Token> input) {
+std::list<MyNamespace::Token>
+MyNamespace::PostfixCalculator::ConvertInfixToPostfix(std::list<Token>& input) {
   input_ = input;
-}
-
-void MyNamespace::PostfixCalculator::ConvertInfixToPostfix() {
   using namespace MyNamespace;
   while (!input_.empty()) {
-    switch (input_.front().GetType()) {
+    switch (input_.front().type()) {
       case Type::kNumber:
       case Type::kUnaryPostfixOperator:
         MoveTokenFromInputToOutput();
@@ -25,66 +20,77 @@ void MyNamespace::PostfixCalculator::ConvertInfixToPostfix() {
       case Type::kOpenBracket:
         MoveTokenFromInputToStack();
         break;
+
       case Type::kBinaryOperator:
         while (
-            !stack_.empty() &&
-            (stack_.back().GetType() == Type::kBinaryOperator ||
-             stack_.back().GetType() == Type::kUnaryPrefixOperator) &&
-            (stack_.back().GetPrecedence() > input_.front().GetPrecedence() ||
-             (stack_.back().GetPrecedence() == input_.front().GetPrecedence() &&
-              input_.front().GetAssociativity() == Associativity::kLeft))) {
+            !operator_stack_.empty() &&
+            (operator_stack_.top().type() == Type::kBinaryOperator ||
+             operator_stack_.top().type() == Type::kUnaryPrefixOperator) &&
+            (operator_stack_.top().precedence() > input_.front().precedence() ||
+             (operator_stack_.top().precedence() ==
+                  input_.front().precedence() &&
+              input_.front().associativity() == Associativity::kLeft))) {
           MoveTokenFromStackToOutput();
         }
         MoveTokenFromInputToStack();
         break;
+
       case Type::kCloseBracket:
-        while (!stack_.empty() &&
-               stack_.back().GetType() != Type::kOpenBracket) {
+        while (!operator_stack_.empty() &&
+               operator_stack_.top().type() != Type::kOpenBracket) {
           MoveTokenFromStackToOutput();
         }
-        if (!stack_.empty() && stack_.back().GetType() == Type::kOpenBracket) {
-          stack_.pop_back();
+        if (!operator_stack_.empty() &&
+            operator_stack_.top().type() == Type::kOpenBracket) {
+          operator_stack_.pop();
         } else {
           throw std::logic_error("Open bracket missing");
         }
-        if (!stack_.empty() &&
-            stack_.back().GetPrecedence() == Precedence::kFunction) {
+        if (!operator_stack_.empty() &&
+            operator_stack_.top().precedence() == Precedence::kFunction) {
           MoveTokenFromStackToOutput();
         }
-        input_.pop();
+        input_.pop_front();
         break;
+
       default:
-        break;
+        throw std::logic_error("Unsupported token");
     }
   }
-  while (!stack_.empty()) {
-    if (stack_.back().GetType() == Type::kOpenBracket) {
+  while (!operator_stack_.empty()) {
+    if (operator_stack_.top().type() == Type::kOpenBracket) {
       throw std::logic_error("Close bracket missing");
     }
     MoveTokenFromStackToOutput();
   }
+
+  return postfix_;
 }
 
 void MyNamespace::PostfixCalculator::MoveTokenFromInputToOutput() {
-  output_.push(input_.front());
-  input_.pop();
+  postfix_.push_back(input_.front());
+  input_.pop_front();
+  // !splice!
 }
 
 void MyNamespace::PostfixCalculator::MoveTokenFromInputToStack() {
-  stack_.push_back(input_.front());
-  input_.pop();
+  operator_stack_.push(input_.front());
+  input_.pop_front();
+  // !splice!
 }
 
 void MyNamespace::PostfixCalculator::MoveTokenFromStackToOutput() {
-  output_.push(stack_.back());
-  stack_.pop_back();
+  postfix_.push_back(operator_stack_.top());
+  operator_stack_.pop();
+  // !splice!
 }
 
 double MyNamespace::PostfixCalculator::PostfixNotationCalculation(
-    double x_value) {
+    std::list<Token>& postfix, double x_value) {
+  postfix_ = postfix;
   using namespace MyNamespace;
-  input_ = output_;
-  while (!input_.empty()) {
+
+  for (auto& token : postfix_) {
     std::visit(
         overloaded{[&](double function) { PushToResult(function); },
                    [&](unary_function function) {
@@ -96,17 +102,28 @@ double MyNamespace::PostfixCalculator::PostfixNotationCalculation(
                      PushToResult(function(left_argument, right_argument));
                    },
                    [&](auto) { PushToResult(x_value); }},
-        input_.front().GetFunction());
+        token.function());
   }
+
   return PopFromResult();
 }
+
+double MyNamespace::PostfixCalculator::PostfixNotationCalculation(
+    std::list<Token>& postfix) {
+  return PostfixNotationCalculation(postfix, 0.0);
+}
+
+double MyNamespace::PostfixCalculator::PostfixNotationCalculation(
+    double x_value) {
+  return PostfixNotationCalculation(postfix_, x_value);
+}
 void MyNamespace::PostfixCalculator::PushToResult(double value) {
-  result_.push_back(value);
-  input_.pop();
+  result_.push(value);
 }
 
 double MyNamespace::PostfixCalculator::PopFromResult() {
-  double value = result_.back();
-  result_.pop_back();
+  // !splice! ??
+  double value = result_.top();
+  result_.pop();
   return value;
 }
