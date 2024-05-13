@@ -11,20 +11,20 @@
 
 namespace MyNamespace {
 class MathCalculator {
- public:
+public:
   using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
   MathCalculator(){};
   ~MathCalculator() = default;
 
-  void CalculateAnswer(const std::string& input_expression,
-                       const std::string& input_x);
-  void CalculateAnswer(const std::string& input_expression);
-  void CalculateGraph(const std::string& input_expression, int number_of_points,
+  void CalculateAnswer(const std::string &input_expression,
+                       const std::string &input_x);
+  void CalculateAnswer(const std::string &input_expression);
+  void CalculateGraph(const std::string &input_expression, int number_of_points,
                       double x_start, double x_end, double y_min, double y_max);
   double GetAnswer() const;
   XYGraph GetGraph() const;
 
- private:
+private:
   ParameterChecker parameter_checker_;
   Parser parser_;
   Validator validator_;
@@ -36,6 +36,6 @@ class MathCalculator {
                    double y_min, double y_max);
 };
 
-};  // namespace MyNamespace
+}; // namespace MyNamespace
 
-#endif  // SMARTCALC_MODEL_MATH_MATHCALCULATOR_H_
+#endif // SMARTCALC_MODEL_MATH_MATHCALCULATOR_H_

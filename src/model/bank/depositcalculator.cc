@@ -28,8 +28,8 @@ long double MyNamespace::DepositCalculator::GetTaxAmount() const {
   return tax_amount_;
 }
 
-long double MyNamespace::DepositCalculator::GetDepositAmountByTheEndOfTheTerm()
-    const {
+long double
+MyNamespace::DepositCalculator::GetDepositAmountByTheEndOfTheTerm() const {
   return deposit_amount_by_the_end_of_the_term_;
 }
 
@@ -40,15 +40,15 @@ void MyNamespace::DepositCalculator::LoadDepositData(
   start_of_term_ = InputData.start_of_term;
   end_of_term_ = InputData.start_of_term;
   switch (InputData.placement_period_type) {
-    case DateType::kDays:
-      end_of_term_.AddDays(InputData.placement_period);
-      break;
-    case DateType::kMonths:
-      end_of_term_.AddMonths(InputData.placement_period);
-      break;
-    case DateType::kYears:
-      end_of_term_.AddYears(InputData.placement_period);
-      break;
+  case DateType::kDays:
+    end_of_term_.AddDays(InputData.placement_period);
+    break;
+  case DateType::kMonths:
+    end_of_term_.AddMonths(InputData.placement_period);
+    break;
+  case DateType::kYears:
+    end_of_term_.AddYears(InputData.placement_period);
+    break;
   }
   interest_rate_ = InputData.interest_rate;
   tax_rate_ = InputData.tax_rate;
@@ -85,27 +85,27 @@ void MyNamespace::DepositCalculator::Calculation() {
 
 void MyNamespace::DepositCalculator::SetNextPaymentDate() {
   switch (periodicity_of_payments_) {
-    case PeriodicityOfPayments::kDaily:
-      payment_date_.AddDays(1);
-      break;
-    case PeriodicityOfPayments::kWeekly:
-      payment_date_.AddDays(7);
-      break;
-    case PeriodicityOfPayments::kMonthly:
-      payment_date_.AddMonths(1);
-      break;
-    case PeriodicityOfPayments::kQuarterOfTheYear:
-      payment_date_.AddMonths(3);
-      break;
-    case PeriodicityOfPayments::kHalfYear:
-      payment_date_.AddMonths(6);
-      break;
-    case PeriodicityOfPayments::kAnnualy:
-      payment_date_.AddYears(1);
-      break;
-    case PeriodicityOfPayments::kEndOfTerm:
-      payment_date_ = end_of_term_;
-      break;
+  case PeriodicityOfPayments::kDaily:
+    payment_date_.AddDays(1);
+    break;
+  case PeriodicityOfPayments::kWeekly:
+    payment_date_.AddDays(7);
+    break;
+  case PeriodicityOfPayments::kMonthly:
+    payment_date_.AddMonths(1);
+    break;
+  case PeriodicityOfPayments::kQuarterOfTheYear:
+    payment_date_.AddMonths(3);
+    break;
+  case PeriodicityOfPayments::kHalfYear:
+    payment_date_.AddMonths(6);
+    break;
+  case PeriodicityOfPayments::kAnnualy:
+    payment_date_.AddYears(1);
+    break;
+  case PeriodicityOfPayments::kEndOfTerm:
+    payment_date_ = end_of_term_;
+    break;
   }
   if (payment_date_ > end_of_term_) {
     payment_date_ = end_of_term_;
@@ -178,16 +178,16 @@ void MyNamespace::DepositCalculator::CheckPartialWithdrawalsList() {
 void MyNamespace::DepositCalculator::SetNextDate(int periodicity_type,
                                                  Date &date) {
   switch (periodicity_type) {
-    case Periodicity::kOneTime:
-      break;
-    case Periodicity::kPerWeek:
-      date.AddDays(7);
-      break;
-    case Periodicity::kPerMonth:
-      date.AddMonths(1);
-      break;
-    case Periodicity::kPerYear:
-      date.AddYears(1);
-      break;
+  case Periodicity::kOneTime:
+    break;
+  case Periodicity::kPerWeek:
+    date.AddDays(7);
+    break;
+  case Periodicity::kPerMonth:
+    date.AddMonths(1);
+    break;
+  case Periodicity::kPerYear:
+    date.AddYears(1);
+    break;
   }
 }

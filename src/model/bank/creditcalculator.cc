@@ -3,6 +3,8 @@
 #include <cmath>
 #include <vector>
 
+#include "round.h"
+
 void MyNamespace::CreditCalculator::LoadData(int type_of_monthly_payments,
                                              double total_credit_amount,
                                              int term, double interest_rate) {

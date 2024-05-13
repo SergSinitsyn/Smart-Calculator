@@ -3,7 +3,7 @@
 
 namespace MyNamespace {
 class Date {
- public:
+public:
   Date() = default;
   Date(int day, int month, int year);
   ~Date() = default;
@@ -18,25 +18,26 @@ class Date {
 
   int DaysInYear() const;
 
-  bool operator==(const Date& other) const;
-  bool operator!=(const Date& other) const;
-  bool operator>(const Date& other) const;
-  bool operator<(const Date& other) const;
-  bool operator<=(const Date& other) const;
-  bool operator>=(const Date& other) const;
+  bool operator==(const Date &other) const;
+  bool operator!=(const Date &other) const;
+  bool operator>(const Date &other) const;
+  bool operator<(const Date &other) const;
+  bool operator<=(const Date &other) const;
+  bool operator>=(const Date &other) const;
 
- private:
-  int day_;
-  int month_;
-  int year_;
-  int count_month_;
-  int count_year_;
-  int start_day_;
-  int start_month_;
-  int start_year_;
+private:
+  int day_{};
+  int month_{};
+  int year_{};
+  int count_month_{};
+  int count_year_{};
+  int start_day_{};
+  int start_month_{};
+  int start_year_{};
 
   void Add(int day, int month, int year);
 };
-};  // namespace MyNamespace
 
-#endif  // SMARTCALC_MODEL_BANK_DATE_H_
+}; // namespace MyNamespace
+
+#endif // SMARTCALC_MODEL_BANK_DATE_H_

@@ -3,5 +3,5 @@
 #include <cmath>
 
 double RoundToTwoDecimalPlaces(double value) {
-  return round(value * 100.) / 100.;
+  return round(value * 100.0) / 100.0;
 }

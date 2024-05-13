@@ -40,8 +40,7 @@ std::map<std::string, Token> Parser::token_map_ = {
     {"round", Token("round", kFunction, kRight, kUnaryFunction, roundl)},
     {"e", Token("e", kDefault, kNone, kNumber, M_E)},
     {"pi", Token("pi", kDefault, kNone, kNumber, M_PI)},
-    {"inf", Token("inf", kDefault, kNone, kNumber, INFINITY)},
-    {"!", Token("!", kUnaryOperator, kLeft, kUnaryPostfixOperator, factorial)}};
+    {"inf", Token("inf", kDefault, kNone, kNumber, INFINITY)}};
 
 std::list<Token> Parser::Parsing(std::string expression) {
   ConvertToLowercase(expression);
@@ -49,10 +48,9 @@ std::list<Token> Parser::Parsing(std::string expression) {
   size_t index = 0;
   while (index < expression.size()) {
     if (isdigit(expression[index])) {
-      Token number;
       auto new_number = ReadNumber(expression, index);
-      number.MakeNumber(new_number.second, new_number.first);
-      tokens_.push_back(number);
+      tokens_.push_back(
+          Token(new_number.second, kDefault, kNone, kNumber, new_number.first));
     } else if (isalpha(expression[index])) {
       PushToken(ReadWord(expression, index));
     } else {
@@ -66,12 +64,12 @@ std::list<Token> Parser::Parsing(std::string expression) {
   return tokens_;
 }
 
-void Parser::ConvertToLowercase(std::string& str) {
+void Parser::ConvertToLowercase(std::string &str) {
   std::transform(str.begin(), str.end(), str.begin(), tolower);
 }
 
-std::pair<double, std::string> Parser::ReadNumber(std::string& input,
-                                                  size_t& start_index) const {
+std::pair<double, std::string> Parser::ReadNumber(std::string &input,
+                                                  size_t &start_index) const {
   std::regex double_regex("\\d+([.]\\d+)?(e([-+])?\\d+)?");
   std::sregex_iterator regex_iterator = std::sregex_iterator(
       input.begin() + start_index, input.end(), double_regex);
@@ -84,7 +82,7 @@ std::pair<double, std::string> Parser::ReadNumber(std::string& input,
   return std::make_pair(double_value, match.str());
 }
 
-std::string Parser::ReadWord(std::string& input, size_t& start_index) const {
+std::string Parser::ReadWord(std::string &input, size_t &start_index) const {
   std::regex word_regex("([a-z]+)");
   std::sregex_iterator regex_iterator = std::sregex_iterator(
       input.begin() + start_index, input.end(), word_regex);
@@ -102,7 +100,7 @@ void Parser::PushToken(std::string token) {
 }
 
 void Parser::DeleteSpaces() {
-  tokens_.remove_if([](const Token& token) { return token.name() == "space"; });
+  tokens_.remove_if([](const Token &token) { return token.name() == "space"; });
 }
 
 void MyNamespace::Parser::CheckUnaryPlus() {
@@ -124,4 +122,4 @@ void MyNamespace::Parser::CheckUnaryNegation() {
   }
 }
 
-};  // namespace MyNamespace
+}; // namespace MyNamespace

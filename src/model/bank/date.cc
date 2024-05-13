@@ -55,7 +55,7 @@ void MyNamespace::Date::AddYears(int years) {
   year_ = temp.GetYear();
 }
 
-bool MyNamespace::Date::operator==(const Date& other) const {
+bool MyNamespace::Date::operator==(const Date &other) const {
   if (this == &other) {
     return true;
   }
@@ -66,11 +66,11 @@ bool MyNamespace::Date::operator==(const Date& other) const {
   }
 }
 
-bool MyNamespace::Date::operator!=(const Date& other) const {
+bool MyNamespace::Date::operator!=(const Date &other) const {
   return !(*this == other);
 }
 
-bool MyNamespace::Date::operator>(const Date& other) const {
+bool MyNamespace::Date::operator>(const Date &other) const {
   if (this == &other) {
     return true;
   }
@@ -91,7 +91,7 @@ bool MyNamespace::Date::operator>(const Date& other) const {
   }
 }
 
-bool MyNamespace::Date::operator<(const Date& other) const {
+bool MyNamespace::Date::operator<(const Date &other) const {
   if (this == &other) {
     return true;
   }
@@ -112,11 +112,11 @@ bool MyNamespace::Date::operator<(const Date& other) const {
   }
 }
 
-bool MyNamespace::Date::operator<=(const Date& other) const {
+bool MyNamespace::Date::operator<=(const Date &other) const {
   return (*this == other || *this < other);
 }
 
-bool MyNamespace::Date::operator>=(const Date& other) const {
+bool MyNamespace::Date::operator>=(const Date &other) const {
   return (*this == other || *this > other);
 }
 

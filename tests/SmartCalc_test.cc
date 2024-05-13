@@ -2,9 +2,9 @@
 
 #include <cmath>
 
-#include "../model/bank/creditcalculator.h"
-#include "../model/bank/depositcalculator.h"
-#include "../model/math/math_calculator.h"
+#include "../src/model/bank/creditcalculator.h"
+#include "../src/model/bank/depositcalculator.h"
+#include "../src/model/math/math_calculator.h"
 
 #define kAcc 1e-6
 
@@ -312,10 +312,14 @@ TEST(calculation, expression_27) {
 TEST(calculation_graph, expression) {
   using namespace MyNamespace;
   MathCalculator calc;
-  calc.CalculateGraph("x*x", 11, 0, 10, -10, 100);
+  calc.CalculateGraph("x*x", 21, 0, 20, -10, 1000);
   MathCalculator::XYGraph result = calc.GetGraph();
-  std::vector<double> expected_x = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  std::vector<double> expected_y = {0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100};
+  std::vector<double> expected_x = {0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+                                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+  std::vector<double> expected_y = {0,   1,   4,   9,   16,  25,  36,
+                                    49,  64,  81,  100, 121, 144, 169,
+                                    196, 225, 256, 289, 324, 361, 400};
+  ASSERT_EQ(result.first.size(), expected_x.size());
   ASSERT_TRUE((result.first == expected_x) && (result.second == expected_y));
 }
 

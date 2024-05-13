@@ -3,7 +3,6 @@
 
 #include <vector>
 
-#include "round.h"
 namespace MyNamespace {
 
 enum TypeOfMonthlyPayments {
@@ -12,7 +11,7 @@ enum TypeOfMonthlyPayments {
 };
 
 class CreditCalculator {
- public:
+public:
   CreditCalculator() = default;
   ~CreditCalculator() = default;
   void CalculateCredit(int type_of_monthly_payments, double total_credit_amount,
@@ -21,20 +20,20 @@ class CreditCalculator {
   double GetTotalPayment() const;
   double GetOverpaymentOnCredit() const;
 
- private:
+private:
   void LoadData(int type_of_monthly_payments, double total_credit_amount,
                 int term, double interest_rate);
   void CalculateAnnuityCredit();
   void CalculateDifferentiatedCredit();
 
-  int type_of_monthly_payments_;
-  double total_credit_amount_;
-  double term_;
-  double interest_rate_;
+  int type_of_monthly_payments_{};
+  double total_credit_amount_{};
+  double term_{};
+  double interest_rate_{};
   std::vector<double> monthly_payment_;
-  double overpayment_on_credit_;
-  double total_payment_;
+  double overpayment_on_credit_{};
+  double total_payment_{};
 };
-};  // namespace MyNamespace
+}; // namespace MyNamespace
 
-#endif  // SMARTCALC_MODEL_BANK_CREDTCALCULATOR_H_
+#endif // SMARTCALC_MODEL_BANK_CREDTCALCULATOR_H_

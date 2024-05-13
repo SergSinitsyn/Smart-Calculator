@@ -13,7 +13,7 @@
 #include "validator.h"
 
 void MyNamespace::MathCalculator::CalculateAnswer(
-    const std::string& input_expression, const std::string& input_x) {
+    const std::string &input_expression, const std::string &input_x) {
   parameter_checker_.CheckLength(input_expression);
 
   std::list<Token> x_expression = parser_.Parsing(input_x);
@@ -34,12 +34,12 @@ void MyNamespace::MathCalculator::CalculateAnswer(
 }
 
 void MyNamespace::MathCalculator::CalculateAnswer(
-    const std::string& input_expression) {
+    const std::string &input_expression) {
   CalculateAnswer(input_expression, "0");
 }
 
 void MyNamespace::MathCalculator::CalculateGraph(
-    const std::string& input_expression, int number_of_points, double x_start,
+    const std::string &input_expression, int number_of_points, double x_start,
     double x_end, double y_min, double y_max) {
   parameter_checker_.CheckLength(input_expression);
   parameter_checker_.CheckNumberOfPoints(number_of_points);
@@ -55,8 +55,8 @@ void MyNamespace::MathCalculator::CalculateGraph(
 
 double MyNamespace::MathCalculator::GetAnswer() const { return answer_; }
 
-MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::GetGraph()
-    const {
+MyNamespace::MathCalculator::XYGraph
+MyNamespace::MathCalculator::GetGraph() const {
   return answer_graph_;
 }
 

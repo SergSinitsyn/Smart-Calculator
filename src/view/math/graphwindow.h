@@ -22,7 +22,7 @@ using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
 class GraphWindow : public QWidget {
   Q_OBJECT
 
- public:
+public:
   explicit GraphWindow(QWidget *parent = nullptr);
   ~GraphWindow();
   void SetController(Controller *g);
@@ -34,7 +34,7 @@ class GraphWindow : public QWidget {
   double GetMaxY();
   void SetGraph(XYGraph graph);
 
- private:
+private:
   int SetColor();
   void SetupWidget();
   void SetupBox();
@@ -53,10 +53,10 @@ class GraphWindow : public QWidget {
       QColor("ingigo"), QColor("teal"),   QColor("yellowgreen"),
       QColor("tan")};
 
- public slots:
+public slots:
   void TakeExpressionFromCalc(QString expression);
 
- private slots:
+private slots:
   void on_lineEdit_In_textChanged(const QString &arg);
   void on_pushButton_Print_clicked();
   void on_pushButton_Color_clicked();
@@ -69,9 +69,9 @@ class GraphWindow : public QWidget {
   void xAxisChanged(QCPRange);
   void yAxisChanged(QCPRange);
 
- signals:
+signals:
   void SendExpressionToCalc(QString);
 };
-};  // namespace MyNamespace
+}; // namespace MyNamespace
 
-#endif  // SMARTCALC_VIEW_MATH_GRAPHWINDOW_H_
+#endif // SMARTCALC_VIEW_MATH_GRAPHWINDOW_H_

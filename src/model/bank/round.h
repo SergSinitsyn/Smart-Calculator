@@ -3,4 +3,4 @@
 
 double RoundToTwoDecimalPlaces(double value);
 
-#endif  // SMARTCALC_MODEL_BANK_ROUND_H_
+#endif // SMARTCALC_MODEL_BANK_ROUND_H_

@@ -20,7 +20,7 @@ using MultiMapQDate = std::multimap<QDate, std::pair<int, double>>;
 class DepositWindow : public QWidget {
   Q_OBJECT
 
- public:
+public:
   explicit DepositWindow(QWidget *parent = nullptr);
   ~DepositWindow();
   void SetController(Controller *d);
@@ -39,7 +39,7 @@ class DepositWindow : public QWidget {
   void SetAnswer(double deposit_amount_by_the_end_of_the_term,
                  double accrued_interest, double tax_amount);
 
- private:
+private:
   Ui::DepositWindow *ui;
   Controller *controller_deposit_;
 
@@ -60,7 +60,7 @@ class DepositWindow : public QWidget {
   void SetGroupSeparators(QString &srt);
   void SetValueToLine(double value, QLineEdit *line);
 
- private slots:
+private slots:
   void on_pushButton_Calculate_clicked();
   void on_pushButton_AddReplenishment_clicked();
   void on_pushButton_AddPartialWithdrawal_clicked();
@@ -68,6 +68,6 @@ class DepositWindow : public QWidget {
   void on_dateEdit_StartOfTerm_userDateChanged(const QDate &date);
   void CloseCell(int CellNumber, int CellType);
 };
-};  // namespace MyNamespace
+}; // namespace MyNamespace
 
-#endif  // SMARTCALC_VIEW_BANK_DEPOSITWINDOW_H_
+#endif // SMARTCALC_VIEW_BANK_DEPOSITWINDOW_H_

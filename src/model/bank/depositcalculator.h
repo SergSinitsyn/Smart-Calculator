@@ -33,7 +33,7 @@ enum Periodicity {
 };
 
 class DepositCalculator {
- public:
+public:
   using MultiMapDate = std::multimap<Date, std::pair<int, double>>;
   struct DepositInputData {
     double deposit_amount;
@@ -56,7 +56,7 @@ class DepositCalculator {
   long double GetTaxAmount() const;
   long double GetDepositAmountByTheEndOfTheTerm() const;
 
- private:
+private:
   void LoadDepositData(const DepositInputData &InputData);
   void Calculation();
   void SetNextPaymentDate();
@@ -67,28 +67,29 @@ class DepositCalculator {
   void SetNextDate(int type, Date &date);
 
   // input data
-  double deposit_amount_;
-  Date start_of_term_;
-  double interest_rate_;
-  double tax_rate_;
-  int periodicity_of_payments_;
-  bool capitalization_of_interest_;
-  MultiMapDate replenishments_list_;
-  MultiMapDate partial_withdrawals_list_;
-  double minimum_balance_;
+  double deposit_amount_{};
+  Date start_of_term_{};
+  double interest_rate_{};
+  double tax_rate_{};
+  int periodicity_of_payments_{};
+  bool capitalization_of_interest_{};
+  MultiMapDate replenishments_list_{};
+  MultiMapDate partial_withdrawals_list_{};
+  double minimum_balance_{};
 
   // temp data
-  Date end_of_term_;
-  Date current_date_;
-  Date payment_date_;
-  long double accrued_interest_receivable_;
-  double start_deposit_;
+  Date end_of_term_{};
+  Date current_date_{};
+  Date payment_date_{};
+  long double accrued_interest_receivable_{};
+  double start_deposit_{};
 
   // output data
-  long double accrued_interest_;
-  long double tax_amount_;
-  long double deposit_amount_by_the_end_of_the_term_;
+  long double accrued_interest_{};
+  long double tax_amount_{};
+  long double deposit_amount_by_the_end_of_the_term_{};
 };
-};  // namespace MyNamespace
 
-#endif  // SMARTCALC_MODEL_BANK_DEPOSITCALCULATOR_H_
+}; // namespace MyNamespace
+
+#endif // SMARTCALC_MODEL_BANK_DEPOSITCALCULATOR_H_

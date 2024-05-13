@@ -54,8 +54,8 @@ Date Controller::ConvertDate(QDate old) const {
   return result;
 }
 
-DepositCalculator::MultiMapDate Controller::ConvertDateMap(
-    MultiMapQDate old) const {
+DepositCalculator::MultiMapDate
+Controller::ConvertDateMap(MultiMapQDate old) const {
   DepositCalculator::MultiMapDate result;
   for (auto it = old.begin(); it != old.end(); ++it) {
     result.insert(std::make_pair(ConvertDate(it->first), it->second));
@@ -63,4 +63,4 @@ DepositCalculator::MultiMapDate Controller::ConvertDateMap(
   return result;
 }
 
-};  // namespace MyNamespace
+}; // namespace MyNamespace

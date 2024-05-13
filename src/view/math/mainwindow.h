@@ -22,31 +22,31 @@ class Controller;
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
- public:
-  MainWindow(QWidget* parent = nullptr);
+public:
+  MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
-  void SetController(Controller* c);
+  void SetController(Controller *c);
   std::string GetInputString() const;
   std::string GetInputStringX() const;
   void SetAnswer(double x);
 
- private:
-  Ui::MainWindow* ui;
-  CreditWindow* credit_view_;
-  DepositWindow* deposit_view_;
-  GraphWindow* graph_view_;
-  Controller* controller_;
+private:
+  Ui::MainWindow *ui;
+  CreditWindow *credit_view_;
+  DepositWindow *deposit_view_;
+  GraphWindow *graph_view_;
+  Controller *controller_;
 
   void ConnectInputButtons();
   void ConnectInputButtonsExtra();
 
   void HideAllWindows();
-  QLineEdit* LineOnFocus();
+  QLineEdit *LineOnFocus();
 
- public slots:
+public slots:
   void TakeExpressionFromGraph(QString expression);
 
- private slots:
+private slots:
   void InputButtons();
   void InputButtonsWithBrakets();
   void on_toolButton_equal_clicked();
@@ -56,10 +56,10 @@ class MainWindow : public QMainWindow {
   void on_actionGraph_View_triggered();
   void on_actionCredit_Calculator_triggered();
   void on_actionDeposit_Calculator_triggered();
-  void on_lineEdit_input_textChanged(const QString& arg);
+  void on_lineEdit_input_textChanged(const QString &arg);
 
- signals:
+signals:
   void SendExpressionToGraph(QString);
 };
-};      // namespace MyNamespace
-#endif  // SMARTCALC_VIEW_MATH_MAINWINDOW_H_
+};     // namespace MyNamespace
+#endif // SMARTCALC_VIEW_MATH_MAINWINDOW_H_

@@ -10,7 +10,7 @@ namespace MyNamespace {
 class Cell : public QWidget {
   Q_OBJECT
 
- public:
+public:
   explicit Cell(QWidget *parent = nullptr);
   ~Cell();
   int GetPeriodicity() const;
@@ -22,17 +22,17 @@ class Cell : public QWidget {
   void SetType(int newType);
   void SetMinimumDate(QDate date);
 
- private:
+private:
   Ui::Cell *ui;
   int number_;
   int type_;
 
- private slots:
+private slots:
   void on_toolButton_delete_clicked();
 
- signals:
+signals:
   void CloseThisCell(int, int);
 };
-};  // namespace MyNamespace
+}; // namespace MyNamespace
 
-#endif  // SMARTCALC_VIEW_BANK_CELL_H_
+#endif // SMARTCALC_VIEW_BANK_CELL_H_

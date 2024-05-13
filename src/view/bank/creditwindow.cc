@@ -23,7 +23,8 @@ double CreditWindow::GetInterestRate() const {
 
 int CreditWindow::GetTerm() const {
   int term = ui->spinBox_Term->value();
-  if (ui->comboBox_Term->currentIndex() == 1) term *= 12;
+  if (ui->comboBox_Term->currentIndex() == 1)
+    term *= 12;
   return term;
 }
 
@@ -67,12 +68,14 @@ void CreditWindow::on_pushButton_Clear_clicked() {
 }
 
 void CreditWindow::on_comboBox_Term_currentIndexChanged(int index) {
-  if (index == 0) ui->spinBox_Term->setMaximum(600);
-  if (index == 1) ui->spinBox_Term->setMaximum(50);
+  if (index == 0)
+    ui->spinBox_Term->setMaximum(600);
+  if (index == 1)
+    ui->spinBox_Term->setMaximum(50);
 }
 
 void CreditWindow::SetDefault(QSpinBox &sb) { sb.setValue(sb.minimum()); }
 
 void CreditWindow::SetDefault(QDoubleSpinBox &sb) { sb.setValue(sb.minimum()); }
 
-};  // namespace MyNamespace
+}; // namespace MyNamespace

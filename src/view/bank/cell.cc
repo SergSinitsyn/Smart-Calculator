@@ -30,4 +30,4 @@ void Cell::on_toolButton_delete_clicked() {
   emit CloseThisCell(number_, type_);
   this->close();
 }
-};  // namespace MyNamespace
+}; // namespace MyNamespace

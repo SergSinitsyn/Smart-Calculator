@@ -4,7 +4,7 @@
 #include "ui_depositwindow.h"
 
 namespace MyNamespace {
-DepositWindow::DepositWindow(QWidget* parent)
+DepositWindow::DepositWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::DepositWindow) {
   ui->setupUi(this);
   ui->dateEdit_StartOfTerm->setDate(QDate::currentDate());
@@ -14,7 +14,7 @@ DepositWindow::DepositWindow(QWidget* parent)
 
 DepositWindow::~DepositWindow() { delete ui; }
 
-void DepositWindow::SetController(Controller* d) { controller_deposit_ = d; }
+void DepositWindow::SetController(Controller *d) { controller_deposit_ = d; }
 
 double DepositWindow::GetDepositAmount() const {
   return ui->doubleSpinBox_DepositAmount->value();
@@ -69,7 +69,7 @@ void DepositWindow::SetAnswer(double deposit_amount_by_the_end_of_the_term,
 }
 
 void DepositWindow::AddNewCellReplenishment() {
-  Cell* NewCell = new Cell(this);
+  Cell *NewCell = new Cell(this);
   ui->verticalLayout_Replenishments->insertWidget(
       cell_number_total_replenishment_, NewCell);
   connect(NewCell, SIGNAL(CloseThisCell(int, int)), this,
@@ -83,7 +83,7 @@ void DepositWindow::AddNewCellReplenishment() {
 }
 
 void DepositWindow::AddNewCellPartialWithdrawal() {
-  Cell* NewCell = new Cell(this);
+  Cell *NewCell = new Cell(this);
   ui->verticalLayout_PartialWithdrawals->insertWidget(
       cell_number_total_partial_withdrawal_, NewCell);
   connect(NewCell, SIGNAL(CloseThisCell(int, int)), this,
@@ -98,13 +98,13 @@ void DepositWindow::AddNewCellPartialWithdrawal() {
 }
 
 void DepositWindow::FillList(
-    QVector<Cell*> vector, std::multimap<QDate, std::pair<int, double>>& map) {
+    QVector<Cell *> vector, std::multimap<QDate, std::pair<int, double>> &map) {
   map.clear();
   auto it = vector.begin();
   while (it != vector.end()) {
-    map.insert(std::make_pair(
-        (*it)->GetDate(),
-        std::make_pair((*it)->GetPeriodicity(), (*it)->GetValue())));
+    map.insert(
+        std::make_pair((*it)->GetDate(), std::make_pair((*it)->GetPeriodicity(),
+                                                        (*it)->GetValue())));
     ++it;
   }
 }
@@ -117,7 +117,7 @@ void DepositWindow::FillPartialWithdrawalsList() {
   FillList(all_cell_partial_withdrawal_ptr_, partial_withdrawals_list_);
 }
 
-void DepositWindow::SetGroupSeparators(QString& srt) {
+void DepositWindow::SetGroupSeparators(QString &srt) {
   int i = 0;
   int t = 3 * (2 + i) + i;
   while (t < srt.size()) {
@@ -127,7 +127,7 @@ void DepositWindow::SetGroupSeparators(QString& srt) {
   }
 }
 
-void DepositWindow::SetValueToLine(double value, QLineEdit* line) {
+void DepositWindow::SetValueToLine(double value, QLineEdit *line) {
   QString word = QString::number(value, 'f', 2);
   SetGroupSeparators(word);
   line->setText(word);
@@ -138,7 +138,7 @@ void DepositWindow::on_pushButton_Calculate_clicked() {
   FillPartialWithdrawalsList();
   try {
     controller_deposit_->CalculateDeposit(this);
-  } catch (const std::exception& e) {
+  } catch (const std::exception &e) {
     QMessageBox::critical(this, "Warning", e.what());
   }
 }
@@ -164,12 +164,15 @@ void DepositWindow::on_pushButton_AddPartialWithdrawal_clicked() {
 }
 
 void DepositWindow::on_comboBox_PlacementPeriod_currentIndexChanged(int index) {
-  if (index == 0) ui->spinBox_PlacementPeriod->setMaximum(18250);
-  if (index == 1) ui->spinBox_PlacementPeriod->setMaximum(600);
-  if (index == 2) ui->spinBox_PlacementPeriod->setMaximum(50);
+  if (index == 0)
+    ui->spinBox_PlacementPeriod->setMaximum(18250);
+  if (index == 1)
+    ui->spinBox_PlacementPeriod->setMaximum(600);
+  if (index == 2)
+    ui->spinBox_PlacementPeriod->setMaximum(50);
 }
 
-void DepositWindow::on_dateEdit_StartOfTerm_userDateChanged(const QDate& date) {
+void DepositWindow::on_dateEdit_StartOfTerm_userDateChanged(const QDate &date) {
   for (int i = 0; i < all_cell_replenishment_ptr_.length(); ++i) {
     all_cell_replenishment_ptr_.at(i)->SetMinimumDate(date);
   }
@@ -201,4 +204,4 @@ void DepositWindow::CloseCell(int CellNumber, int CellType) {
   }
 }
 
-};  // namespace MyNamespace
+}; // namespace MyNamespace
