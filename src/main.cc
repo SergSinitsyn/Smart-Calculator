@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   MathCalculator model_math;
   CreditCalculator model_credit;
   DepositCalculator model_deposit;
-  Controller controller(&model_math, &model_credit, &model_deposit);
+  Controller controller(model_math, model_credit, model_deposit);
   MainWindow main_window;
   main_window.SetController(&controller);
   main_window.show();

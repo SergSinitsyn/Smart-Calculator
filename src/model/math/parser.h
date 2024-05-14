@@ -13,27 +13,28 @@
 namespace MyNamespace {
 
 class Parser {
-public:
+ public:
   Parser(){};
-  std::list<Token> Parsing(std::string input_expression);
+  std::list<Token> Parsing(const std::string &);
 
-private:
+ private:
+  size_t current_index_ = 0;
+  std::string expression_{};
   std::list<Token> tokens_;
 
   static std::map<std::string, Token> token_map_;
   static constexpr bool kLastToken_[kNumTokenTypes] = {
-      1, 0, 0, 1, 0, 0, 1}; // TODO replace this
+      1, 0, 0, 1, 0, 0, 1};  // TODO replace this
 
-  void ConvertToLowercase(std::string &str);
-  std::pair<double, std::string> ReadNumber(std::string &input,
-                                            size_t &start_index) const;
-  std::string ReadWord(std::string &input, size_t &start_index) const;
-  void PushToken(std::string temp);
+  void ConvertToLowercase(std::string &);
+  std::pair<double, std::string> ReadNumber();
+  std::string ReadWord();
+  void PushToken(const std::string &);
+  void DeleteSpaces();
   void CheckUnaryPlus();
   void CheckUnaryNegation();
-  void DeleteSpaces();
 };
 
-} // namespace MyNamespace
+};  // namespace MyNamespace
 
-#endif // SMARTCALC_MODEL_MATH_PARSER_H_
+#endif  // SMARTCALC_MODEL_MATH_PARSER_H_

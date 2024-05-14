@@ -52,6 +52,8 @@ install:
 	qmake CONFIG+=release -o $(BUILD_DIR)/Makefile $(SRC_DIR)/$(EXECUTABLE).pro
 	-cd $(BUILD_DIR); make
 	-cd $(BUILD_DIR); make clean
+	$(CLEAN) $(BUILD_DIR)/Makefile
+	$(CLEAN) $(BUILD_DIR)/.qmake.stash
 
 uninstall:
 	$(CLEAN) $(BUILD_DIR)

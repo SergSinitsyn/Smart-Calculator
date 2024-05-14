@@ -78,6 +78,7 @@
         "span": "cpp",
         "format": "cpp",
         "stack": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "__string": "cpp"
     }
 }

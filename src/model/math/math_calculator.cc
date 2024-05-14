@@ -23,9 +23,8 @@ void MyNamespace::MathCalculator::CalculateAnswer(
   validator_.CheckSequenceOfTokens(x_expression);
   validator_.CheckSequenceOfTokens(expression);
 
-  std::list<Token> x_postfix =
-      postfix_calculator_.ConvertInfixToPostfix(x_expression);
-  double x_value = postfix_calculator_.PostfixNotationCalculation(x_postfix);
+  double x_value = postfix_calculator_.PostfixNotationCalculation(
+      postfix_calculator_.ConvertInfixToPostfix(x_expression));
 
   std::list<Token> postfix =
       postfix_calculator_.ConvertInfixToPostfix(expression);
@@ -55,8 +54,8 @@ void MyNamespace::MathCalculator::CalculateGraph(
 
 double MyNamespace::MathCalculator::GetAnswer() const { return answer_; }
 
-MyNamespace::MathCalculator::XYGraph
-MyNamespace::MathCalculator::GetGraph() const {
+MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::GetGraph()
+    const {
   return answer_graph_;
 }
 
@@ -67,7 +66,8 @@ void MyNamespace::MathCalculator::CalculateXY(int number_of_points,
     std::swap(y_min, y_max);
   }
 
-  std::vector<double> x_values, y_values;
+  std::vector<double> x_values;
+  std::vector<double> y_values;
   double step = (x_end - x_start) / (number_of_points - 1);
   long double threshold = fabs(step * 1000.0);
   bool in_range = true;

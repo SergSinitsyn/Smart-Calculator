@@ -7,8 +7,11 @@
 MyNamespace::Token::Token(const std::string &name, Precedence precedence,
                           Associativity associativity, Type type,
                           function_variant function)
-    : name_(name), precedence_(precedence), associativity_(associativity),
-      type_(type), function_(function){};
+    : name_(name),
+      precedence_(precedence),
+      associativity_(associativity),
+      type_(type),
+      function_(function){};
 
 std::string MyNamespace::Token::name() const { return name_; }
 

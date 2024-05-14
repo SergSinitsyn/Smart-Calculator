@@ -38,11 +38,11 @@ enum Associativity {
   kRight,
 };
 
-}; // namespace MyNamespace
+};  // namespace MyNamespace
 
 namespace MyNamespace {
 class Token {
-public:
+ public:
   Token() = delete;
   Token(const std::string &name, Precedence precedence,
         Associativity associativity, Type type, function_variant function);
@@ -56,7 +56,7 @@ public:
 
   void TransformToUnaryNegation();
 
-private:
+ private:
   std::string name_;
   Precedence precedence_;
   Associativity associativity_;
@@ -64,6 +64,6 @@ private:
   function_variant function_;
 };
 
-}; // namespace MyNamespace
+};  // namespace MyNamespace
 
-#endif // SMARTCALC_MODEL_MATH_TOKEN_H_
+#endif  // SMARTCALC_MODEL_MATH_TOKEN_H_

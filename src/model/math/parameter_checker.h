@@ -7,7 +7,7 @@ namespace MyNamespace {
 
 class ParameterChecker {
  public:
-  void CheckLength(std::string& const expression);
+  void CheckLength(const std::string &);
   void CheckNumberOfPoints(int size);
   void CheckRange(double x_start, double x_end);
 };

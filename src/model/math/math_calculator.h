@@ -11,7 +11,7 @@
 
 namespace MyNamespace {
 class MathCalculator {
-public:
+ public:
   using XYGraph = std::pair<std::vector<double>, std::vector<double>>;
   MathCalculator(){};
   ~MathCalculator() = default;
@@ -24,7 +24,7 @@ public:
   double GetAnswer() const;
   XYGraph GetGraph() const;
 
-private:
+ private:
   ParameterChecker parameter_checker_;
   Parser parser_;
   Validator validator_;
@@ -36,6 +36,6 @@ private:
                    double y_min, double y_max);
 };
 
-}; // namespace MyNamespace
+};  // namespace MyNamespace
 
-#endif // SMARTCALC_MODEL_MATH_MATHCALCULATOR_H_
+#endif  // SMARTCALC_MODEL_MATH_MATHCALCULATOR_H_
