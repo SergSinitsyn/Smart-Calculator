@@ -25,12 +25,12 @@ std::string GraphWindow::GetInputString() {
 
 int GraphWindow::GetResolution() {
   switch (ui->comboBox_resolution->currentIndex()) {
-  case 0:
-    return 128;
-  case 1:
-    return 1024;
-  case 2:
-    return 8192;
+    case 0:
+      return 128;
+    case 1:
+      return 1024;
+    case 2:
+      return 8192;
   }
   return 1024;
 }
@@ -116,8 +116,7 @@ void GraphWindow::on_pushButton_Print_clicked() {
 
 void GraphWindow::on_pushButton_Color_clicked() {
   int selected = ui->listWidget->currentRow();
-  if (selected < 0)
-    return;
+  if (selected < 0) return;
 
   QColor ColorValue = QColorDialog::getColor(Qt::white, this, "Select color");
   ui->widget->graph(selected)->setPen(QPen(QColor(ColorValue), 1.5));
@@ -126,14 +125,13 @@ void GraphWindow::on_pushButton_Color_clicked() {
 
 void GraphWindow::on_pushButton_Delete_clicked() {
   int selected = ui->listWidget->currentRow();
-  if (selected < 0)
-    return;
+  if (selected < 0) return;
 
   QMessageBox::StandardButton reply;
-  reply = QMessageBox::question(this, "Test",
-                                "Delete this graph?\n" +
-                                    ui->listWidget->currentItem()->text(),
-                                QMessageBox::Yes | QMessageBox::No);
+  reply = QMessageBox::question(
+      this, "Test",
+      "Delete this graph?\n" + ui->listWidget->currentItem()->text(),
+      QMessageBox::Yes | QMessageBox::No);
   if (reply == QMessageBox::Yes) {
     ui->widget->removeGraph(selected);
     delete ui->listWidget->takeItem(selected);
@@ -162,4 +160,4 @@ void GraphWindow::yAxisChanged(QCPRange range) {
   ui->doubleSpinBox_yMin->setValue(range.lower);
   ui->doubleSpinBox_yMax->setValue(range.upper);
 }
-}; // namespace MyNamespace
+};  // namespace MyNamespace

@@ -65,37 +65,24 @@ void MyNamespace::MathCalculator::CalculateXY(int number_of_points,
   if (y_min > y_max) {
     std::swap(y_min, y_max);
   }
-
   std::vector<double> x_values;
   std::vector<double> y_values;
   double step = (x_end - x_start) / (number_of_points - 1);
-  long double threshold = fabs(step * 1000.0);
-  bool in_range = true;
 
   for (int i = 0; i < number_of_points; ++i) {
     x_values.push_back(x_start + step * i);
+    y_values.push_back(
+        postfix_calculator_.PostfixNotationCalculation(x_values.back()));
+  }
 
-    double y_value =
-        postfix_calculator_.PostfixNotationCalculation(x_values.back());
+  double y_max_area = y_max + y_max - y_min;
+  double y_min_area = y_min + y_min - y_max;
 
-    long double delta = 0;
-    if (i && !std::isnan(y_values.back())) {
-      delta = fabs((y_value - y_values.back()) / step);
-    }
-
-    if (delta > threshold && (y_value * y_values.back()) < 0) {
-      in_range = false;
-    } else if (y_value > y_max || y_value < y_min) {
-      if (in_range) {
-        y_values.push_back(y_value);
-      } else {
-        y_values.push_back(std::numeric_limits<double>::quiet_NaN());
-      }
-      in_range = false;
-    } else {
-      y_values.push_back(y_value);
-      in_range = true;
+  for (auto &point : y_values) {
+    if (point > y_max_area || point < y_min_area) {
+      point = std::numeric_limits<double>::quiet_NaN();
     }
   }
+
   answer_graph_ = std::make_pair(x_values, y_values);
 }

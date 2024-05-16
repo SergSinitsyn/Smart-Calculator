@@ -3,6 +3,8 @@ CXXFLAGS 				:= -Wall -Werror -Wextra -g -fPIC -O0
 COVFLAGS				:= -fprofile-arcs -ftest-coverage -fprofile-abs-path --coverage
 CLEAN					:= rm -rf
 
+EXECUTABLE				:= SmartCalc
+
 OC := $(shell uname)
 ifeq ($(OC),Darwin)
 	LEAKS 				:= CK_FORK=no leaks --atExit --
@@ -35,7 +37,6 @@ TESTS_OBJ 				:= $(patsubst $(TESTS_DIR)%.cc, $(BUILD_MODEL_DIR)%.o, $(TESTS_SRC
 
 GCOV_FILES 				:= $(shell find $(BUILD_MODEL_DIR) -name '*.gcno' -o -name '*.gcda')
 
-EXECUTABLE				:= SmartCalc
 TESTS_EXECUTABLE		:= $(EXECUTABLE)_tests
 DIST_NAME 				:= $(EXECUTABLE)-$(VERSION)
 VERSION 				:= 1.0
@@ -57,6 +58,9 @@ install:
 
 uninstall:
 	$(CLEAN) $(BUILD_DIR)
+
+open:
+	$(OPEN) $(BUILD_DIR)/$(APP)
 
 $(TESTS_EXECUTABLE): $(OBJ) $(TESTS_OBJ)
 	$(CXX) $(CXXFLAGS) $(COVFLAGS) $(OBJ) $(TESTS_OBJ) $(LDFLAGS) -o $@
@@ -111,4 +115,4 @@ cppcheck:
 leaks: $(TESTS_EXECUTABLE)
 	$(LEAKS) ./$(TESTS_EXECUTABLE)
 
-.PHONY: all clean test buold rebuild install uninstall report linter cppcheck dvi
+.PHONY: all clean test build rebuild install uninstall report linter cppcheck dvi open
