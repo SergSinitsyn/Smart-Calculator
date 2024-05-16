@@ -12,35 +12,47 @@
 #include "token.h"
 #include "validator.h"
 
-void MyNamespace::MathCalculator::CalculateAnswer(
+double MyNamespace::MathCalculator::CalculateAnswer(
     const std::string &input_expression, const std::string &input_x) {
-  parameter_checker_.CheckLength(input_expression);
-
-  std::list<Token> x_expression = parser_.Parsing(input_x);
+  parameter_checker_.CheckLength(input_expression, 255);
   std::list<Token> expression = parser_.Parsing(input_expression);
 
-  validator_.CheckX(x_expression);
-  validator_.CheckSequenceOfTokens(x_expression);
-  validator_.CheckSequenceOfTokens(expression);
+  if (validator_.FindX(expression)) {
+    parameter_checker_.CheckLength(input_x, 255);
+    std::list<Token> x_expression = parser_.Parsing(input_x);
+    if (validator_.FindX(x_expression)) {
+      throw std::logic_error("Incorrect variable! Use 'x' only in expression.");
+    }
 
-  double x_value = postfix_calculator_.PostfixNotationCalculation(
-      postfix_calculator_.ConvertInfixToPostfix(x_expression));
+    validator_.CheckSequenceOfTokens(x_expression);
+    double x_value = postfix_calculator_.PostfixNotationCalculation(
+        postfix_calculator_.ConvertInfixToPostfix(x_expression));
 
-  std::list<Token> postfix =
-      postfix_calculator_.ConvertInfixToPostfix(expression);
+    validator_.CheckSequenceOfTokens(expression);
+    std::list<Token> postfix =
+        postfix_calculator_.ConvertInfixToPostfix(expression);
 
-  answer_ = postfix_calculator_.PostfixNotationCalculation(postfix, x_value);
+    return postfix_calculator_.PostfixNotationCalculation(postfix, x_value);
+
+  } else {
+    validator_.CheckSequenceOfTokens(expression);
+    std::list<Token> postfix =
+        postfix_calculator_.ConvertInfixToPostfix(expression);
+    return postfix_calculator_.PostfixNotationCalculation(postfix, 0);
+  }
 }
 
-void MyNamespace::MathCalculator::CalculateAnswer(
+double MyNamespace::MathCalculator::CalculateAnswer(
     const std::string &input_expression) {
-  CalculateAnswer(input_expression, "0");
+  return CalculateAnswer(input_expression, "");
 }
 
-void MyNamespace::MathCalculator::CalculateGraph(
-    const std::string &input_expression, int number_of_points, double x_start,
-    double x_end, double y_min, double y_max) {
-  parameter_checker_.CheckLength(input_expression);
+MyNamespace::MathCalculator::XYGraph
+MyNamespace::MathCalculator::CalculateGraph(const std::string &input_expression,
+                                            int number_of_points,
+                                            double x_start, double x_end,
+                                            double y_min, double y_max) {
+  parameter_checker_.CheckLength(input_expression, 255);
   parameter_checker_.CheckNumberOfPoints(number_of_points);
   parameter_checker_.CheckRange(x_start, x_end);
 
@@ -49,19 +61,13 @@ void MyNamespace::MathCalculator::CalculateGraph(
   validator_.CheckSequenceOfTokens(expression);
 
   postfix_calculator_.ConvertInfixToPostfix(expression);
-  CalculateXY(number_of_points, x_start, x_end, y_min, y_max);
+
+  return CalculateXY(number_of_points, x_start, x_end, y_min, y_max);
 }
 
-double MyNamespace::MathCalculator::GetAnswer() const { return answer_; }
-
-MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::GetGraph()
-    const {
-  return answer_graph_;
-}
-
-void MyNamespace::MathCalculator::CalculateXY(int number_of_points,
-                                              double x_start, double x_end,
-                                              double y_min, double y_max) {
+MyNamespace::MathCalculator::XYGraph MyNamespace::MathCalculator::CalculateXY(
+    int number_of_points, double x_start, double x_end, double y_min,
+    double y_max) {
   if (y_min > y_max) {
     std::swap(y_min, y_max);
   }
@@ -84,5 +90,5 @@ void MyNamespace::MathCalculator::CalculateXY(int number_of_points,
     }
   }
 
-  answer_graph_ = std::make_pair(x_values, y_values);
+  return std::make_pair(x_values, y_values);
 }

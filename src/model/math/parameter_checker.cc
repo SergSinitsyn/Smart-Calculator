@@ -7,8 +7,9 @@
 
 namespace MyNamespace {
 
-void ParameterChecker::CheckLength(const std::string &expression) {
-  if (expression.size() > 255)
+void ParameterChecker::CheckLength(const std::string &expression,
+                                   size_t max_length) {
+  if (expression.size() > max_length)
     throw std::invalid_argument("Character limit exceeded");
   if (expression.size() == 0) throw std::invalid_argument("Empty input");
 }

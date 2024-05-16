@@ -5,8 +5,10 @@
 
 namespace MyNamespace {
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow),
-      credit_view_(new CreditWindow()), deposit_view_(new DepositWindow()),
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      credit_view_(new CreditWindow()),
+      deposit_view_(new DepositWindow()),
       graph_view_(new GraphWindow()) {
   ui->setupUi(this);
   ConnectInputButtons();
@@ -133,4 +135,4 @@ void MainWindow::on_actionDeposit_Calculator_triggered() {
 void MainWindow::on_lineEdit_input_textChanged(const QString &arg) {
   emit SendExpressionToGraph(arg);
 }
-}; // namespace MyNamespace
+};  // namespace MyNamespace

@@ -10,310 +10,275 @@
 
 TEST(calculation, smart_variable) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("x * x", "1 + 2");
-  ASSERT_NEAR(calc.GetAnswer(), 9, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("x * x", "1 + 2"), 9, kAcc);
 }
 
 TEST(calculation, number) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("1.2e3");
-  ASSERT_NEAR(calc.GetAnswer(), 1200, kAcc);
-  calc.CalculateAnswer("1.2e+3");
-  ASSERT_NEAR(calc.GetAnswer(), 1200, kAcc);
-  calc.CalculateAnswer("1.2e-3");
-  ASSERT_NEAR(calc.GetAnswer(), 0.0012, kAcc);
-  calc.CalculateAnswer("1.2e3+x", "-1.2e3");
-  ASSERT_NEAR(calc.GetAnswer(), 0, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("1.2e3"), 1200, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("1.2e+3"), 1200, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("1.2e-3"), 0.0012, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("1.2e3+x", "-1.2e3"), 0, kAcc);
 }
 
 TEST(calculation, add) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("5.53234 + +--+1032.42342");
-  ASSERT_NEAR(calc.GetAnswer(), 1037.95576, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("5.53234 + +--+1032.42342"), 1037.95576,
+              kAcc);
 }
 
 TEST(calculation, sum) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("1037.95576-234.234");
-  ASSERT_NEAR(calc.GetAnswer(), 803.72176, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("1037.95576-234.234"), 803.72176, kAcc);
 }
 
 TEST(calculation, mul) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("803.72176*423.234");
-  ASSERT_NEAR(calc.GetAnswer(), 340162.375372, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("803.72176*423.234"), 340162.375372, kAcc);
 }
 
 TEST(calculation, div) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("340162.375372/342.32");
-  ASSERT_NEAR(calc.GetAnswer(), 993.697053552, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("340162.375372/342.32"), 993.697053552,
+              kAcc);
 }
 
 TEST(calculation, mod) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("993.697053552mod423.234");
-  ASSERT_NEAR(calc.GetAnswer(), 147.229053552, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("993.697053552mod423.234"), 147.229053552,
+              kAcc);
 }
 
 TEST(calculation, parenthesis) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("423.23*(23-4.3)");
-  ASSERT_NEAR(calc.GetAnswer(), 7914.401, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("423.23*(23-4.3)"), 7914.401, kAcc);
 }
 
 TEST(calculation, sin) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("sin(54.5)");
-  ASSERT_NEAR(calc.GetAnswer(), -0.88797583833, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("sin(54.5)"), -0.88797583833, kAcc);
 }
 
 TEST(calculation, cos) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("cos(32.32)");
-  ASSERT_NEAR(calc.GetAnswer(), 0.61841396583, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("cos(32.32)"), 0.61841396583, kAcc);
 }
 
 TEST(calculation, tan) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("tan(34.23)");
-  ASSERT_NEAR(calc.GetAnswer(), -0.33975534786, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("tan(34.23)"), -0.33975534786, kAcc);
 }
 
 TEST(calculation, log) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("log(23.23)");
-  ASSERT_NEAR(calc.GetAnswer(), 1.3660492098, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("log(23.23)"), 1.3660492098, kAcc);
 }
 
 TEST(calculation, ln) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("ln(48.234)");
-  ASSERT_NEAR(calc.GetAnswer(), 3.87606416657, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("ln(48.234)"), 3.87606416657, kAcc);
 }
 
 TEST(calculation, sqrt) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("sqrt(423)");
-  ASSERT_NEAR(calc.GetAnswer(), 20.5669638012, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("sqrt(423)"), 20.5669638012, kAcc);
 }
 
 TEST(calculation, cbrt) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("cbrt(x)", "27");
-  ASSERT_NEAR(calc.GetAnswer(), 3, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("cbrt(x)", "27"), 3, kAcc);
 }
 
 TEST(calculation, asin) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("asin(0.324)");
-  ASSERT_NEAR(calc.GetAnswer(), 0.329954518, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("asin(0.324)"), 0.329954518, kAcc);
 }
 
 TEST(calculation, acos) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("acos(0.324)");
-  ASSERT_NEAR(calc.GetAnswer(), 1.24084181, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("acos(0.324)"), 1.24084181, kAcc);
 }
 
 TEST(calculation, atan) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("atan(-0.324)");
-  ASSERT_NEAR(calc.GetAnswer(), -0.313327168, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("atan(-0.324)"), -0.313327168, kAcc);
 }
 
 TEST(calculation, pow) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("423.32^(2.432^(1/5))");
-  ASSERT_NEAR(calc.GetAnswer(), 1372.787322, kAcc);
+
+  ASSERT_NEAR(calc.CalculateAnswer("423.32^(2.432^(1/5))"), 1372.787322, kAcc);
 }
 
 TEST(calculation, pi) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("pi");
-  ASSERT_NEAR(calc.GetAnswer(), 3.1415926, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("pi"), 3.1415926, kAcc);
 }
 
 TEST(calculation, e) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("e");
-  ASSERT_NEAR(calc.GetAnswer(), 2.718281, kAcc);
+
+  ASSERT_NEAR(calc.CalculateAnswer("e"), 2.718281, kAcc);
 }
 
 TEST(calculation, exp) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("exp(5)");
-  ASSERT_NEAR(calc.GetAnswer(), 148.413159103, kAcc);
+
+  ASSERT_NEAR(calc.CalculateAnswer("exp(5)"), 148.413159103, kAcc);
 }
 
 TEST(calculation, abs) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("abs(-1324.234)");
-  ASSERT_NEAR(calc.GetAnswer(), 1324.234, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("abs(-1324.234)"), 1324.234, kAcc);
 }
 
 TEST(calculation, expression_1) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("COS(Sin(3.14))");
-  ASSERT_NEAR(calc.GetAnswer(), 0.999998, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("COS(Sin(3.14))"), 0.999998, kAcc);
 }
 
 TEST(calculation, expression_2) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("(cos(sin(3.14))+3.12)^-5.14E-3");
-  ASSERT_NEAR(calc.GetAnswer(), 0.9927489, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("(cos(sin(3.14))+3.12)^-5.14E-3"), 0.9927489,
+              kAcc);
 }
 
 TEST(calculation, expression_3) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("sqrt(cos(sin(3.14))+3.12)^-5.14E-3");
-  ASSERT_NEAR(calc.GetAnswer(), 0.9963678, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("sqrt(cos(sin(3.14))+3.12)^-5.14E-3"),
+              0.9963678, kAcc);
 }
 
 TEST(calculation, expression_5) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("(-(-(+(+5))))");
-  ASSERT_NEAR(calc.GetAnswer(), 5, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("(-(-(+(+5))))"), 5, kAcc);
 }
 
 TEST(calculation, expression_6) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("0^(-1)");
-  ASSERT_DOUBLE_EQ(calc.GetAnswer(), INFINITY);
+  ASSERT_DOUBLE_EQ(calc.CalculateAnswer("0^(-1)"), INFINITY);
 }
 
 TEST(calculation, expression_7) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("2^(3+4*5)*(2*2)+2+6/3");
-  ASSERT_NEAR(calc.GetAnswer(), 33554436, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("2^(3+4*5)*(2*2)+2+6/3"), 33554436, kAcc);
 }
 
 TEST(calculation, expression_8) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("sin(2-1)*2^2+6^2*2");
-  ASSERT_NEAR(calc.GetAnswer(), 75.365883939231579, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("sin(2-1)*2^2+6^2*2"), 75.365883939231579,
+              kAcc);
 }
 
 TEST(calculation, expression_9) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("(-(-(-5)))*(-(-5))");
-  ASSERT_NEAR(calc.GetAnswer(), -25, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("(-(-(-5)))*(-(-5))"), -25, kAcc);
 }
 
 TEST(calculation, expression_10) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("-2^(3+4*5)*(2*2)+2+6/3");
-  ASSERT_NEAR(calc.GetAnswer(), -33554428, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("-2^(3+4*5)*(2*2)+2+6/3"), -33554428, kAcc);
 }
 
 TEST(calculation, expression_11) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("56+21-376+(56-22)-(13+10)+(11+(7-(3+2)))");
-  ASSERT_NEAR(calc.GetAnswer(), -275, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("56+21-376+(56-22)-(13+10)+(11+(7-(3+2)))"),
+              -275, kAcc);
 }
 
 TEST(calculation, expression_12) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("tan(10)*((5-3)*ln(4)-log(8))*2+7");
-  ASSERT_NEAR(calc.GetAnswer(), 9.4242194938376841, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("tan(10)*((5-3)*ln(4)-log(8))*2+7"),
+              9.4242194938376841, kAcc);
 }
 
 TEST(calculation, expression_13) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer(
-      "((-(-356.081*4598.63)*803.928*(70.592*(-0.1569))*(-36.1566)))");
-  ASSERT_NEAR(calc.GetAnswer(), 527181836601.876000, 1);
+  ASSERT_NEAR(
+      calc.CalculateAnswer(
+          "((-(-356.081*4598.63)*803.928*(70.592*(-0.1569))*(-36.1566)))"),
+      527181836601.876000, 1);
 }
 
 TEST(calculation, expression_14) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("1+9+2-3*4/5mod6^7");
-  ASSERT_NEAR(calc.GetAnswer(), 9.6, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("1+9+2-3*4/5mod6^7"), 9.6, kAcc);
 }
 
 TEST(calculation, expression_15) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("2^3^4");
-  ASSERT_NEAR(calc.GetAnswer(), 2417851639229258349412352.0, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("2^3^4"), 2417851639229258349412352.0, kAcc);
 }
 
 TEST(calculation, expression_16) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("sin(x+cos(x^x))*tan(x)", "1");
-  ASSERT_NEAR(calc.GetAnswer(), 1.5566836754802069187064716, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("sin(x+cos(x^x))*tan(x)", "1"),
+              1.5566836754802069187064716, kAcc);
 }
 
 TEST(calculation, expression_17) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("asin(x+1)+acos(x)-atan(2)", "-0.60");
-  ASSERT_NEAR(calc.GetAnswer(), 1.518665563861578471360758, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("asin(x+1)+acos(x)-atan(2)", "-0.60"),
+              1.518665563861578471360758, kAcc);
 }
 
 TEST(calculation, expression_18) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("sqrt(8965)+ln(56253)-log(965)");
-  ASSERT_NEAR(calc.GetAnswer(), 102.636771255135727187735, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("sqrt(8965)+ln(56253)-log(965)"),
+              102.636771255135727187735, kAcc);
 }
 
 TEST(calculation, expression_19) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("5.3+8.6-sin(x*1.6-5)/0.5", "-0.60");
-  ASSERT_NEAR(calc.GetAnswer(), 13.26482286785592989986, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("5.3+8.6-sin(x*1.6-5)/0.5", "-0.60"),
+              13.26482286785592989986, kAcc);
 }
 
 TEST(calculation, expression_20) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("x", "-0.60");
-  ASSERT_NEAR(calc.GetAnswer(), -0.60, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("x", "-0.60"), -0.60, kAcc);
 }
 
 TEST(calculation, expression_21) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("x", "-pi");
-  ASSERT_NEAR(calc.GetAnswer(), -1 * M_PI, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("x", "-pi"), -1 * M_PI, kAcc);
 }
 
 TEST(calculation, expression_22) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("x", "-e");
-  ASSERT_NEAR(calc.GetAnswer(), -1 * M_E, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("x", "-e"), -1 * M_E, kAcc);
 }
 
 TEST(calculation, expression_23) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("x", "-1");
-  ASSERT_NEAR(calc.GetAnswer(), -1, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("x", "-1"), -1, kAcc);
 }
 
 TEST(calculation, expression_24) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("sin(x)", "inf");
-  ASSERT_TRUE(std::isnan(calc.GetAnswer()));
+  ASSERT_TRUE(std::isnan(calc.CalculateAnswer("sin(x)", "inf")));
 }
 
 TEST(calculation, expression_25) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("1/0");
-  ASSERT_TRUE(std::isinf(calc.GetAnswer()));
+  ASSERT_TRUE(std::isinf(calc.CalculateAnswer("1/0")));
 }
 
 TEST(calculation, expression_26) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("-1/0");
-  ASSERT_TRUE(std::isinf(calc.GetAnswer()));
+  ASSERT_TRUE(std::isinf(calc.CalculateAnswer("-1/0")));
 }
 
 TEST(calculation, expression_27) {
   MyNamespace::MathCalculator calc;
-  calc.CalculateAnswer("x", "-e");
-  ASSERT_NEAR(calc.GetAnswer(), -2.718281828459, kAcc);
+  ASSERT_NEAR(calc.CalculateAnswer("x", "-e"), -2.718281828459, kAcc);
 }
 
 TEST(calculation_graph, expression) {
   using namespace MyNamespace;
   MathCalculator calc;
-  calc.CalculateGraph("x*x", 21, 0, 20, -10, 1000);
-  MathCalculator::XYGraph result = calc.GetGraph();
+  MathCalculator::XYGraph result =
+      calc.CalculateGraph("x*x", 21, 0, 20, -10, 1000);
   std::vector<double> expected_x = {0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
                                     11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
   std::vector<double> expected_y = {0,   1,   4,   9,   16,  25,  36,
@@ -554,7 +519,7 @@ TEST(logic_error, fail_21) {
 
 TEST(calculation, fail_22) {
   MyNamespace::MathCalculator calc;
-  ASSERT_ANY_THROW(calc.CalculateAnswer("1 + x", "1+x"));
+  ASSERT_ANY_THROW(calc.CalculateAnswer("1 + x ", "x"));
 }
 
 TEST(logic_error, deposit_fail) {

@@ -12,17 +12,15 @@ Controller::Controller(MathCalculator &model_1, CreditCalculator &model_2,
 Controller::~Controller(){};
 
 void Controller::CalculateValue(MainWindow *main_window) {
-  model_math_->CalculateAnswer(main_window->GetInputString(),
-                               main_window->GetInputStringX());
-  main_window->SetAnswer(model_math_->GetAnswer());
+  main_window->SetAnswer(model_math_->CalculateAnswer(
+      main_window->GetInputString(), main_window->GetInputStringX()));
 }
 
 void Controller::CalculateGraph(GraphWindow *graph_window) {
-  model_math_->CalculateGraph(graph_window->GetInputString(),
-                              graph_window->GetResolution(),
-                              graph_window->GetMinX(), graph_window->GetMaxX(),
-                              graph_window->GetMinY(), graph_window->GetMaxY());
-  graph_window->SetGraph(model_math_->GetGraph());
+  graph_window->SetGraph(model_math_->CalculateGraph(
+      graph_window->GetInputString(), graph_window->GetResolution(),
+      graph_window->GetMinX(), graph_window->GetMaxX(), graph_window->GetMinY(),
+      graph_window->GetMaxY()));
 }
 
 void Controller::CalculateCredit(CreditWindow *credit_window) {

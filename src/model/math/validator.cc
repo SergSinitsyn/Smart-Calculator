@@ -19,11 +19,12 @@ void MyNamespace::Validator::CheckSequenceOfTokens(std::list<Token> &tokens) {
   CheckLastToken(tokens);
 }
 
-void MyNamespace::Validator::CheckX(std::list<Token> &tokens) {
+bool MyNamespace::Validator::FindX(std::list<Token> &tokens) {
   if (std::any_of(tokens.begin(), tokens.end(),
                   [](const Token &token) { return token.name() == "x"; })) {
-    throw std::logic_error("Incorrect variable! Use 'x' only in expression.");
+    return true;
   }
+  return false;
 }
 
 void MyNamespace::Validator::CheckFirstToken(std::list<Token> &tokens) {
@@ -37,10 +38,9 @@ void MyNamespace::Validator::CheckTokens(std::list<Token> &tokens) {
   if (tokens.size() < 2) {
     return;
   }
-  auto current = tokens.begin();
-  auto next = tokens.begin();
-  ++next;
-  for (; next != tokens.end(); ++current, ++next) {
+
+  for (auto current = tokens.begin(), next = ++tokens.begin();
+       next != tokens.end(); ++current, ++next) {
     if (!kAdjacencyMatrix_[current->type()][next->type()]) {
       throw std::logic_error("Wrong sequence: " + current->name() + " " +
                              next->name());
@@ -55,4 +55,4 @@ void MyNamespace::Validator::CheckLastToken(std::list<Token> &tokens) {
   }
 }
 
-} // namespace MyNamespace
+}  // namespace MyNamespace

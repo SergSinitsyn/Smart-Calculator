@@ -16,13 +16,12 @@ class MathCalculator {
   MathCalculator(){};
   ~MathCalculator() = default;
 
-  void CalculateAnswer(const std::string &input_expression,
-                       const std::string &input_x);
-  void CalculateAnswer(const std::string &input_expression);
-  void CalculateGraph(const std::string &input_expression, int number_of_points,
-                      double x_start, double x_end, double y_min, double y_max);
-  double GetAnswer() const;
-  XYGraph GetGraph() const;
+  double CalculateAnswer(const std::string &input_expression,
+                         const std::string &input_x);
+  double CalculateAnswer(const std::string &input_expression);
+  XYGraph CalculateGraph(const std::string &input_expression,
+                         int number_of_points, double x_start, double x_end,
+                         double y_min, double y_max);
 
  private:
   ParameterChecker parameter_checker_;
@@ -30,10 +29,8 @@ class MathCalculator {
   Validator validator_;
   PostfixCalculator postfix_calculator_;
 
-  double answer_{std::numeric_limits<double>::quiet_NaN()};
-  XYGraph answer_graph_;
-  void CalculateXY(int number_of_points, double x_start, double x_end,
-                   double y_min, double y_max);
+  XYGraph CalculateXY(int number_of_points, double x_start, double x_end,
+                      double y_min, double y_max);
 };
 
 };  // namespace MyNamespace

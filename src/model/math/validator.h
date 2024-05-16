@@ -8,21 +8,21 @@
 namespace MyNamespace {
 
 class Validator {
-public:
+ public:
   void CheckSequenceOfTokens(std::list<Token> &);
-  void CheckX(std::list<Token> &);
+  bool FindX(std::list<Token> &);
 
-private:
+ private:
   // kAdjacencyMatrix_[i][j]: i - token in expression, j - next token in
   // expression
   static constexpr bool kAdjacencyMatrix_[kNumTokenTypes][kNumTokenTypes] = {
-      {0, 1, 0, 1, 0, 0, 1}, // kNumber
-      {1, 0, 1, 0, 1, 1, 0}, // kBinaryOperator
-      {1, 0, 1, 0, 1, 1, 0}, // kUnaryPrefixOperator
-      {0, 1, 0, 1, 0, 0, 1}, // kUnaryPostfixOperator
-      {0, 0, 0, 0, 0, 1, 0}, // kUnaryFunction
-      {1, 0, 1, 0, 1, 1, 0}, // kOpenBracket
-      {0, 1, 0, 1, 0, 0, 1}, // kCloseBracket
+      {0, 1, 0, 1, 0, 0, 1},  // kNumber
+      {1, 0, 1, 0, 1, 1, 0},  // kBinaryOperator
+      {1, 0, 1, 0, 1, 1, 0},  // kUnaryPrefixOperator
+      {0, 1, 0, 1, 0, 0, 1},  // kUnaryPostfixOperator
+      {0, 0, 0, 0, 0, 1, 0},  // kUnaryFunction
+      {1, 0, 1, 0, 1, 1, 0},  // kOpenBracket
+      {0, 1, 0, 1, 0, 0, 1},  // kCloseBracket
   };
 
   void CheckFirstToken(std::list<Token> &);
@@ -30,6 +30,6 @@ private:
   void CheckLastToken(std::list<Token> &);
 };
 
-} // namespace MyNamespace
+}  // namespace MyNamespace
 
-#endif // SMARTCALC_MODEL_MATH_VALIDATOR_H_
+#endif  // SMARTCALC_MODEL_MATH_VALIDATOR_H_
